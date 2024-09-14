@@ -1,7 +1,17 @@
 import { errorCatch } from "@/utils/catch-error";
 
 import * as SecureStore from "expo-secure-store";
-import api from "../../../api";
+import { AuthApi } from "../../../../api-client";
+
+const serverUrl = process.env.SERVER_URL;
+const auth = new AuthApi(
+  {
+    basePath: serverUrl,
+    isJsonMime: () => true,
+  },
+  process.env.SERVER_URL,
+  undefined,
+);
 
 export const getAccessToken = async () => {
   const accessToken = await SecureStore.getItemAsync("accessToken");
@@ -29,7 +39,7 @@ export const deleteTokensStorage = async () => {
 export const getNewTokens = async () => {
   const refreshToken = await getRefreshToken();
   if (!refreshToken) throw new Error("No refresh token");
-  const { data: response } = await api.auth
+  const { data: response } = await auth
     .refreshToken({ refreshToken })
     .catch((error: any) => {
       if (errorCatch(error) === "jwt expired") deleteTokensStorage();

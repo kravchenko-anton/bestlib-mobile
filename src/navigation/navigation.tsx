@@ -81,7 +81,7 @@ const Navigation: FC = () => {
     <SafeAreaProvider
       initialMetrics={initialWindowMetrics}
       style={{
-        backgroundColor: Color.background,
+        backgroundColor: Color.muted,
       }}
     >
       <GestureDetectorProvider>

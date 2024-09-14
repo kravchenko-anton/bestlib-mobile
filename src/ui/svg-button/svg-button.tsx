@@ -1,4 +1,3 @@
-import { storage } from "@/App";
 import { AnimatedPress } from "@/ui";
 import { settings } from "@/ui/button/settings";
 import type { ButtonProperties } from "@/ui/button/types";
@@ -6,6 +5,7 @@ import { storedSvgPath, useSvgIcon } from "@/ui/svg-button/useSvgIcon";
 import Title from "@/ui/title/title";
 import { cn } from "@/utils";
 import { InnerColor } from "@/utils/colors";
+import { storage } from "@/utils/mmkv";
 import { Text } from "react-native";
 import { SvgXml } from "react-native-svg";
 

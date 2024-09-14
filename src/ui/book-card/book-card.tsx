@@ -1,8 +1,10 @@
 import type { Style } from "@/types/global";
-import { Image, Title } from "@/ui";
+
 import AnimatedPress from "@/ui/animated-press/animated-press";
 import { settings } from "@/ui/book-card/settings";
 import type { BookCardProperties } from "@/ui/book-card/types";
+import Image from "@/ui/image/image";
+import Title from "@/ui/title/title";
 import { Color } from "@/utils/colors";
 import type { FC } from "react";
 

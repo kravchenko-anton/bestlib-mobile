@@ -4,11 +4,11 @@ module.exports = {
 	content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
 	theme: {
 		colors: {
-			muted: '#1f2123',
-			bordered: '#2d2e30',
-			background: '#111113',
-			foreground: '#18191b',
-			primary: '#306A9C',
+			muted: '#282828',
+			bordered: '#3A3B3C',
+			background: '#18191A',
+			foreground: '#242526',
+			primary: '#515A47',
 			black: '#000000',
 			gray: '#9F9F9F',
 			white: '#F4F3F2',

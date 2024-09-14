@@ -1,5 +1,5 @@
-import { storage } from "@/App";
 import { getFileUrl } from "@/utils/get-file-url";
+import { storage } from "@/utils/mmkv";
 import { useLayoutEffect, useState } from "react";
 
 export const storedSvgPath = "svg-icon";

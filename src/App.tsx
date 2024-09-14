@@ -11,7 +11,6 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { useFonts } from "expo-font";
 import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { MMKV } from "react-native-mmkv";
 import "react-native-svg";
 import "react-native-url-polyfill/auto";
 import "../env-config";
@@ -32,11 +31,6 @@ onlineManager.setEventListener((setOnline) =>
     setOnline(!!state.isConnected);
   }),
 );
-
-export const storage = new MMKV({
-  id: "app",
-  encryptionKey: "hunter2",
-});
 
 Sentry.init({
   dsn: process.env.SENTRY_DNC,

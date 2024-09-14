@@ -13,13 +13,14 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bestlib.mobile"
     },
     "android": {
       "package": "com.bestlib.mobile",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#18191A"
       }
     },
     "web": {
@@ -37,12 +38,26 @@
         }
       ],
       "expo-secure-store",
-      ["expo-font",  {
-        "fonts": ["./assets/fonts/Merriweather-Black.ttf", "Merriweather-BlackItalic.ttf", "Merriweather-Bold.ttf", "Merriweather-BoldItalic.ttf", "Merriweather-Italic.ttf", "Merriweather-Light.ttf", "Merriweather-LightItalic.ttf", "Merriweather-Regular.ttf"]
-      }]
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/SpaceGrotesk-Bold.ttf",
+            "./assets/fonts/SpaceGrotesk-Light.ttf",
+            "./assets/fonts/SpaceGrotesk-Regular.ttf",
+            "./assets/fonts/SpaceGrotesk-SemiBold.ttf",
+            "./assets/fonts/SpaceGrotesk-Medium.ttf"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e7b545fe-e610-44ff-85d4-307de03cc0e4"
+      }
     }
   }
 }

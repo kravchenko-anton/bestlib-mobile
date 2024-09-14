@@ -15,8 +15,7 @@ const Image: FC<ImageProperties> = ({
   ...properties
 }) => (
   <DefaultImage
-    resizeMode={"cover"}
-    className={cn("bg-muted", fullSize ? "h-full" : "h-auto", className)}
+    className={cn("bg-muted", fullSize ? "h-full" : "h-max", className)}
     source={{
       uri: getFileUrl(url),
       width,

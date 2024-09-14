@@ -110,7 +110,7 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 						Sentry.metrics.increment('google-login')
 					})
 					.catch(error => {
-						console.error(JSON.stringify(error))
+						console.error(error)
 
 						errorToast("Couldn't login")
 						set({

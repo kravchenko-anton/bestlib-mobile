@@ -4,8 +4,8 @@ import React from "react";
 import type { Path, PathValue } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { TextInput, View } from "react-native";
-import { Title } from "../index";
 import { fontSettings } from "../title/settings";
+import Title from "../title/title";
 import { settings } from "./settings";
 import type { FieldProperties } from "./types";
 

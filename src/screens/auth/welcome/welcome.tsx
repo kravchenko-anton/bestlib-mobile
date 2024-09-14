@@ -1,3 +1,4 @@
+import api from '@/api'
 import { Book, Google, Mail } from "@/icons";
 import { LoginIllustration } from "@/illustrations/login";
 import { useAuthStore } from "@/screens/auth/store/auth-store";
@@ -32,15 +33,16 @@ const Welcome: FC = () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      if (!userInfo.data?.idToken) return errorToast("Something went wrong");
+      if (!userInfo.data?.idToken) return errorToast("Something went wrong with Google");
       googleLogin({
         socialId: userInfo.data?.idToken,
       });
-    } catch {
+    } catch (e) {
+      console.log("error",JSON.stringify(e));
       errorToast("Something went wrong");
     }
   };
-
+console.log(process.env.SERVER_URL)
   return (
     <ScrollLayout>
       <View className="mb-4 mt-[20%]">
@@ -68,7 +70,7 @@ const Welcome: FC = () => {
           >
             {appName}
           </Title>
-          ,{"\n"}the best place to read books
+          ,{"\n"}best books for you!
         </Title>
         <Button
           size="md"

@@ -1,9 +1,9 @@
 export const Color = {
-	muted: '#1f2123' as const,
-	bordered: '#2d2e30' as const,
-	background: '#111113' as const,
-	foreground: '#18191b' as const,
-	primary: '#306A9C' as const,
+	muted: '#282828' as const,
+	bordered: '#3A3B3C' as const,
+	background: '#18191A' as const,
+	foreground: '#242526' as const,
+	primary: '#515A47' as const,
 
 	black: '#000000' as const,
 	gray: '#9F9F9F' as const,
