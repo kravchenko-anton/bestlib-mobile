@@ -13,45 +13,36 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AuthorDtoBooksInner } from './author-dto-books-inner';
 
 /**
  * 
  * @export
- * @interface AuthorDto
+ * @interface ShortAuthorDto
  */
-export interface AuthorDto {
+export interface ShortAuthorDto {
     /**
      * 
      * @type {string}
-     * @memberof AuthorDto
+     * @memberof ShortAuthorDto
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof AuthorDto
+     * @memberof ShortAuthorDto
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof AuthorDto
+     * @memberof ShortAuthorDto
      */
     'description': string;
     /**
      * 
      * @type {string}
-     * @memberof AuthorDto
+     * @memberof ShortAuthorDto
      */
     'picture': string;
-    /**
-     * 
-     * @type {Array<AuthorDtoBooksInner>}
-     * @memberof AuthorDto
-     */
-    'books': Array<AuthorDtoBooksInner>;
 }
 

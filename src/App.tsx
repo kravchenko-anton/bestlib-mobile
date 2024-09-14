@@ -44,6 +44,21 @@ export const clientPersister: any = createSyncStoragePersister({
 
 const App = () => {
   useFonts({
+    "FiraSans-Bold": require("../assets/fonts/FiraSans-Bold.ttf"),
+    "FiraSans-Light": require("../assets/fonts/FiraSans-Light.ttf"),
+    "FiraSans-Regular": require("../assets/fonts/FiraSans-Regular.ttf"),
+    "OpenSans-Bold": require("../assets/fonts/OpenSans-Bold.ttf"),
+    "OpenSans-Italic": require("../assets/fonts/OpenSans-Italic.ttf"),
+    "OpenSans-Regular": require("../assets/fonts/OpenSans-Regular.ttf"),
+    "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
+    "Poppins-Italic": require("../assets/fonts/Poppins-Italic.ttf"),
+    "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
+    "PTSerif-Bold": require("../assets/fonts/PTSerif-Bold.ttf"),
+    "PTSerif-Italic": require("../assets/fonts/PTSerif-Italic.ttf"),
+    "PTSerif-Regular": require("../assets/fonts/PTSerif-Regular.ttf"),
+    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+    "Roboto-Italic": require("../assets/fonts/Roboto-Italic.ttf"),
+    "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
     "SpaceGrotesk-Regular": require("../assets/fonts/SpaceGrotesk-Regular.ttf"),
     "SpaceGrotesk-Light": require("../assets/fonts/SpaceGrotesk-Light.ttf"),
     "SpaceGrotesk-Bold": require("../assets/fonts/SpaceGrotesk-Bold.ttf"),

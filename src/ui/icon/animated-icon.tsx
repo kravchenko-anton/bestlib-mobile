@@ -1,10 +1,9 @@
-import { AnimatedPressable } from "@/ui/animated-components";
 import { usePressAnimation } from "@/ui/animated-press/press-animation";
 import { cn } from "@/utils";
 import { InnerColor } from "@/utils/colors";
 import type { FC } from "react";
 
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from 'react-native'
 import { settings } from "./settings";
 import type { IconProperties } from "./types";
 
@@ -14,18 +13,15 @@ const AnimatedIcon: FC<IconProperties> = ({
   size = "sm",
   fatness = 2,
   className = "",
-  style,
   fill = false,
   isLoading = false,
   noPadding = false,
   onPress,
   ...properties
 }) => {
-  const { pressFunctions, animatedStyle } = usePressAnimation();
   return (
-    <AnimatedPressable
-      {...pressFunctions}
-      style={[style, animatedStyle]}
+    <TouchableOpacity
+      activeOpacity={0.6}
       className={cn(
         "items-center justify-center rounded-lg",
         properties.disabled && "opacity-50",
@@ -50,7 +46,7 @@ const AnimatedIcon: FC<IconProperties> = ({
           stroke={InnerColor[variant]}
         />
       )}
-    </AnimatedPressable>
+    </TouchableOpacity>
   );
 };
 export default AnimatedIcon;

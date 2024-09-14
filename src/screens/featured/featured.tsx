@@ -71,7 +71,7 @@ const Featured = () => {
             data={featured.genres}
             renderItem={({ item: genre }) => (
               <SvgButton
-                size="md"
+                size="sm"
                 altEmoji={genre.emoji}
                 svgUri={genre.icon}
                 title={genre.name}

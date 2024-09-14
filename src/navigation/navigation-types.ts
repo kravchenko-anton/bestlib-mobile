@@ -9,6 +9,7 @@ export type TypeRootStackParameterListType = {
   BookImpression: { id: string };
   Genre: { id: string; name: string };
   Library: undefined;
+  Author: { id: string };
   Login: undefined;
   Register: undefined;
   Profile: undefined;

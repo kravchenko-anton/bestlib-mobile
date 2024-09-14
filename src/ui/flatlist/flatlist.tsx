@@ -22,7 +22,7 @@ const FlatList = <T,>({
         className="mb-3"
         color={Color.white}
         size="xl"
-        weight="regular"
+        weight="medium"
         style={{
           marginTop: mt,
           paddingHorizontal: properties.horizontal ? px : 0,

@@ -1,5 +1,9 @@
 export const QueryKeys = {
   library: ["user-library"],
+  author: {
+    key: ["author"],
+    byId: (id: string) => ["author", id]
+  },
   userStatistics: ["user-statistics"],
   featured: ["featured"],
   recommendationGenres: ["recommendation-genres"],

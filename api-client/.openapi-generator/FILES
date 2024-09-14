@@ -23,6 +23,7 @@ models/auth-output-user.ts
 models/auth-output.ts
 models/author-catalog-output-data-inner.ts
 models/author-catalog-output.ts
+models/author-dto-books-inner.ts
 models/author-dto.ts
 models/book-catalog-output-data-inner.ts
 models/book-catalog-output.ts
@@ -39,7 +40,6 @@ models/ebook-output.ts
 models/featured-output.ts
 models/find-one-genre-output.ts
 models/full-book-count.ts
-models/full-book-statistics-inner.ts
 models/full-book.ts
 models/google-auth-dto.ts
 models/gpt-explain.ts
@@ -49,6 +49,7 @@ models/reaction-by-book-output.ts
 models/reaction-list-output.ts
 models/reading-history.ts
 models/refresh-dto.ts
+models/short-author-dto.ts
 models/short-book.ts
 models/short-genre.ts
 models/translate-text.ts

@@ -1,11 +1,10 @@
 import type { ScrollViewDefaultProperties } from '@/types/component-types'
 import type { FC } from 'react'
-import { ScrollView as DefaultScrollView } from 'react-native'
+import { ScrollView as DefaultScrollView } from 'react-native-gesture-handler'
 
 const ScrollView: FC<ScrollViewDefaultProperties> = ({ ...properties }) => (
 	<DefaultScrollView
 		renderToHardwareTextureAndroid
-		automaticallyAdjustContentInsets={false}
 		overScrollMode='never'
 		showsHorizontalScrollIndicator={false}
 		showsVerticalScrollIndicator={false}

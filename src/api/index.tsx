@@ -1,5 +1,5 @@
 import {
-	AuthApi,
+	AuthApi, AuthorApi,
 	BookApi,
 	CatalogApi,
 	EbookApi,
@@ -38,11 +38,13 @@ const storage = new StorageApi(baseParameters, serverUrl, mobileInstance)
 
 const user = new UserApi(baseParameters, serverUrl, mobileInstance)
 const reaction = new ReactionApi(baseParameters, serverUrl, mobileInstance)
+const author = new AuthorApi(baseParameters, serverUrl, mobileInstance)
 
 export default {
 	auth,
 	book,
 	catalog,
+	author,
 	ebook,
 	genre,
 	reaction,

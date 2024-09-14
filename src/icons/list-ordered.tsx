@@ -1,5 +1,5 @@
 import type { SvgType } from "@/icons/index";
-import { Path, Svg } from "react-native-svg";
+import { Line, Svg } from "react-native-svg";
 
 export const ListOrdered = (properties: SvgType) => (
   <Svg
@@ -7,12 +7,18 @@ export const ListOrdered = (properties: SvgType) => (
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    className="lucide lucide-list-ordered"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-list"
     {...properties}
   >
-    <Path d="M9 6h6M9 12h6M9 18h6" />
+    <Line x1="8" x2="21" y1="6" y2="6" />
+    <Line x1="8" x2="21" y1="12" y2="12" />
+    <Line x1="8" x2="21" y1="18" y2="18" />
+    <Line x1="3" x2="3.01" y1="6" y2="6" />
+    <Line x1="3" x2="3.01" y1="12" y2="12" />
+    <Line x1="3" x2="3.01" y1="18" y2="18" />
   </Svg>
 );

@@ -1,9 +1,8 @@
 import type {
 	FlatListProps,
 	ImageProps,
-	PressableProps,
 	ScrollViewProps,
-	TextProps,
+	TextProps, TouchableOpacityProps,
 	ViewProps
 } from 'react-native'
 
@@ -37,9 +36,8 @@ export type FlatListDefaultProperties<T> = Pick<
 	| 'renderItem'
 >
 export type PressableDefaultProperties = Pick<
-	PressableProps,
+	TouchableOpacityProps,
 	| 'onLayout'
-	| 'pointerEvents'
 	| 'onPress'
 	| 'style'
 	| 'className'

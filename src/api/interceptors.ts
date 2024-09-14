@@ -53,12 +53,12 @@ export const axiosResponseInstance = async (error: any) => {
       ) {
         return deleteTokensStorage();
       }
-      errorToast("Something went wrong, please try again");
+      errorToast("Something went not okay");
       return Promise.reject(error);
     }
   }
 
-  errorToast(error);
+  errorToast("Something not right");
   throw error;
 };
 
