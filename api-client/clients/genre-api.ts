@@ -40,7 +40,7 @@ export const GenreApiAxiosParamCreator = function (configuration?: Configuration
         byId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('byId', 'id', id)
-            const localVarPath = `/genre/by-id/{slug}`
+            const localVarPath = `/genre/by-id/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

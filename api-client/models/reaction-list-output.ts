@@ -37,7 +37,7 @@ export interface ReactionListOutput {
      * @type {string}
      * @memberof ReactionListOutput
      */
-    'slug': string;
+    'id': string;
     /**
      * 
      * @type {string}

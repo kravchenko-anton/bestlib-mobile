@@ -1,6 +1,5 @@
 .gitignore
 .npmignore
-.openapi-generator-ignore
 api.ts
 base.ts
 clients/auth-api.ts
@@ -33,6 +32,7 @@ models/check503-response.ts
 models/create-author-dto.ts
 models/create-book-dto-chapters-inner.ts
 models/create-book-dto.ts
+models/create-impression-dto.ts
 models/create-reaction.ts
 models/ebook-output-chapters-inner.ts
 models/ebook-output.ts
@@ -44,7 +44,7 @@ models/full-book.ts
 models/google-auth-dto.ts
 models/gpt-explain.ts
 models/index.ts
-models/info-by-slug.ts
+models/info-by-id.ts
 models/reaction-by-book-output.ts
 models/reaction-list-output.ts
 models/reading-history.ts

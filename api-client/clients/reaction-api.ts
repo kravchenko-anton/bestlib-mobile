@@ -76,15 +76,15 @@ export const ReactionApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @param {string} bookSlug 
+         * @param {string} bookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reactionByBook: async (bookSlug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'bookSlug' is not null or undefined
-            assertParamExists('reactionByBook', 'bookSlug', bookSlug)
-            const localVarPath = `/reaction/reaction-by-bookId/{id}`
-                .replace(`{${"bookSlug"}}`, encodeURIComponent(String(bookSlug)));
+        reactionByBook: async (bookId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bookId' is not null or undefined
+            assertParamExists('reactionByBook', 'bookId', bookId)
+            const localVarPath = `/reaction/reaction-by-bookId/{bookId}`
+                .replace(`{${"bookId"}}`, encodeURIComponent(String(bookId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -244,12 +244,12 @@ export const ReactionApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} bookSlug 
+         * @param {string} bookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async reactionByBook(bookSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReactionByBookOutput>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.reactionByBook(bookSlug, options);
+        async reactionByBook(bookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReactionByBookOutput>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reactionByBook(bookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReactionApi.reactionByBook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -310,12 +310,12 @@ export const ReactionApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @param {string} bookSlug 
+         * @param {string} bookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reactionByBook(bookSlug: string, options?: any): AxiosPromise<Array<ReactionByBookOutput>> {
-            return localVarFp.reactionByBook(bookSlug, options).then((request) => request(axios, basePath));
+        reactionByBook(bookId: string, options?: any): AxiosPromise<Array<ReactionByBookOutput>> {
+            return localVarFp.reactionByBook(bookId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -366,13 +366,13 @@ export class ReactionApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} bookSlug 
+     * @param {string} bookId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReactionApi
      */
-    public reactionByBook(bookSlug: string, options?: RawAxiosRequestConfig) {
-        return ReactionApiFp(this.configuration).reactionByBook(bookSlug, options).then((request) => request(this.axios, this.basePath));
+    public reactionByBook(bookId: string, options?: RawAxiosRequestConfig) {
+        return ReactionApiFp(this.configuration).reactionByBook(bookId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

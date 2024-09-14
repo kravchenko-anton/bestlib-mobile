@@ -49,12 +49,6 @@ export interface BookCatalogOutputDataInner {
      * @type {number}
      * @memberof BookCatalogOutputDataInner
      */
-    'readingTime': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BookCatalogOutputDataInner
-     */
     'rating': number;
     /**
      * 

@@ -16,6 +16,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.bestlib.mobile",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -27,7 +28,18 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "mobile",
+          "organization": "booknex"
+        }
+      ],
+      "expo-secure-store",
+      ["expo-font",  {
+        "fonts": ["./assets/fonts/Merriweather-Black.ttf", "Merriweather-BlackItalic.ttf", "Merriweather-Bold.ttf", "Merriweather-BoldItalic.ttf", "Merriweather-Italic.ttf", "Merriweather-Light.ttf", "Merriweather-LightItalic.ttf", "Merriweather-Regular.ttf"]
+      }]
     ],
     "experiments": {
       "typedRoutes": true

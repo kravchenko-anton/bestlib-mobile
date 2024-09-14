@@ -124,15 +124,15 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        finishReading: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('finishReading', 'slug', slug)
-            const localVarPath = `/user/finish-reading/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        finishReading: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('finishReading', 'id', id)
+            const localVarPath = `/user/finish-reading/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -161,15 +161,15 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        isSaved: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('isSaved', 'slug', slug)
-            const localVarPath = `/user/is-saved/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        isSaved: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('isSaved', 'id', id)
+            const localVarPath = `/user/is-saved/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -274,15 +274,15 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        removeFromLibrary: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('removeFromLibrary', 'slug', slug)
-            const localVarPath = `/user/remove-from-library/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        removeFromLibrary: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('removeFromLibrary', 'id', id)
+            const localVarPath = `/user/remove-from-library/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -311,15 +311,15 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startReading: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('startReading', 'slug', slug)
-            const localVarPath = `/user/start-reading/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        startReading: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('startReading', 'id', id)
+            const localVarPath = `/user/start-reading/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -426,15 +426,15 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toggleSave: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('toggleSave', 'slug', slug)
-            const localVarPath = `/user/toggle-save/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        toggleSave: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('toggleSave', 'id', id)
+            const localVarPath = `/user/toggle-save/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -498,24 +498,24 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async finishReading(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.finishReading(slug, options);
+        async finishReading(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.finishReading(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.finishReading']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async isSaved(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.isSaved(slug, options);
+        async isSaved(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.isSaved(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.isSaved']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -546,24 +546,24 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async removeFromLibrary(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.removeFromLibrary(slug, options);
+        async removeFromLibrary(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.removeFromLibrary(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.removeFromLibrary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async startReading(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.startReading(slug, options);
+        async startReading(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startReading(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.startReading']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -594,12 +594,12 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toggleSave(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.toggleSave(slug, options);
+        async toggleSave(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.toggleSave(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.toggleSave']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -635,21 +635,21 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        finishReading(slug: string, options?: any): AxiosPromise<void> {
-            return localVarFp.finishReading(slug, options).then((request) => request(axios, basePath));
+        finishReading(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.finishReading(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        isSaved(slug: string, options?: any): AxiosPromise<boolean> {
-            return localVarFp.isSaved(slug, options).then((request) => request(axios, basePath));
+        isSaved(id: string, options?: any): AxiosPromise<boolean> {
+            return localVarFp.isSaved(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -671,21 +671,21 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        removeFromLibrary(slug: string, options?: any): AxiosPromise<void> {
-            return localVarFp.removeFromLibrary(slug, options).then((request) => request(axios, basePath));
+        removeFromLibrary(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.removeFromLibrary(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startReading(slug: string, options?: any): AxiosPromise<void> {
-            return localVarFp.startReading(slug, options).then((request) => request(axios, basePath));
+        startReading(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.startReading(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -707,12 +707,12 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @param {string} slug 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toggleSave(slug: string, options?: any): AxiosPromise<boolean> {
-            return localVarFp.toggleSave(slug, options).then((request) => request(axios, basePath));
+        toggleSave(id: string, options?: any): AxiosPromise<boolean> {
+            return localVarFp.toggleSave(id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -749,24 +749,24 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} slug 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public finishReading(slug: string, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).finishReading(slug, options).then((request) => request(this.axios, this.basePath));
+    public finishReading(id: string, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).finishReading(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {string} slug 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public isSaved(slug: string, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).isSaved(slug, options).then((request) => request(this.axios, this.basePath));
+    public isSaved(id: string, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).isSaved(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -793,24 +793,24 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} slug 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public removeFromLibrary(slug: string, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).removeFromLibrary(slug, options).then((request) => request(this.axios, this.basePath));
+    public removeFromLibrary(id: string, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).removeFromLibrary(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {string} slug 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public startReading(slug: string, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).startReading(slug, options).then((request) => request(this.axios, this.basePath));
+    public startReading(id: string, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).startReading(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -837,13 +837,13 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} slug 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public toggleSave(slug: string, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).toggleSave(slug, options).then((request) => request(this.axios, this.basePath));
+    public toggleSave(id: string, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).toggleSave(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

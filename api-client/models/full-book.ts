@@ -55,12 +55,6 @@ export interface FullBook {
      * @type {number}
      * @memberof FullBook
      */
-    'readingTime': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof FullBook
-     */
     'rating': number;
     /**
      * 
