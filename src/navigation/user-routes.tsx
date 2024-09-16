@@ -28,9 +28,6 @@ export const routes: IRouteType[] = [
   {
     name: "Search",
     component: SearchCatalog,
-    options: {
-      goBackGesture: "swipeDown",
-    },
   },
   {
     name: "Library",
@@ -40,9 +37,6 @@ export const routes: IRouteType[] = [
   {
     name: "Genre",
     component: Genre,
-    options: {
-      goBackGesture: "swipeDown",
-    },
   },
   {
     name: "Settings",
@@ -59,9 +53,6 @@ export const routes: IRouteType[] = [
   {
     name: "Book",
     component: Book,
-    options: {
-      goBackGesture: "swipeDown",
-    },
   },
   {
     name: "UpdateRecommendation",

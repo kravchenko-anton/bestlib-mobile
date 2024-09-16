@@ -2,15 +2,13 @@ import api from "@/api";
 import { useTypedNavigation } from "@/hooks";
 import { ReadingList } from "@/screens/library/reading-list";
 import { useLibraryWithSync } from "@/screens/library/useLibraryWithSync";
-import { BookCard, Flatlist, Image, Loader, ScrollLayout, Title } from "@/ui";
-import { AnimatedPressable } from "@/ui/animated-components";
+import { BookCard, Flatlist, Loader, ScrollLayout } from "@/ui";
 import Header from "@/ui/header/header";
 import NothingFount from "@/ui/nothing-fount";
 import { Color } from "@/utils/colors";
 import { QueryKeys } from "@/utils/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { RefreshControl, View } from "react-native";
-import { FadeIn } from "react-native-reanimated";
 
 const Library = () => {
   const { navigate } = useTypedNavigation();
@@ -85,56 +83,56 @@ const Library = () => {
               )}
             />
             <View className="mx-2">
-              <Flatlist
-                mt={5}
-                className="mb-4"
-                title="Reations"
-                scrollEnabled={false}
-                data={userReactionsList}
-                renderItem={({ item: reaction, index }) => (
-                  <AnimatedPressable
-                    entering={FadeIn.duration(1000).delay(100 * index)}
-                    className="bg-foreground border-muted flex-row justify-between rounded-lg border-2 px-2 py-1"
-                    onPress={() => navigate("Reactions", { id: reaction.id })}
-                  >
-                    <View className="border-bordered rounded-lg border-[1px]">
-                      <Image url={reaction.picture} height={74} width={50} />
-                    </View>
+              {/* <Flatlist */}
+              {/*   mt={5} */}
+              {/*   className="mb-4" */}
+              {/*   title="Reations" */}
+              {/*   scrollEnabled={false} */}
+              {/*   data={userReactionsList} */}
+              {/*   renderItem={({ item: reaction, index }) => ( */}
+              {/*     <AnimatedPressable */}
+              {/*       entering={FadeIn.duration(1000).delay(100 * index)} */}
+              {/*       className="bg-foreground border-muted flex-row justify-between rounded-lg border-2 px-2 py-1" */}
+              {/*       onPress={() => navigate("Reactions", { id: reaction.id })} */}
+              {/*     > */}
+              {/*       <View className="border-bordered rounded-lg border-[1px]"> */}
+              {/*         <Image url={reaction.picture} height={74} width={50} /> */}
+              {/*       </View> */}
 
-                    <View className="ml-2 w-2/3 ">
-                      <Title
-                        numberOfLines={2}
-                        color={Color.white}
-                        weight="medium"
-                        size={"lg"}
-                      >
-                        {reaction.title}
-                      </Title>
-                      <Title
-                        numberOfLines={1}
-                        weight="regular"
-                        size={"md"}
-                        color={Color.gray}
-                      >
-                        {reaction.author}
-                      </Title>
-                    </View>
+              {/*       <View className="ml-2 w-2/3 "> */}
+              {/*         <Title */}
+              {/*           numberOfLines={2} */}
+              {/*           color={Color.white} */}
+              {/*           weight="medium" */}
+              {/*           size={"lg"} */}
+              {/*         > */}
+              {/*           {reaction.title} */}
+              {/*         </Title> */}
+              {/*         <Title */}
+              {/*           numberOfLines={1} */}
+              {/*           weight="regular" */}
+              {/*           size={"md"} */}
+              {/*           color={Color.gray} */}
+              {/*         > */}
+              {/*           {reaction.author} */}
+              {/*         </Title> */}
+              {/*       </View> */}
 
-                    <View className="flex-row  items-center justify-between">
-                      <View className="bg-bordered h-[40px] w-[40px] flex-row items-center justify-center rounded-full">
-                        <Title
-                          size="xl"
-                          weight="bold"
-                          numberOfLines={1}
-                          color={Color.white}
-                        >
-                          {reaction.count}
-                        </Title>
-                      </View>
-                    </View>
-                  </AnimatedPressable>
-                )}
-              />
+              {/*       <View className="flex-row  items-center justify-between"> */}
+              {/*         <View className="bg-bordered h-[40px] w-[40px] flex-row items-center justify-center rounded-full"> */}
+              {/*           <Title */}
+              {/*             size="xl" */}
+              {/*             weight="bold" */}
+              {/*             numberOfLines={1} */}
+              {/*             color={Color.white} */}
+              {/*           > */}
+              {/*             {reaction.count} */}
+              {/*           </Title> */}
+              {/*         </View> */}
+              {/*       </View> */}
+              {/*     </AnimatedPressable> */}
+              {/*   )} */}
+              {/* /> */}
             </View>
           </ScrollLayout>
         )

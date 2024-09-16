@@ -91,6 +91,12 @@ export interface InfoById {
     'author': UserLibraryOutputReadingBooksInnerAuthor;
     /**
      * 
+     * @type {string}
+     * @memberof InfoById
+     */
+    'readingTime': string;
+    /**
+     * 
      * @type {Array<UserLibraryOutputFinishedBooksInner>}
      * @memberof InfoById
      */

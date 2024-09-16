@@ -6,6 +6,7 @@ import { QueryKeys } from "@/utils/query-keys";
 import type { FunctionType } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import type { FC } from "react";
+import React from "react";
 import { View } from "react-native";
 
 interface ManageRecommendationProperties {
@@ -20,6 +21,7 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
     queryFn: () => api.recommendation.currentRecommendation(),
     select: (data) => data.data,
   });
+
   if (!selectedGenres) return null;
   return (
     <View className="bg-foreground border-bordered m-3 rounded-lg border-[1px] p-3.5">

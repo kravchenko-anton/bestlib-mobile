@@ -38,5 +38,17 @@ export interface UpdateChapterDto {
      * @memberof UpdateChapterDto
      */
     'position'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateChapterDto
+     */
+    'wordCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateChapterDto
+     */
+    'symbolCount'?: number;
 }
 

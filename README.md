@@ -1,50 +1,48 @@
-# Welcome to your Expo app 👋
+# bestlib
+[![wakatime](https://wakatime.com/badge/github/kravchenko-anton/booknex-2.svg)](https://wakatime.com/badge/github/kravchenko-anton/booknex-2)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### [Demo](https://booknex.up.railway.app/)
 
-## Get started
+## Description
+### Booknex is a platform for reading books with a daily reading goal. Build with react-native, nestjs, nextjs and nx monorepo.
+### Now the project is on pause. Because there is not enough money to hire a mentor, improve the functionality, publish in store
 
-1. Install dependencies
+## Features
+- `shadecn` ui library for build dashboard
+-  app updating with  `(react-native-code-push)`
+-  file storaging with `aws s3 (blackblaze)`
+-  debug problems with `sentry` 🐞
+-  global validation and dto with `zod`
+-   swagger generate types for backend with `openapi`
+-   mono repo with `nx`
+-   google, email auth with `jwt`
+-   parsing goodreads books with `puppeteer`
 
-   ```bash
-   npm install
-   ```
+-   User daily reading goal tracking
+-   book reader with fully customizable (webview) 📖
+-   book reading progress tracking
+-   best practices in writing code
 
-2. Start the app
 
-   ```bash
-    npx expo start
-   ```
+-  Admin book create with decompose epub
+-  tracking book and user statistics
+-  fully editable content
+-  adaptive design
+-  best practices in code architecture
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Screenshots
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+<div float="left">
+<div style="display: flex; justify-content: space-between; gap: 20px">
+    <img src="/screens/reading-customization.png"  width="250" height="540"  />
+    <img src="/screens/reading.png"   width="250" height="540"  />
+    <img src="/screens/book-chapters.png"  width="250" height="540"  />
+    <img src="/screens/reading-goal.png"   width="250" height="540"  />
+    <img src="/screens/settings.png"  width="250" height="540"  />
+    <img src="/screens/book-app.png"   width="250" height="540"  />
+    <img src="/screens/featured.png"  width="250" height="540"  />
+    <img src="/screens/library.png"   width="250" height="540"  />
+</div>
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+</div>

@@ -44,5 +44,17 @@ export interface Chapter {
      * @memberof Chapter
      */
     'id': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Chapter
+     */
+    'wordCount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Chapter
+     */
+    'symbolCount': number;
 }
 

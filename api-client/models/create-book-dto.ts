@@ -37,12 +37,6 @@ export interface CreateBookDto {
      * @type {string}
      * @memberof CreateBookDto
      */
-    'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBookDto
-     */
     'age': AgeEnum;
     /**
      * 

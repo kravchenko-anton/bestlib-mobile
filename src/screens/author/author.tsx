@@ -20,12 +20,12 @@ import { View } from "react-native";
 
 const Author: FC = () => {
   const { params } = useTypedRoute<"Author">();
-  const { data: author } = useQuery({
+  const { data: author, error } = useQuery({
     queryKey: QueryKeys.author.byId(params.id),
     queryFn: () => api.author.byId(params.id),
     select: (data) => data.data,
   });
-
+  console.log(author, error);
   const { navigate, goBack } = useTypedNavigation();
   if (!author) return <Loader />;
   return (
@@ -41,9 +41,9 @@ const Author: FC = () => {
         </View>
         <Image
           url={author.picture}
-          height={50}
+          height={100}
           className="mx-auto -mt-5"
-          width={50}
+          width={100}
           style={{
             borderRadius: 1000,
             borderWidth: 1,
@@ -52,30 +52,15 @@ const Author: FC = () => {
         />
       </View>
 
-      <View className="px-2 pt-2">
-        <Title numberOfLines={2} weight="bold" size={"xl"}>
-          {author.name}
-        </Title>
-        <Title
-          numberOfLines={1}
-          color={Color.gray}
-          weight="regular"
-          size={"sm"}
-        >
-          {author.description}
-        </Title>
-      </View>
-
-      <Title size="xl" weight="bold" className="mt-4 px-2">
-        Detailed information
+      <Title center numberOfLines={2} weight="bold" size={"xxl"}>
+        {author.name}
       </Title>
-
-      <Description size={16} className="mt-1 px-2 pb-8" weight="light">
+      <Description center size={16} className="mt-1 px-2 pb-8" weight="light">
         {author.description}
       </Description>
 
       <BannerList
-        title="From the same author"
+        title="Best books by this author"
         data={author.books}
         renderItem={({ item: book }) => (
           <BookCard

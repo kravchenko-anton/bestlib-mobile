@@ -38,5 +38,17 @@ export interface CreateBookDtoChaptersInner {
      * @memberof CreateBookDtoChaptersInner
      */
     'position': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBookDtoChaptersInner
+     */
+    'wordCount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBookDtoChaptersInner
+     */
+    'symbolCount': number;
 }
 

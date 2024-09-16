@@ -5,6 +5,7 @@ import ReaderCustomization from "@/screens/reader/components/reader-customizatio
 import { ReaderLoading } from "@/screens/reader/components/reader-loading";
 import ReaderMenu from "@/screens/reader/components/reader-menu/reader-menu";
 import ReaderViewer from "@/screens/reader/components/reader-viewer/reader-viewer";
+import { Translator } from "@/screens/reader/components/translator/translator";
 import { useReader } from "@/screens/reader/functions/useReader";
 import { Loader } from "@/ui";
 
@@ -81,7 +82,10 @@ const Reader = () => {
           ) || null
         }
       />
-      {/* <Translator sheetRef={null} /> */}
+      <Translator
+        colorScheme={reader.colorScheme}
+        sheetRef={reader.modalRefs.translationModalReference}
+      />
     </>
   );
 };

@@ -22,7 +22,6 @@ const Featured = () => {
     queryKey: QueryKeys.featured,
     queryFn: () => api.catalog.featured(),
     select: (data) => data.data,
-    staleTime: 1000 * 60 * 60 * 24,
   });
   useEffect(() => {
     Sentry.metrics.increment("get-featured");

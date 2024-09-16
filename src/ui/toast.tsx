@@ -9,7 +9,7 @@ const options = () => ({
     backgroundColor: Color.muted,
     alignItems: "center" as const,
     borderRadius: 10,
-    height: 35,
+    height: 40,
     width: 260,
     borderColor: Color.bordered,
 
@@ -31,7 +31,7 @@ const Toast: FC = () => (
     config={{
       success: (properties) => (
         <BaseToast
-          text1NumberOfLines={1}
+          text1NumberOfLines={2}
           renderLeadingIcon={() => (
             <OkHandEmoji className="ml-2 mr-2" width={20} height={20} />
           )}
@@ -41,7 +41,7 @@ const Toast: FC = () => (
       ),
       error: (properties) => (
         <BaseToast
-          text1NumberOfLines={1}
+          text1NumberOfLines={2}
           renderLeadingIcon={() => (
             <ThumbDownEmoji className="ml-2 mr-2" width={20} height={20} />
           )}
