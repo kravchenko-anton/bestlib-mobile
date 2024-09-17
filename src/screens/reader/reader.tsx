@@ -1,5 +1,6 @@
 import { useTypedRoute } from "@/hooks";
 import ReaderChapters from "@/screens/reader/components/chapters-modal/reader-chapters";
+import { GtpWindow } from "@/screens/reader/components/gpt-window/gpt-window";
 import { ReactionInfo } from "@/screens/reader/components/reaction-info/reaction-info";
 import ReaderCustomization from "@/screens/reader/components/reader-customization/reader-customization";
 import { ReaderLoading } from "@/screens/reader/components/reader-loading";
@@ -76,15 +77,15 @@ const Reader = () => {
         id={params.id}
         colorScheme={reader.colorScheme}
         sheetRef={reader.modalRefs.reactionModalReference}
-        activeReactionPressed={
-          reader.reactionBookList.find(
-            (reaction) => reaction.id === reader.activeReactionPressedId,
-          ) || null
-        }
       />
       <Translator
         colorScheme={reader.colorScheme}
         sheetRef={reader.modalRefs.translationModalReference}
+      />
+
+      <GtpWindow
+        colorScheme={reader.colorScheme}
+        sheetRef={reader.modalRefs.gptModalReference}
       />
     </>
   );

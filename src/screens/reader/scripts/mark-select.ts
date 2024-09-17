@@ -1,3 +1,4 @@
+//language=TypeScript
 export const markSelectScript = `
 	function wrapReactionsInMarkTag(reactions) {
 		const instance = new Mark(document.querySelector('body'));
@@ -32,4 +33,4 @@ export const markSelectScript = `
 			}
 		});
 		
-`
+`;

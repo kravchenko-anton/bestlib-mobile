@@ -21,9 +21,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   const [readerLoading, setReaderLoading] = useState(true);
   const [readerHeaderVisible, setReaderHeaderVisible] = useState(false);
   const viewerReference = useRef<WebView>(null);
-  const [activeReactionPressedId, setActiveReactionPressedId] = useState<
-    string | null
-  >(null);
+
   const { colorScheme, ...restUiProperties } = useCustomizationStore(
     (state) => state,
   );
@@ -40,7 +38,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     enabled: !!id,
     networkMode: "offlineFirst",
     gcTime: Number.MAX_SAFE_INTEGER,
-    staleTime: 1000 * 60 * 60 * 24,
+    staleTime: 0,
   });
 
   const {
@@ -51,13 +49,10 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   } = useReadingProgress({ id, readerLoading, initialScrollPosition });
 
   const { onFinish } = useFinishBook(clearProgress);
-  const { openModal, modalRefs, reactionModal } = useModalReference(
-    setReaderHeaderVisible,
-    {
-      onOpenModal: () =>
-        viewerReference.current?.injectJavaScript(`removeAllTextSelection()`),
-    },
-  );
+  const { openModal, modalRefs } = useModalReference(setReaderHeaderVisible, {
+    onOpenModal: () =>
+      viewerReference.current?.injectJavaScript(`removeAllTextSelection()`),
+  });
 
   const { onMessage } = useReaderMessage({
     id,
@@ -65,11 +60,12 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     onContentLoadEnd: () => setReaderLoading(false),
     onScroll: updateReadingProgress,
     createReaction: createReaction,
-    setActiveReactionPressed: (id) => {
-      setActiveReactionPressedId(
-        reactionBookList.find((reaction) => reaction.id === id)?.id || null,
+    openGptModal: (text: string) => openModal.gpt(text),
+    openTranslateModal: (text: string) => openModal.translation(text),
+    openReactionModal: (id) => {
+      openModal.reaction.open(
+        reactionBookList.find((reaction) => reaction.id === id) || null,
       );
-      reactionModal.open();
     },
   });
 
@@ -100,7 +96,6 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     	wrapReactionsInMarkTag(${JSON.stringify(reactionBookList)});
     `);
   }, [reactionBookList, createReaction]);
-  console.log(reactionBookList);
 
   return {
     ebook,
@@ -110,7 +105,6 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     viewerReference,
     setReaderHeaderVisible,
     modalRefs,
-    activeReactionPressedId,
     ebookRequestLoading,
     readingProgress,
     ebookRequestRefetching,

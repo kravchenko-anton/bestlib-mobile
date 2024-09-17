@@ -4,6 +4,8 @@
     "strict": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],

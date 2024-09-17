@@ -2,6 +2,7 @@ import { useTypedNavigation } from "@/hooks";
 import type { FunctionType } from "@/utils/types";
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { type Dispatch, type SetStateAction, useRef } from "react";
+import type { ReactionByBookOutput } from "../../../../api-client";
 
 interface UseModalReferenceProperties {
   onOpenModal: FunctionType;
@@ -35,20 +36,26 @@ export const useModalReference = (
       translationModalReference,
       gptModalReference,
     },
-    reactionModal: {
-      open: () => {
-        reactionModalReference.current?.present();
-        onOpenModal();
-      },
-      close: () => reactionModalReference.current?.close(),
-    },
+
     openModal: {
-      gpt: () => {
-        gptModalReference.current?.present();
+      reaction: {
+        open: (activeReactionPressed: ReactionByBookOutput | null) => {
+          reactionModalReference.current?.present({
+            activeReactionPressed,
+          });
+          onOpenModal();
+        },
+      },
+      gpt: (text: string) => {
+        gptModalReference.current?.present({
+          text,
+        });
         onOpenModal();
       },
-      translation: () => {
-        translationModalReference.current?.present();
+      translation: (text: string) => {
+        translationModalReference.current?.present({
+          text,
+        });
         onOpenModal();
       },
       chaptersList: () => {

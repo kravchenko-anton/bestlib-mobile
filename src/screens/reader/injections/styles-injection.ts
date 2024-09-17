@@ -1,21 +1,21 @@
-import type { CustomizationStoreType } from '@/screens/reader/components/reader-customization/customization-store'
-import { windowWidth } from '@/utils/dimensions'
-import { Color } from '@/utils/colors'
+import type { CustomizationStoreType } from "@/screens/reader/components/reader-customization/customization-store";
+import { Color } from "@/utils/colors";
+import { windowWidth } from "@/utils/dimensions";
 
 export const injectStyle = (style: string) => `
 	var style = document.createElement('style');
 	style.type = 'text/css';
 	style.innerHTML = \`${style}\`;
  document.head.appendChild(style);
-		`
+		`;
 export const getStyleTag = ({
-	fontSize,
-	font: { fontFamily },
-	padding,
-	lineHeight,
-	colorScheme: { colorPalette }
+  fontSize,
+  font: { fontFamily },
+  padding,
+  lineHeight,
+  colorScheme: { colorPalette },
 }: CustomizationStoreType) =>
-	`
+  `
 	span {
 		color: ${colorPalette.text} !important;
 		font-family: ${fontFamily} !important;
@@ -131,9 +131,9 @@ export const getStyleTag = ({
 	mark {
 		background: ${colorPalette.mark.background} !important;
 		color: ${colorPalette.mark.text} !important;
-		border-radius: 4px !important;
-		padding-left: 4px !important;
-		padding-right: 4px !important;
+		border-radius: 0px !important;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
 		&:hover {
 		 background: ${colorPalette.mark.hoverBackground} !important;
 	}
@@ -158,7 +158,7 @@ export const getStyleTag = ({
         background: ${colorPalette.background.lighter} !important;
         border-radius: 100px !important;
     margin-left: auto !important;
-        
+    
 			}
 		
 		.select-menu-reaction .select-menu-reaction-item {
@@ -190,7 +190,7 @@ export const getStyleTag = ({
 	    	gap: 20px !important;
 	    	align-items: center !important;
 	    	padding: 0 15px !important;
-	    	height: 45px !important;	
+	    	height: 45px !important;
 	    	
 	    	> p {
 	    		font-size: 18px !important;
@@ -222,4 +222,4 @@ export const getStyleTag = ({
 		margin-left: auto !important;
 		margin-right: auto !important;
     }
-	`
+	`;

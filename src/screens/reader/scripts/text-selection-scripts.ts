@@ -1,4 +1,5 @@
-export const textSElectionLimit = 1200
+export const textSElectionLimit = 1200;
+//language=TypeScript
 export const onSelectTextScript = `
 let position = { x: 0, y: 0 };
 let timeoutId = null;
@@ -30,12 +31,13 @@ document.addEventListener('selectionchange', () => {
 			}
 	}
 });
-`
-
+`;
+//language=TypeScript
 export const selectMenuActions = `
 	const translateButton = document.getElementById('text-menu-translate');
 	const shareButton = document.getElementById('text-menu-share');
 	const emojiButtons = document.querySelectorAll('.select-menu-reaction-item');
+	const explainButton = document.getElementById('text-menu-explain');
 	const getSelectionOffsetRelativeToParent = () => {
 const selection = window.getSelection();
 const range = selection.getRangeAt(0);
@@ -52,17 +54,17 @@ return { startOffset, endOffset };
 		const activeSelection = document.getSelection().toString();
 		const range = document.getSelection().getRangeAt(0);
 		const { startOffset, endOffset } = getSelectionOffsetRelativeToParent();
-			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'reaction', 
+			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'reaction',
 			payload: {
 			text:activeSelection,
 			reaction: button.title,
-			range: { startOffset, endOffset,	
+			range: { startOffset, endOffset,
 			xpath: getXPath(range.commonAncestorContainer.parentNode)
 			},
 			 }}));
 			window.getSelection().removeAllRanges();
 		});
-	});	
+	});
 	
 		translateButton.addEventListener('click', (e) => {
 	const activeSelection = document.getSelection().toString();
@@ -71,7 +73,15 @@ return { startOffset, endOffset };
 	} }));
 		window.getSelection().removeAllRanges();
 	});
-	
+		
+		explainButton.addEventListener('click', () => {
+			const activeSelection = document.getSelection().toString();
+			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'explain', payload: {
+			text: activeSelection
+			} }));
+		window.getSelection().removeAllRanges();
+		});
+		
 	shareButton.addEventListener('click', () => {
 			const activeSelection = document.getSelection().toString();
 			window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'share', payload: {
@@ -79,8 +89,9 @@ return { startOffset, endOffset };
 			} }));
 		window.getSelection().removeAllRanges();
 	});
-`
+`;
 
+//language=TypeScript
 export const textSelectMenu = `
 const selectMenu = document.getElementById('select-menu');
 selectMenu.style.opacity = '0';
@@ -108,9 +119,9 @@ document.addEventListener('contextmenu', (e) => {
 	if (activeSelection.toString().length < 2) return;
 	const range = activeSelection.getRangeAt(0);
 		const { startOffset, endOffset } = getSelectionOffsetRelativeToParent();
-	
+		const rangeContent = range.startContainer.textContent;
 	window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selection', payload: {  text: activeSelection.toString(), range:
-	{ startOffset, endOffset, xpath: getXPath(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode)}
+	{ startOffset, rangeContent, endOffset, xpath: getXPath(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode)}
 	 } }));
 	const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
 	const screenHeight = window.innerHeight;
@@ -136,7 +147,7 @@ document.addEventListener('contextmenu', (e) => {
 		
 	const isOverlappingMark = Boolean(activeSelection.getRangeAt(0).cloneContents().querySelector('mark'));
 	const isParentTagMark = Boolean(activeSelection.getRangeAt(0).commonAncestorContainer.parentNode.tagName === 'MARK');
-	if (isOverlappingMark || startXpath !== endXpath || isParentTagMark ) { 
+	if (isOverlappingMark || startXpath !== endXpath || isParentTagMark ) {
 		reactionItems.forEach((item) => {
 			item.style.opacity = '0.5';
 			item.style.pointerEvents = 'none';
@@ -151,15 +162,14 @@ document.addEventListener('contextmenu', (e) => {
 });
 
 document.addEventListener('selectionchange', () => {
-	if (!isFirstSelection) { 
+	if (!isFirstSelection) {
 		setTimeout(() => {
 		selectMenu.style.opacity = '0';
 	}, 50);
 			selectMenu.style.pointerEvents = 'none';
 		selectMenu.style.visibility = 'hidden';
 		selectMenu.style.display = 'none';
-
 	}
 	isFirstSelection = false;
 });
-`
+`;

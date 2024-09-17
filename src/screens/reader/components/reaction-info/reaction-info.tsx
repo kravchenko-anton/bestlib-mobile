@@ -20,12 +20,18 @@ export interface ReactionModalProperties {
   sheetRef: RefObject<BottomSheetModal>;
   colorScheme: ThemePackType;
   id: string;
-  activeReactionPressed: ReactionByBookOutput | null;
 }
+
+export type BottomSheetModalProperties =
+  | {
+      data: {
+        activeReactionPressed: ReactionByBookOutput | null;
+      };
+    }
+  | undefined;
 
 export const ReactionInfo: FC<ReactionModalProperties> = ({
   sheetRef,
-  activeReactionPressed,
   colorScheme,
   id,
 }) => {
@@ -74,7 +80,7 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
       enableOverDrag
       index={0}
       ref={sheetRef}
-      snapPoints={[250]}
+      snapPoints={[280]}
       handleIndicatorStyle={{ backgroundColor: colorScheme.colorPalette.text }}
       style={{
         borderColor: Color.bordered,
@@ -94,76 +100,81 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
         />
       )}
     >
-      <View className="mx-4">
-        <Title
-          color={colorScheme.colorPalette.text}
-          size={"xxl"}
-          weight="bold"
-          numberOfLines={2}
-        >
-          {activeReactionPressed?.text}
-        </Title>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={reactions}
-          className="border-b-2 pb-1 pt-2"
-          style={{
-            borderColor: colorScheme.colorPalette.background.lighter,
-          }}
-          renderItem={({ item }) => (
-            <SvgButton
-              className="mb-1.5 mr-2 mt-2 px-3"
-              altEmoji={item.altEmoji}
-              title={item.title}
-              svgUri={item.svg}
-              size="sm"
+      {(data: BottomSheetModalProperties) => {
+        const activeReactionPressed = data?.data.activeReactionPressed;
+        return (
+          <View className="mx-4">
+            <Title
+              color={colorScheme.colorPalette.text}
+              size={"xl"}
+              weight="bold"
+              numberOfLines={3}
+            >
+              {activeReactionPressed?.text}
+            </Title>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={reactions}
+              className="border-b-2 pb-1 pt-2"
               style={{
-                borderColor: Color.transparent,
-                backgroundColor:
-                  activeReactionPressed?.type === item.title
-                    ? colorScheme.colorPalette.mark.hoverBackground
-                    : colorScheme.colorPalette.mark.background,
+                borderColor: colorScheme.colorPalette.background.lighter,
               }}
-              onPress={
-                activeReactionPressed?.type === item.title
-                  ? undefined
-                  : () => {
-                      if (!activeReactionPressed) return;
-                      updateReaction({
-                        id: activeReactionPressed.id,
-                        type: item.title,
-                      });
-                    }
-              }
+              renderItem={({ item }) => (
+                <SvgButton
+                  className="mb-1.5 mr-2 mt-2 px-3"
+                  altEmoji={item.altEmoji}
+                  title={item.title}
+                  svgUri={item.svg}
+                  size="sm"
+                  style={{
+                    borderColor: Color.transparent,
+                    backgroundColor:
+                      activeReactionPressed?.type === item.title
+                        ? colorScheme.colorPalette.mark.hoverBackground
+                        : colorScheme.colorPalette.mark.background,
+                  }}
+                  onPress={
+                    activeReactionPressed?.type === item.title
+                      ? undefined
+                      : () => {
+                          if (!activeReactionPressed) return;
+                          updateReaction({
+                            id: activeReactionPressed.id,
+                            type: item.title,
+                          });
+                        }
+                  }
+                />
+              )}
             />
-          )}
-        />
-        <View className="mt-2">
-          <SelectItem
-            icon={Share}
-            title={"Share"}
-            color={colorScheme.colorPalette.text}
-            onPress={async () => {
-              await shareReaction(String(activeReactionPressed?.text));
-            }}
-          />
-          <SelectItem
-            icon={Trash}
-            color={colorScheme.colorPalette.text}
-            disabled={removeReactionLoading || !activeReactionPressed}
-            title={"Delete"}
-            style={{
-              opacity:
-                removeReactionLoading || !activeReactionPressed ? 0.5 : 1,
-            }}
-            onPress={() => {
-              if (removeReactionLoading || !activeReactionPressed) return;
-              removeReaction(activeReactionPressed.id);
-            }}
-          />
-        </View>
-      </View>
+            <View className="mt-2">
+              <SelectItem
+                icon={Share}
+                title={"Share"}
+                color={colorScheme.colorPalette.text}
+                onPress={async () => {
+                  await shareReaction(String(activeReactionPressed?.text));
+                }}
+              />
+              <SelectItem
+                icon={Trash}
+                color={colorScheme.colorPalette.text}
+                disabled={removeReactionLoading || !activeReactionPressed}
+                title={"Delete"}
+                style={{
+                  opacity:
+                    removeReactionLoading || !activeReactionPressed ? 0.5 : 1,
+                }}
+                onPress={() => {
+                  if (removeReactionLoading || !activeReactionPressed) return;
+                  removeReaction(activeReactionPressed.id);
+                }}
+              />
+            </View>
+          </View>
+        );
+      }}
     </BottomSheetModal>
   );
 };

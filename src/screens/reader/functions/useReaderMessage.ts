@@ -2,13 +2,7 @@ import type { reactionsTitles } from "@/utils/reactions";
 import { shareText } from "@/utils/share-text";
 import { errorToast } from "@/utils/toast";
 import type { CreateReaction } from "api-client";
-import { Linking, NativeModules, Platform } from "react-native";
 import type { WebViewMessageEvent } from "react-native-webview";
-
-const deviceLanguage =
-  Platform.OS === "ios"
-    ? NativeModules.SettingsManager.settings.AppleLocale // iOS
-    : NativeModules.I18nManager.localeIdentifier; // Android
 
 export enum ReaderMessageType {
   Scroll = "scroll",
@@ -19,6 +13,7 @@ export enum ReaderMessageType {
   Share = "share",
   Translate = "translate",
   Reaction = "reaction",
+  Explain = "explain",
 }
 export interface WebviewMessageType {
   type: ReaderMessageType;
@@ -52,7 +47,9 @@ export interface ReaderMessageProperties {
   onFinishBookPress: (id: string) => void;
   onContentLoadEnd: () => void;
   createReaction: (data: CreateReaction) => void;
-  setActiveReactionPressed: (id: string) => void;
+  openReactionModal: (id: string) => void;
+  openTranslateModal: (text: string) => void;
+  openGptModal: (text: string) => void;
 }
 
 export const useReaderMessage = ({
@@ -60,25 +57,29 @@ export const useReaderMessage = ({
   onContentLoadEnd,
   id,
   onScroll,
-  setActiveReactionPressed,
+  openReactionModal,
   createReaction,
+  openTranslateModal,
+  openGptModal,
 }: ReaderMessageProperties) => {
   const onMessage = async (event: WebViewMessageEvent) => {
     const parsedEvent = JSON.parse(
       event.nativeEvent.data,
     ) as WebviewMessageType;
     const { type, payload } = parsedEvent;
+    console.log("🚂", parsedEvent);
     if (type === ReaderMessageType.FinishLoading) {
       console.log("Finish loading");
       onContentLoadEnd();
+    }
+    if (type === ReaderMessageType.Explain) {
+      openGptModal(payload.text);
     }
     if (type === ReaderMessageType.Share) {
       await shareText(payload.text);
     }
     if (type === ReaderMessageType.Translate) {
-      const link = `https://translate.google.com/?sl=auto&tl=${deviceLanguage}&text=${payload.text}`;
-      console.log(link);
-      await Linking.openURL(link);
+      openTranslateModal(payload.text);
     }
     if (type === ReaderMessageType.Reaction) {
       console.log("🚂", {
@@ -121,7 +122,7 @@ export const useReaderMessage = ({
       payload.id !== undefined
     ) {
       console.log("Mark click", payload.id);
-      setActiveReactionPressed(payload.id);
+      openReactionModal(payload.id);
     }
   };
 

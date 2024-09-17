@@ -1,16 +1,5 @@
-import { calculateProgress } from './calculate-progress'
-// 	const events = [
-//     'click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave',
-//     'contextmenu', 'wheel', 'select', 'input', 'keydown', 'keyup', 'keypress', 'touchstart', 'touchend', 'touchmove',
-//     'resize', 'scroll', 'zoom', 'focus', 'blur', 'select', 'change', 'submit', 'reset', 'play', 'pause', 'loadedmetadata',
-//     'loadstart', 'progress', 'error', 'abort', 'load', 'beforeunload', 'unload', 'offline', 'online', 'toggle'
-// ];
-//
-// events.forEach(eventType => {
-//     document.addEventListener(eventType, (event) => {
-//     window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'selectionEnd', payload: { eventType } }));
-//     });
-// });
+import { calculateProgress } from "./calculate-progress";
+//language=TypeScript
 export const utilsScripts = `
 function getCharactersCountUntilNode(node, parent) {
   var walker = document.createTreeWalker(
@@ -35,7 +24,8 @@ function getCharactersCountUntilNode(node, parent) {
 }
 
 
-		const slugify = (textContent) => textContent.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+	const slugify = (textContent) => textContent.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+	
 	function scrollToChapter(link) {
 	document.getElementById(link)?.scrollIntoView({ behavior: 'smooth' })
 }
@@ -71,4 +61,4 @@ function removeAllTextSelection() {
       alert("Message: " + message + " - Source: " + sourcefile + " Line: " + lineno + ":" + colno);
       return true;
     };
-`
+`;

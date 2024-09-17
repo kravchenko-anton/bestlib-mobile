@@ -64,7 +64,8 @@
             "./assets/fonts/SpaceGrotesk-Medium.ttf"
           ]
         }
-      ]
+      ],
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true

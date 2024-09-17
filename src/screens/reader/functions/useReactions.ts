@@ -35,10 +35,9 @@ export const useReactions = (bookId: string) => {
     queryKey: QueryKeys.reaction.byId(bookId),
     queryFn: () => api.reaction.reactionByBook(bookId),
     select: (data) => data.data,
-    enabled: !!bookId,
-    networkMode: "offlineFirst",
-    gcTime: Number.MAX_SAFE_INTEGER,
   });
+
+  console.log(reactionBookList);
 
   return {
     createReaction,
