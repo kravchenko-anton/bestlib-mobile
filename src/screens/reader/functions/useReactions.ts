@@ -1,4 +1,5 @@
 import api from "@/api";
+import { ReactionsCollection } from "@/db";
 import { MutationKeys, QueryKeys } from "@/utils/query-keys";
 import { errorToast } from "@/utils/toast";
 import * as Sentry from "@sentry/react-native";
@@ -7,7 +8,7 @@ import type { CreateReaction } from "api-client";
 
 export const useReactions = (bookId: string) => {
   const queryClient = useQueryClient();
-
+  const reactionsCollection = ReactionsCollection;
   const {
     mutateAsync: createReactionMutation,
     isPending: createReactionLoading,

@@ -1,14 +1,13 @@
-import { synchronize } from '@nozbe/watermelondb/sync';
-import database from './index';
-import { supabase } from '../lib/supabase';
+import { synchronize } from "@nozbe/watermelondb/sync";
+import database from "./index";
 
 export async function mySync() {
   await synchronize({
     database,
     sendCreatedAsUpdated: true,
     pullChanges: async ({ lastPulledAt, schemaVersion, migration }) => {
-      console.log('Pulling data');
-      const { data, error } = await supabase.rpc('pull', {
+      console.log("Pulling data");
+      const { data, error } = await supabase.rpc("pull", {
         last_pulled_at: lastPulledAt,
         schemaversion: schemaVersion,
         migration: migration,
@@ -21,11 +20,11 @@ export async function mySync() {
       };
     },
     pushChanges: async ({ changes, lastPulledAt }) => {
-      console.log('Pushing data');
+      console.log("Pushing data");
 
-      const { error } = await supabase.rpc('push', { changes });
+      const { error } = await supabase.rpc("push", { changes });
 
-      console.log('Error: ', error);
+      console.log("Error: ", error);
 
       console.log(changes);
 
