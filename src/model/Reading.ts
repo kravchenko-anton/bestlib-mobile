@@ -1,14 +1,14 @@
 import { Model } from "@nozbe/watermelondb";
-import { field } from "@nozbe/watermelondb/decorators";
+import { date, field, nochange, text } from "@nozbe/watermelondb/decorators";
 
 export default class Reading extends Model {
   static table = "reading_histories";
-  @field("book_id") bookId: string;
-  @field("book_title") bookTitle: string;
-  @field("book_author") bookAuthor: string;
-  @field("book_picture") bookPicture: string;
-  @field("start_date") startDate: number;
-  @field("end_date") endDate: number;
+  @nochange @field("book_id") bookId: string;
+  @text("book_title") bookTitle: string;
+  @text("book_author") bookAuthor: string;
+  @text("book_picture") bookPicture: string;
+  @date("start_date") startDate: number;
+  @date("end_date") endDate: number;
   @field("reading_time_ms") readingTimeMs: number;
   @field("scroll_position") scrollPosition: number;
   @field("start_progress") startProgress: number;

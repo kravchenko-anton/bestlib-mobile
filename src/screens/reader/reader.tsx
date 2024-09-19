@@ -9,6 +9,7 @@ import ReaderViewer from "@/screens/reader/components/reader-viewer/reader-viewe
 import { Translator } from "@/screens/reader/components/translator/translator";
 import { useReader } from "@/screens/reader/functions/useReader";
 import { Loader } from "@/ui";
+import React from "react";
 
 const Reader = () => {
   const { params } = useTypedRoute<"Reader">();
@@ -74,6 +75,9 @@ const Reader = () => {
         sheetRef={reader.modalRefs.readingSettingsModalReference}
       />
       <ReactionInfo
+        createReaction={reader.createReaction}
+        deleteReaction={reader.deleteReaction}
+        updateReaction={reader.updateReaction}
         id={params.id}
         colorScheme={reader.colorScheme}
         sheetRef={reader.modalRefs.reactionModalReference}

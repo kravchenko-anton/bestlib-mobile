@@ -1,8 +1,8 @@
+import Reading from "@/model/Reading";
 import { Database } from "@nozbe/watermelondb";
 import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
 import { setGenerator } from "@nozbe/watermelondb/utils/common/randomId";
 import * as Crypto from "expo-crypto";
-import Book from "../model/Book";
 import Reaction from "../model/Reaction";
 
 import schema from "./schema";
@@ -19,10 +19,10 @@ const adapter = new SQLiteAdapter({
 // Then, make a Watermelon database from it!
 const database = new Database({
   adapter,
-  modelClasses: [Reaction, Book],
+  modelClasses: [Reaction, Reading],
 });
 
 export default database;
 
 export const ReactionsCollection = database.get<Reaction>("reactions_list");
-export const allocationsCollection = database.get<Book>("allocations");
+export const ReadingCollection = database.get<Reading>("reading_histories");

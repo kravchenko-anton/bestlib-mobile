@@ -1,48 +1,77 @@
-import api from "@/api";
-import { ReactionsCollection } from "@/db";
-import { MutationKeys, QueryKeys } from "@/utils/query-keys";
-import { errorToast } from "@/utils/toast";
-import * as Sentry from "@sentry/react-native";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { CreateReaction } from "api-client";
+import database, { ReactionsCollection } from "@/db";
+import type Reaction from "@/model/Reaction";
+import { Q } from "@nozbe/watermelondb";
+import { useEffect, useState } from "react";
 
+export type CreateReaction = {
+  bookId: string;
+  bookTitle: string;
+  bookAuthor: string;
+  bookPicture: string;
+  type: string;
+  text: string;
+  xpath: string;
+  startOffset: number;
+  endOffset: number;
+};
 export const useReactions = (bookId: string) => {
-  const queryClient = useQueryClient();
-  const reactionsCollection = ReactionsCollection;
-  const {
-    mutateAsync: createReactionMutation,
-    isPending: createReactionLoading,
-  } = useMutation({
-    mutationKey: MutationKeys.reaction.create,
-    mutationFn: (data: CreateReaction) => api.reaction.create(data),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: QueryKeys.reaction.byId(bookId),
-      });
-    },
-  });
+  const reactionBookList = ReactionsCollection;
+  const [reactions, setReactions] = useState<Reaction[]>([]);
 
-  const createReaction = (data: CreateReaction) => {
-    if (createReactionLoading) return errorToast("Please wait a moment");
-    createReactionMutation(data).then(async () => {
-      await queryClient.invalidateQueries({
-        queryKey: QueryKeys.reaction.byId(bookId),
+  useEffect(() => {
+    const observeData = async () => {
+      const subscription = reactionBookList
+        .query(Q.where("book_id", bookId))
+        .observe()
+        .subscribe((records) => {
+          setReactions(
+            records.map((record) => record._raw) as unknown as Reaction[],
+          );
+        });
+
+      return () => subscription.unsubscribe();
+    };
+
+    observeData();
+  }, [bookId]);
+
+  console.log("Reactions", reactions);
+  const findReactionById = async (id: string) => {
+    return await reactionBookList.find(id);
+  };
+  const createReaction = async (data: CreateReaction) => {
+    console.log("Creating reaction", data);
+    await database.write(async () => {
+      return await reactionBookList.create((reaction) => {
+        reaction.bookId = bookId;
+        reaction.bookTitle = data.bookTitle;
+        reaction.bookAuthor = data.bookAuthor;
+        reaction.bookPicture = data.bookPicture;
+        reaction.type = data.type;
+        reaction.text = data.text;
+        reaction.xpath = data.xpath;
+        reaction.startOffset = data.startOffset;
+        reaction.endOffset = data.endOffset;
       });
     });
-    Sentry.metrics.increment("create-reaction");
   };
-
-  const { data: reactionBookList } = useQuery({
-    queryKey: QueryKeys.reaction.byId(bookId),
-    queryFn: () => api.reaction.reactionByBook(bookId),
-    select: (data) => data.data,
-  });
-
-  console.log(reactionBookList);
-
+  const deleteReaction = async (id: string) => {
+    await database.write(async () => {
+      const reaction = await reactionBookList.find(id);
+      await reaction.markAsDeleted();
+    });
+  };
+  const updateReaction = async (id: string, data: (_: Reaction) => void) => {
+    await database.write(async () => {
+      const reaction = await reactionBookList.find(id);
+      await reaction.update(data);
+    });
+  };
   return {
+    allReactions: reactions,
     createReaction,
-    reactionBookList,
-    isLoading: createReactionLoading,
+    updateReaction,
+    deleteReaction,
+    findReactionById,
   };
 };

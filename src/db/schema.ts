@@ -1,32 +1,20 @@
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 export default appSchema({
-  version: 6,
+  version: 9,
   tables: [
-    tableSchema({
-      name: "books_list",
-      columns: [
-        { name: "book_id", type: "string" },
-        { name: "title", type: "string" },
-        { name: "author", type: "string" },
-        { name: "picture", type: "string" },
-        { name: "is_read", type: "boolean" },
-        { name: "is_saved", type: "boolean" },
-        { name: "is_finished", type: "boolean" },
-      ],
-    }),
     tableSchema({
       name: "reactions_list",
       columns: [
-        { name: "book_id", type: "string" },
-        { name: "book_title", type: "string" },
-        { name: "book_author", type: "string" },
-        { name: "book_picture", type: "string" },
         { name: "type", type: "string" },
         { name: "text", type: "string" },
         { name: "xpath", type: "string" },
         { name: "startOffset", type: "number" },
         { name: "endOffset", type: "number" },
+        { name: "book_id", type: "string" },
+        { name: "book_title", type: "string" },
+        { name: "book_author", type: "string" },
+        { name: "book_picture", type: "string" },
       ],
     }),
     tableSchema({

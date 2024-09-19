@@ -1,8 +1,8 @@
 import { useTypedNavigation } from "@/hooks";
+import type Reaction from "@/model/Reaction";
 import type { FunctionType } from "@/utils/types";
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { type Dispatch, type SetStateAction, useRef } from "react";
-import type { ReactionByBookOutput } from "../../../../api-client";
 
 interface UseModalReferenceProperties {
   onOpenModal: FunctionType;
@@ -39,9 +39,9 @@ export const useModalReference = (
 
     openModal: {
       reaction: {
-        open: (activeReactionPressed: ReactionByBookOutput | null) => {
+        open: async (activeReactionPressed: Promise<Reaction> | null) => {
           reactionModalReference.current?.present({
-            activeReactionPressed,
+            activeReactionPressed: await activeReactionPressed,
           });
           onOpenModal();
         },

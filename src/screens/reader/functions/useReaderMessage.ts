@@ -1,7 +1,7 @@
+import type { CreateReaction } from "@/screens/reader/functions/useReactions";
 import type { reactionsTitles } from "@/utils/reactions";
 import { shareText } from "@/utils/share-text";
 import { errorToast } from "@/utils/toast";
-import type { CreateReaction } from "api-client";
 import type { WebViewMessageEvent } from "react-native-webview";
 
 export enum ReaderMessageType {
@@ -95,12 +95,15 @@ export const useReaderMessage = ({
         reaction: payload.reaction,
       });
       createReaction({
+        bookId: id,
+        text: payload.text,
         startOffset: payload.range.startOffset,
         endOffset: payload.range.endOffset,
         xpath: payload.range.xpath,
-        text: payload.text,
         type: payload.reaction,
-        bookId: id,
+        bookPicture: "",
+        bookAuthor: "",
+        bookTitle: "",
       });
     }
     if (type === ReaderMessageType.SelectionLimitFail)

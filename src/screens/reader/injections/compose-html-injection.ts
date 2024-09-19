@@ -1,3 +1,4 @@
+import type Reaction from "@/model/Reaction";
 import { injectFont } from "@/screens/reader/injections/font-injection";
 import {
   calculateProgress,
@@ -12,7 +13,6 @@ import {
   textSelectMenu,
 } from "@/screens/reader/scripts/text-selection-scripts";
 import { utilsScripts } from "@/screens/reader/scripts/utils-scripts";
-import type { ReactionByBookOutput } from "api-client";
 
 interface ComposeReaderViewHtmlProperties {
   title: string;
@@ -21,7 +21,7 @@ interface ComposeReaderViewHtmlProperties {
   defaultProperties: {
     scrollPosition: number;
     theme: string;
-    reactions: ReactionByBookOutput[];
+    reactions: Reaction[];
   };
 }
 

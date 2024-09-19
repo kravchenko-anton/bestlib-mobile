@@ -1,9 +1,9 @@
+import type Reaction from "@/model/Reaction";
 import type { ThemePackType } from "@/screens/reader/components/reader-customization/theme-pack";
 import { composeReaderViewHtml } from "@/screens/reader/injections/compose-html-injection";
 import { windowWidth } from "@/utils/dimensions";
 import { doublePress } from "@/utils/handleDoublePress";
 import type { FunctionType } from "@/utils/types";
-import type { ReactionByBookOutput } from "api-client";
 import { forwardRef } from "react";
 import { TouchableWithoutFeedback, View } from "react-native";
 import WebView, { type WebViewMessageEvent } from "react-native-webview";
@@ -17,7 +17,7 @@ export interface ReaderViewerProperties {
   defaultProperties: {
     scrollPosition: number;
     theme: string;
-    reactions: ReactionByBookOutput[];
+    reactions: Reaction[];
   };
   colorScheme: ThemePackType;
   onMessage: (event: WebViewMessageEvent) => Promise<void>;

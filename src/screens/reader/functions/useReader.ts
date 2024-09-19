@@ -1,5 +1,4 @@
 import api from "@/api";
-
 import { useTypedNavigation } from "@/hooks";
 import { useCustomizationStore } from "@/screens/reader/components/reader-customization/customization-store";
 import { useFinishBook } from "@/screens/reader/functions/useFinishBook";
@@ -25,8 +24,13 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   const { colorScheme, ...restUiProperties } = useCustomizationStore(
     (state) => state,
   );
-  const { reactionBookList = [], createReaction } = useReactions(id);
-
+  const {
+    createReaction,
+    deleteReaction,
+    updateReaction,
+    findReactionById,
+    allReactions,
+  } = useReactions(id);
   const {
     data: ebook,
     isLoading: ebookRequestLoading,
@@ -62,10 +66,8 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     createReaction: createReaction,
     openGptModal: (text: string) => openModal.gpt(text),
     openTranslateModal: (text: string) => openModal.translation(text),
-    openReactionModal: (id) => {
-      openModal.reaction.open(
-        reactionBookList.find((reaction) => reaction.id === id) || null,
-      );
+    openReactionModal: async (id) => {
+      await openModal.reaction.open(findReactionById(id) || null);
     },
   });
 
@@ -74,7 +76,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   const [defaultProperties] = useState({
     scrollPosition,
     theme: styleTag,
-    reactions: reactionBookList,
+    reactions: allReactions,
   });
   useEffect(() => {
     setOptions({
@@ -93,9 +95,9 @@ export const useReader = (id: string, initialScrollPosition: number) => {
 
   useEffect(() => {
     viewerReference.current?.injectJavaScript(`
-    	wrapReactionsInMarkTag(${JSON.stringify(reactionBookList)});
+    	wrapReactionsInMarkTag(${JSON.stringify(allReactions)});
     `);
-  }, [reactionBookList, createReaction]);
+  }, [allReactions, createReaction]);
 
   return {
     ebook,
@@ -107,10 +109,13 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     modalRefs,
     ebookRequestLoading,
     readingProgress,
+    createReaction,
+    updateReaction,
+    deleteReaction,
     ebookRequestRefetching,
     openModal,
     onMessage,
-    reactionBookList,
+    allReactions,
     defaultProperties,
     styleTag,
   };
