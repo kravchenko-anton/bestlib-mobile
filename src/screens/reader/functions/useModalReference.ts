@@ -47,15 +47,11 @@ export const useModalReference = (
         },
       },
       gpt: (text: string) => {
-        gptModalReference.current?.present({
-          text,
-        });
+        gptModalReference.current?.present(text);
         onOpenModal();
       },
       translation: (text: string) => {
-        translationModalReference.current?.present({
-          text,
-        });
+        translationModalReference.current?.present(text);
         onOpenModal();
       },
       chaptersList: () => {

@@ -35,7 +35,6 @@ export const useReactions = (bookId: string) => {
     observeData();
   }, [bookId]);
 
-  console.log("Reactions", reactions);
   const findReactionById = async (id: string) => {
     return await reactionBookList.find(id);
   };

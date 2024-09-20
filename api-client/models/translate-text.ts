@@ -32,11 +32,5 @@ export interface TranslateText {
      * @memberof TranslateText
      */
     'text': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TranslateText
-     */
-    'context': string;
 }
 

@@ -1,8 +1,9 @@
 export const QueryKeys = {
   library: ["user-library"],
+  translate: ["translate"],
   author: {
     key: ["author"],
-    byId: (id: string) => ["author", id]
+    byId: (id: string) => ["author", id],
   },
   userStatistics: ["user-statistics"],
   featured: ["featured"],
@@ -73,6 +74,8 @@ export const QueryKeys = {
 };
 
 export const MutationKeys = {
+  translate: ["translate"],
+  gptExplain: ["gpt-explain"],
   book: {
     review: ["review-book"],
     update: ["update-book"],

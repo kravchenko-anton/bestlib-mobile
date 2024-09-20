@@ -6,11 +6,11 @@ clients/auth-api.ts
 clients/author-api.ts
 clients/book-api.ts
 clients/catalog-api.ts
-clients/default-api.ts
 clients/ebook-api.ts
 clients/genre-api.ts
 clients/health-api.ts
 clients/reaction-api.ts
+clients/reading-api.ts
 clients/recommendation-api.ts
 clients/storage-api.ts
 clients/user-api.ts
@@ -36,7 +36,7 @@ models/create-book-dto.ts
 models/create-impression-dto.ts
 models/create-reaction.ts
 models/ebook-output-chapters-inner.ts
-models/ebook-output-functions.ts
+models/ebook-output-function-enums.ts
 models/ebook-output.ts
 models/featured-output.ts
 models/find-one-genre-output.ts

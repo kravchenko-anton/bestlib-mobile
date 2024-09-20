@@ -17,7 +17,7 @@ export * from './create-impression-dto';
 export * from './create-reaction';
 export * from './ebook-output';
 export * from './ebook-output-chapters-inner';
-export * from './ebook-output-functions';
+export * from './ebook-output-function-enums';
 export * from './featured-output';
 export * from './find-one-genre-output';
 export * from './full-book';

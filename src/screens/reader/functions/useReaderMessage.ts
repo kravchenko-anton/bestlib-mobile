@@ -1,8 +1,14 @@
+import api from "@/api";
 import type { CreateReaction } from "@/screens/reader/functions/useReactions";
+import { MutationKeys } from "@/utils/query-keys";
 import type { reactionsTitles } from "@/utils/reactions";
 import { shareText } from "@/utils/share-text";
 import { errorToast } from "@/utils/toast";
+import { useNetInfo } from "@react-native-community/netinfo";
+import { useMutation } from "@tanstack/react-query";
+import { getLocales } from "expo-localization";
 import type { WebViewMessageEvent } from "react-native-webview";
+import type { GptExplain, TranslateText } from "../../../../api-client";
 
 export enum ReaderMessageType {
   Scroll = "scroll",
@@ -44,24 +50,45 @@ export interface ReaderMessageProperties {
     >,
   ) => void;
   id: string;
+  bookTitle: string;
+  bookAuthor: string;
+  bookPicture: string;
   onFinishBookPress: (id: string) => void;
   onContentLoadEnd: () => void;
   createReaction: (data: CreateReaction) => void;
   openReactionModal: (id: string) => void;
-  openTranslateModal: (text: string) => void;
   openGptModal: (text: string) => void;
+  openTranslationModal: (text: string) => void;
 }
 
 export const useReaderMessage = ({
   onFinishBookPress,
+  bookAuthor,
+  bookPicture,
   onContentLoadEnd,
   id,
   onScroll,
   openReactionModal,
   createReaction,
-  openTranslateModal,
+  bookTitle,
+  openTranslationModal,
   openGptModal,
 }: ReaderMessageProperties) => {
+  const { isConnected } = useNetInfo();
+
+  const { mutateAsync: gptExplain, isPending: explainLoading } = useMutation({
+    mutationKey: MutationKeys.gptExplain,
+    mutationFn: (payload: GptExplain) => api.reading.gptExplain(payload),
+  });
+
+  const { mutateAsync: translate, isPending: translateLoading } = useMutation({
+    mutationKey: MutationKeys.translate,
+    mutationFn: (payload: Omit<TranslateText, "targetLang">) =>
+      api.reading.translate({
+        ...payload,
+        targetLang: getLocales()[0].languageTag,
+      }),
+  });
   const onMessage = async (event: WebViewMessageEvent) => {
     const parsedEvent = JSON.parse(
       event.nativeEvent.data,
@@ -73,13 +100,26 @@ export const useReaderMessage = ({
       onContentLoadEnd();
     }
     if (type === ReaderMessageType.Explain) {
-      openGptModal(payload.text);
+      if (!isConnected) return errorToast("No internet connection");
+      if (explainLoading) return errorToast("Loading explanation");
+      const { data: explanation } = await gptExplain({
+        selectedText: payload.text,
+        bookTitle: bookTitle,
+        bookAuthor: bookAuthor,
+        targetLang: getLocales()[0].languageTag,
+      });
+      openGptModal(explanation);
     }
     if (type === ReaderMessageType.Share) {
       await shareText(payload.text);
     }
     if (type === ReaderMessageType.Translate) {
-      openTranslateModal(payload.text);
+      if (!isConnected) return errorToast("No internet connection");
+      if (translateLoading) return errorToast("Loading translation");
+      const { data: translateAnswer } = await translate({
+        text: payload.text,
+      });
+      openTranslationModal(translateAnswer);
     }
     if (type === ReaderMessageType.Reaction) {
       console.log("🚂", {
@@ -101,9 +141,9 @@ export const useReaderMessage = ({
         endOffset: payload.range.endOffset,
         xpath: payload.range.xpath,
         type: payload.reaction,
-        bookPicture: "",
-        bookAuthor: "",
-        bookTitle: "",
+        bookPicture: bookPicture,
+        bookAuthor: bookAuthor,
+        bookTitle: bookTitle,
       });
     }
     if (type === ReaderMessageType.SelectionLimitFail)

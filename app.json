@@ -12,6 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#18191A"
     },
+    "androidStatusBar": {
+      "backgroundColor": "#18191A"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bestlib.mobile"
@@ -65,7 +68,8 @@
           ]
         }
       ],
-      "expo-build-properties"
+      "expo-build-properties",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true

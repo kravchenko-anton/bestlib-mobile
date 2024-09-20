@@ -2,6 +2,12 @@ import type { CustomizationStoreType } from "@/screens/reader/components/reader-
 import { Color } from "@/utils/colors";
 import { windowWidth } from "@/utils/dimensions";
 
+export const injectStyle = (style: string) => `
+	var style = document.createElement('style');
+	style.type = 'text/css';
+	style.innerHTML = \`${style}\`;
+ document.head.appendChild(style);
+		`;
 export const getStyleTag = ({
   fontSize,
   font: { fontFamily },

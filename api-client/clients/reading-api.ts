@@ -22,13 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CreateReaction } from '../models';
+import type { GptExplain } from '../models';
 // @ts-ignore
-import type { ReactionByBookOutput } from '../models';
-// @ts-ignore
-import type { ReactionListOutput } from '../models';
-// @ts-ignore
-import type { UpdateReaction } from '../models';
+import type { TranslateText } from '../models';
 /**
  * ReadingApi - axios parameter creator
  * @export
@@ -37,14 +33,14 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
-         * @param {CreateReaction} createReaction 
+         * @param {GptExplain} gptExplain 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        create: async (createReaction: CreateReaction, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createReaction' is not null or undefined
-            assertParamExists('create', 'createReaction', createReaction)
-            const localVarPath = `/reaction/create`;
+        gptExplain: async (gptExplain: GptExplain, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'gptExplain' is not null or undefined
+            assertParamExists('gptExplain', 'gptExplain', gptExplain)
+            const localVarPath = `/reading/gpt-explain`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -67,7 +63,7 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createReaction, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(gptExplain, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -76,121 +72,14 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {string} bookId 
+         * @param {TranslateText} translateText 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reactionByBook: async (bookId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'bookId' is not null or undefined
-            assertParamExists('reactionByBook', 'bookId', bookId)
-            const localVarPath = `/reaction/reaction-by-bookId/{bookId}`
-                .replace(`{${"bookId"}}`, encodeURIComponent(String(bookId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        reactionList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/reaction/reaction-list`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        remove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('remove', 'id', id)
-            const localVarPath = `/reaction/delete/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {UpdateReaction} updateReaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        update: async (updateReaction: UpdateReaction, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'updateReaction' is not null or undefined
-            assertParamExists('update', 'updateReaction', updateReaction)
-            const localVarPath = `/reaction/update`;
+        translate: async (translateText: TranslateText, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'translateText' is not null or undefined
+            assertParamExists('translate', 'translateText', translateText)
+            const localVarPath = `/reading/translate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -213,7 +102,7 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateReaction, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(translateText, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -232,61 +121,26 @@ export const ReadingApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {CreateReaction} createReaction 
+         * @param {GptExplain} gptExplain 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async create(createReaction: CreateReaction, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.create(createReaction, options);
+        async gptExplain(gptExplain: GptExplain, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.gptExplain(gptExplain, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReadingApi.create']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReadingApi.gptExplain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {string} bookId 
+         * @param {TranslateText} translateText 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async reactionByBook(bookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReactionByBookOutput>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.reactionByBook(bookId, options);
+        async translate(translateText: TranslateText, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.translate(translateText, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReadingApi.reactionByBook']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async reactionList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReactionListOutput>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.reactionList(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReadingApi.reactionList']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async remove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.remove(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReadingApi.remove']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {UpdateReaction} updateReaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async update(updateReaction: UpdateReaction, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.update(updateReaction, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReadingApi.update']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReadingApi.translate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -301,47 +155,21 @@ export const ReadingApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
-         * @param {CreateReaction} createReaction 
+         * @param {GptExplain} gptExplain 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        create(createReaction: CreateReaction, options?: any): AxiosPromise<void> {
-            return localVarFp.create(createReaction, options).then((request) => request(axios, basePath));
+        gptExplain(gptExplain: GptExplain, options?: any): AxiosPromise<string> {
+            return localVarFp.gptExplain(gptExplain, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} bookId 
+         * @param {TranslateText} translateText 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reactionByBook(bookId: string, options?: any): AxiosPromise<Array<ReactionByBookOutput>> {
-            return localVarFp.reactionByBook(bookId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        reactionList(options?: any): AxiosPromise<Array<ReactionListOutput>> {
-            return localVarFp.reactionList(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        remove(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.remove(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {UpdateReaction} updateReaction 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        update(updateReaction: UpdateReaction, options?: any): AxiosPromise<void> {
-            return localVarFp.update(updateReaction, options).then((request) => request(axios, basePath));
+        translate(translateText: TranslateText, options?: any): AxiosPromise<string> {
+            return localVarFp.translate(translateText, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -355,56 +183,24 @@ export const ReadingApiFactory = function (configuration?: Configuration, basePa
 export class ReadingApi extends BaseAPI {
     /**
      * 
-     * @param {CreateReaction} createReaction 
+     * @param {GptExplain} gptExplain 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReadingApi
      */
-    public create(createReaction: CreateReaction, options?: RawAxiosRequestConfig) {
-        return ReadingApiFp(this.configuration).create(createReaction, options).then((request) => request(this.axios, this.basePath));
+    public gptExplain(gptExplain: GptExplain, options?: RawAxiosRequestConfig) {
+        return ReadingApiFp(this.configuration).gptExplain(gptExplain, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {string} bookId 
+     * @param {TranslateText} translateText 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReadingApi
      */
-    public reactionByBook(bookId: string, options?: RawAxiosRequestConfig) {
-        return ReadingApiFp(this.configuration).reactionByBook(bookId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReadingApi
-     */
-    public reactionList(options?: RawAxiosRequestConfig) {
-        return ReadingApiFp(this.configuration).reactionList(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReadingApi
-     */
-    public remove(id: string, options?: RawAxiosRequestConfig) {
-        return ReadingApiFp(this.configuration).remove(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {UpdateReaction} updateReaction 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReadingApi
-     */
-    public update(updateReaction: UpdateReaction, options?: RawAxiosRequestConfig) {
-        return ReadingApiFp(this.configuration).update(updateReaction, options).then((request) => request(this.axios, this.basePath));
+    public translate(translateText: TranslateText, options?: RawAxiosRequestConfig) {
+        return ReadingApiFp(this.configuration).translate(translateText, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

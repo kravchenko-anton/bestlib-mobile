@@ -10,6 +10,7 @@ import {
   StorageApi,
   UserApi,
 } from "api-client";
+import { ReadingApi } from "../../api-client/clients/reading-api";
 import { instance } from "./interceptors";
 
 const mobileInstance: any = instance;
@@ -39,8 +40,11 @@ const storage = new StorageApi(baseParameters, serverUrl, mobileInstance);
 const user = new UserApi(baseParameters, serverUrl, mobileInstance);
 const reaction = new ReactionApi(baseParameters, serverUrl, mobileInstance);
 const author = new AuthorApi(baseParameters, serverUrl, mobileInstance);
+const reading = new ReadingApi(baseParameters, serverUrl, mobileInstance);
+
 export default {
   auth,
+  reading,
   book,
   catalog,
   author,

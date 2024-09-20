@@ -17,32 +17,32 @@
 /**
  * 
  * @export
- * @interface GptExplain
+ * @interface EbookOutputFunctionEnums
  */
-export interface GptExplain {
+export interface EbookOutputFunctionEnums {
     /**
      * 
      * @type {string}
-     * @memberof GptExplain
+     * @memberof EbookOutputFunctionEnums
      */
-    'selectedText': string;
+    'scrollToProgress'?: string;
     /**
      * 
      * @type {string}
-     * @memberof GptExplain
+     * @memberof EbookOutputFunctionEnums
      */
-    'bookTitle': string;
+    'scrollToChapter'?: string;
     /**
      * 
      * @type {string}
-     * @memberof GptExplain
+     * @memberof EbookOutputFunctionEnums
      */
-    'targetLang': string;
+    'removeAllTextSelection'?: string;
     /**
      * 
      * @type {string}
-     * @memberof GptExplain
+     * @memberof EbookOutputFunctionEnums
      */
-    'bookAuthor': string;
+    'wrapReactionsInMarkTag'?: string;
 }
 

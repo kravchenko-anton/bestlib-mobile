@@ -7,7 +7,10 @@ import { useReactions } from "@/screens/reader/functions/useReactions";
 import { useReaderMessage } from "@/screens/reader/functions/useReaderMessage";
 import { useReadingProgress } from "@/screens/reader/functions/useReadingProgress/useReadingProgress";
 import { injectFont } from "@/screens/reader/injections/font-injection";
-import { getStyleTag } from "@/screens/reader/injections/styles-injection";
+import {
+  getStyleTag,
+  injectStyle,
+} from "@/screens/reader/injections/styles-injection";
 import { QueryKeys } from "@/utils/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
@@ -57,12 +60,15 @@ export const useReader = (id: string, initialScrollPosition: number) => {
 
   const { onMessage } = useReaderMessage({
     id,
+    bookTitle: ebook?.title || "",
+    bookAuthor: ebook?.author.name || "",
+    bookPicture: ebook?.picture || "",
     onFinishBookPress: onFinish,
     onContentLoadEnd: () => setReaderLoading(false),
     onScroll: updateReadingProgress,
     createReaction: createReaction,
     openGptModal: (text: string) => openModal.gpt(text),
-    openTranslateModal: (text: string) => openModal.translation(text),
+    openTranslationModal: (text: string) => openModal.translation(text),
     openReactionModal: async (id) => {
       await openModal.reaction.open(findReactionById(id) || null);
     },
@@ -77,39 +83,40 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   });
   useEffect(() => {
     setOptions({
+      statusBarHidden: false,
       statusBarStyle: colorScheme.statusBar,
       navigationBarColor: colorScheme.colorPalette.background.darker,
       navigationBarHidden: true,
-      statusBarTranslucent: true,
-      statusBarHidden: !readerHeaderVisible,
+      statusBarTranslucent: false,
       statusBarColor: colorScheme.colorPalette.background.darker,
     });
   }, [colorScheme, setOptions, readerHeaderVisible]);
 
   useEffect(() => {
-    if (!ebook?.functions?.injectStyle) return;
-    viewerReference.current?.injectJavaScript(
-      ebook?.functions?.injectStyle(styleTag),
-    );
+    viewerReference.current?.injectJavaScript(injectStyle(styleTag));
   }, [styleTag]);
 
   useEffect(() => {
-    if (!ebook?.functions?.wrapReactionsInMarkTag) return;
     viewerReference.current?.injectJavaScript(
-      ebook?.functions.wrapReactionsInMarkTag(allReactions),
+      `${ebook?.functionEnums.wrapReactionsInMarkTag}(${JSON.stringify(allReactions)})`,
     );
   }, [allReactions, createReaction]);
-  const composedHtml = ebook?.functions?.getFile
-    ? ebook?.functions?.getFile({
-        fontScript: injectFont(),
-        defaultProperties: {
-          scrollPosition: initialScrollPosition,
-          theme: getStyleTag({ colorScheme, ...restUiProperties }),
-          reactions: allReactions,
-        },
-      })
-    : "";
-  console.log(ebook, "ebook.functions");
+  const composedHtml = `
+   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <style>${injectFont()}</style>
+    </head>
+    <style>${defaultProperties.theme}</style>
+    ${ebook?.file}
+      <script>
+     window.onload = function() {
+      window.scrollTo({ top: ${defaultProperties.scrollPosition}});
+      ${ebook?.onLoadScript}
+			wrapReactionsInMarkTag(${JSON.stringify(defaultProperties.reactions)});
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'finish-loading' }))
+     };
+    </script>
+  `;
 
   return {
     ebook,
