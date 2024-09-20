@@ -1,6 +1,5 @@
 import type Reaction from "@/model/Reaction";
 import type { ThemePackType } from "@/screens/reader/components/reader-customization/theme-pack";
-import { composeReaderViewHtml } from "@/screens/reader/injections/compose-html-injection";
 import { windowWidth } from "@/utils/dimensions";
 import { doublePress } from "@/utils/handleDoublePress";
 import type { FunctionType } from "@/utils/types";
@@ -12,8 +11,6 @@ export interface ReaderViewerProperties {
   readerUiVisible: boolean;
   handleDoublePress: FunctionType;
   file: string;
-  picture: string;
-  title: string;
   defaultProperties: {
     scrollPosition: number;
     theme: string;
@@ -27,12 +24,10 @@ const ReaderViewer = forwardRef(
   (properties: ReaderViewerProperties, reference: any) => {
     const {
       defaultProperties,
+      file,
       handleDoublePress,
       colorScheme,
-      title,
       onMessage,
-      picture,
-      file,
     } = properties;
 
     if (!defaultProperties) return <View className="flex-1" />;
@@ -60,12 +55,7 @@ const ReaderViewer = forwardRef(
             )}
             source={{
               baseUrl: "",
-              html: composeReaderViewHtml({
-                defaultProperties,
-                file,
-                picture,
-                title,
-              }),
+              html: file,
             }}
             style={{
               width: windowWidth,

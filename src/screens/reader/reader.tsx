@@ -10,7 +10,7 @@ import { Translator } from "@/screens/reader/components/translator/translator";
 import { useReader } from "@/screens/reader/functions/useReader";
 import { Loader } from "@/ui";
 import React from "react";
-
+// install before using https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js
 const Reader = () => {
   const { params } = useTypedRoute<"Reader">();
 
@@ -38,7 +38,7 @@ const Reader = () => {
           reader.setReaderHeaderVisible(!reader.readerHeaderVisible)
         }
         onMessage={reader.onMessage}
-        {...reader.ebook}
+        file={reader.composedHtml}
       />
       <ReaderMenu
         bookSlug={params.id}

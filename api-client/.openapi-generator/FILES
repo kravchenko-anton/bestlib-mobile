@@ -36,6 +36,7 @@ models/create-book-dto.ts
 models/create-impression-dto.ts
 models/create-reaction.ts
 models/ebook-output-chapters-inner.ts
+models/ebook-output-functions.ts
 models/ebook-output.ts
 models/featured-output.ts
 models/find-one-genre-output.ts

@@ -1,7 +1,7 @@
 import { useTypedNavigation } from "@/hooks";
 import { useAuthStore } from "@/screens/auth/store/auth-store";
 import Header from "@/ui/header/header";
-import { mailLink } from "@/utils/constants/index";
+import { Color } from "@/utils/colors";
 import { Linking, View } from "react-native";
 import * as List from "./settings-list";
 
@@ -17,32 +17,9 @@ const Settings = () => {
       <View className="h-full">
         <View className="pt-4">
           <List.Item
-            title="Contact support"
-            onPress={() => Linking.openURL(mailLink)}
-          />
-          <List.Item
-            title="Privacy policy"
-            onPress={() =>
-              Linking.openURL("https://booknex.up.railway.app/privacy-policy")
-            }
-          />
-          <List.Item
-            title="Terms of service"
-            onPress={() =>
-              Linking.openURL("https://booknex.up.railway.app/terms-of-service")
-            }
-          />
-
-          <List.Item
+            borderColor={Color.primary}
             title="Community chat"
             onPress={() => Linking.openURL("https://t.me/boknex")}
-          />
-          <List.Item
-            title={`Donate`}
-            description={`Support the development of the app`}
-            onPress={() =>
-              Linking.openURL("https://boosty.to/booknex-app/donate")
-            }
           />
           <List.Item
             description={user?.email}

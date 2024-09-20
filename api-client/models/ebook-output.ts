@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { EbookOutputChaptersInner } from './ebook-output-chapters-inner';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { EbookOutputFunctions } from './ebook-output-functions';
 
 /**
  * 
@@ -25,16 +28,16 @@ import type { EbookOutputChaptersInner } from './ebook-output-chapters-inner';
 export interface EbookOutput {
     /**
      * 
-     * @type {string}
-     * @memberof EbookOutput
-     */
-    'file': string;
-    /**
-     * 
      * @type {Array<EbookOutputChaptersInner>}
      * @memberof EbookOutput
      */
     'chapters': Array<EbookOutputChaptersInner>;
+    /**
+     * 
+     * @type {EbookOutputFunctions}
+     * @memberof EbookOutput
+     */
+    'functions': EbookOutputFunctions;
     /**
      * 
      * @type {string}

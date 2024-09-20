@@ -6,10 +6,8 @@ import { useModalReference } from "@/screens/reader/functions/useModalReference"
 import { useReactions } from "@/screens/reader/functions/useReactions";
 import { useReaderMessage } from "@/screens/reader/functions/useReaderMessage";
 import { useReadingProgress } from "@/screens/reader/functions/useReadingProgress/useReadingProgress";
-import {
-  getStyleTag,
-  injectStyle,
-} from "@/screens/reader/injections/styles-injection";
+import { injectFont } from "@/screens/reader/injections/font-injection";
+import { getStyleTag } from "@/screens/reader/injections/styles-injection";
 import { QueryKeys } from "@/utils/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
@@ -40,9 +38,8 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     queryFn: () => api.ebook.ebookById(id),
     select: (data) => data.data,
     enabled: !!id,
-    networkMode: "offlineFirst",
-    gcTime: Number.MAX_SAFE_INTEGER,
     staleTime: 0,
+    gcTime: 0,
   });
 
   const {
@@ -90,14 +87,29 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   }, [colorScheme, setOptions, readerHeaderVisible]);
 
   useEffect(() => {
-    viewerReference.current?.injectJavaScript(`${injectStyle(styleTag)}`);
+    if (!ebook?.functions?.injectStyle) return;
+    viewerReference.current?.injectJavaScript(
+      ebook?.functions?.injectStyle(styleTag),
+    );
   }, [styleTag]);
 
   useEffect(() => {
-    viewerReference.current?.injectJavaScript(`
-    	wrapReactionsInMarkTag(${JSON.stringify(allReactions)});
-    `);
+    if (!ebook?.functions?.wrapReactionsInMarkTag) return;
+    viewerReference.current?.injectJavaScript(
+      ebook?.functions.wrapReactionsInMarkTag(allReactions),
+    );
   }, [allReactions, createReaction]);
+  const composedHtml = ebook?.functions?.getFile
+    ? ebook?.functions?.getFile({
+        fontScript: injectFont(),
+        defaultProperties: {
+          scrollPosition: initialScrollPosition,
+          theme: getStyleTag({ colorScheme, ...restUiProperties }),
+          reactions: allReactions,
+        },
+      })
+    : "";
+  console.log(ebook, "ebook.functions");
 
   return {
     ebook,
@@ -110,6 +122,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     ebookRequestLoading,
     readingProgress,
     createReaction,
+    composedHtml,
     updateReaction,
     deleteReaction,
     ebookRequestRefetching,
