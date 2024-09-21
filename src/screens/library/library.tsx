@@ -53,7 +53,7 @@ const Library = () => {
               />
             }
           >
-            <ReadingList data={readingList} navigate={navigate} />
+            <ReadingList data={readingList} />
             <Flatlist
               horizontal
               title="Saved to read"

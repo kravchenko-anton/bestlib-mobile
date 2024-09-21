@@ -1,31 +1,28 @@
-import api from "@/api";
-import { Check, MoreHorizontal, Share, Trash } from "@/icons";
-import type { CompareReadingBooksType } from "@/screens/library/compareReadingBooks";
-import { useFinishBook } from "@/screens/reader/functions/useFinishBook";
-import { AnimatedIcon, Image, Title } from "@/ui";
-import { settings } from "@/ui/book-card/settings";
-import ProgressBar from "@/ui/progress-bar/progress-bar";
-import SelectItem from "@/ui/select-list/select-list-item";
-import { Color } from "@/utils/colors";
-import { MutationKeys, QueryKeys } from "@/utils/query-keys";
-import { shareBookWithAuthor } from "@/utils/share-text";
-import { successToast } from "@/utils/toast";
-import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
-import { useNetInfo } from "@react-native-community/netinfo";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { UserLibraryOutputReadingBooksInner } from "api-client";
-import React, { type FC, useRef, useState } from "react";
-import { View } from "react-native";
-import Animated, { JumpingTransition } from "react-native-reanimated";
+import api from '@/api'
+import { useTypedNavigation } from '@/hooks'
+import { Check, MoreHorizontal, Share, Trash } from '@/icons'
+import { useFinishBook } from '@/screens/reader/functions/useFinishBook'
+import { AnimatedIcon, Image, Title } from '@/ui'
+import { settings } from '@/ui/book-card/settings'
+import SelectItem from '@/ui/select-list/select-list-item'
+import { Color } from '@/utils/colors'
+import { MutationKeys, QueryKeys } from '@/utils/query-keys'
+import { shareBookWithAuthor } from '@/utils/share-text'
+import { successToast } from '@/utils/toast'
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import type { UserLibraryOutputReadingBooksInner } from 'api-client'
+import React, { type FC, useRef, useState } from 'react'
+import { View } from 'react-native'
+import Animated, { JumpingTransition } from 'react-native-reanimated'
 
 interface ReadingListProperties {
-  data: CompareReadingBooksType[];
-  navigate: any;
+  data: UserLibraryOutputReadingBooksInner[] | undefined;
 }
 
-export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
+export const ReadingList: FC<ReadingListProperties> = ({ data }) => {
   const queryClient = useQueryClient();
-  const { isConnected } = useNetInfo();
+  const { navigate } = useTypedNavigation();
   const sheetReference = useRef<BottomSheetModal>(null);
   const { mutateAsync: removeFromLibrary } = useMutation({
     mutationKey: MutationKeys.book.removeFromLibrary,
@@ -48,7 +45,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
     });
   };
 
-  if (data.length === 0) return null;
+  if (data?.length === 0) return null;
   return (
     <View className="bg-foreground border-bordered mb-0 ml-2 mt-4 rounded-[14px] rounded-r-none border-[1px] border-r-0  p-3 px-0">
       <View className="pl-4">
@@ -62,7 +59,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
           Reading now
         </Title>
         <Title weight="regular" className="mb-4" size={"sm"} color={Color.gray}>
-          {data.length.toString()} books
+          {data?.length.toString()} books
         </Title>
       </View>
       <Animated.FlatList
@@ -77,7 +74,11 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
           paddingHorizontal: 12,
           paddingBottom: 8,
         }}
-        renderItem={({ item: book }: { item: CompareReadingBooksType }) => (
+        renderItem={({
+          item: book,
+        }: {
+          item: UserLibraryOutputReadingBooksInner;
+        }) => (
           <Animated.View
             style={{
               width: settings.width.md,
@@ -88,7 +89,6 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
                 onTouchEnd={() => {
                   navigate("Reader", {
                     id: book.id,
-                    initialScrollPosition: book.scrollPosition,
                   });
                 }}
               >
@@ -107,14 +107,13 @@ export const ReadingList: FC<ReadingListProperties> = ({ data, navigate }) => {
                   size={"sm"}
                   variant="muted"
                   onPress={() => {
-                    const { scrollPosition, progress, ...rest } = book;
-                    setActiveBookModalContent(rest);
-                    sheetReference.current?.present();
+                    setActiveBookModalContent(book);
+                    sheetReference.current?.present(book);
                   }}
                 />
               </View>
             </View>
-            <ProgressBar progress={book.progress} />
+            {/* <ProgressBar progress={book.progress} /> */}
 
             <Title numberOfLines={2} size="sm" weight="bold" className="mt-1">
               {book.title}

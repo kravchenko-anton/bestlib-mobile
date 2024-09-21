@@ -1,5 +1,5 @@
 import { useTypedNavigation } from '@/hooks'
-import { useAuthStore } from '@/screens/auth/store/auth-store'
+import { useAuthStore } from '@/store/auth/auth-store'
 import { useEffect } from 'react'
 
 export const useAuthorize = () => {

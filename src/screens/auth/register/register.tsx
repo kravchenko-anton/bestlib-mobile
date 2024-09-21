@@ -1,12 +1,12 @@
-import { useTypedNavigation } from "@/hooks";
-import { Mail, Password } from "@/icons";
-import { useAuthStore } from "@/screens/auth/store/auth-store";
-import { useAuthorize } from "@/screens/auth/useAuthorize";
-import { Button, Field, ScrollLayout } from "@/ui";
-import * as Header from "@/ui/header/header";
-import { type AuthDtoType, AuthSchema } from "@/validation/auth/auth.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { useTypedNavigation } from '@/hooks'
+import { Mail, Password } from '@/icons'
+import { useAuthorize } from '@/screens/auth/useAuthorize'
+import { useAuthStore } from '@/store/auth/auth-store'
+import { Button, Field, ScrollLayout } from '@/ui'
+import * as Header from '@/ui/header/header'
+import { type AuthDtoType, AuthSchema } from '@/validation/auth/auth.schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 
 const Register = () => {
   const { navigate } = useTypedNavigation();

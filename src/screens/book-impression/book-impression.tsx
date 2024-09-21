@@ -1,36 +1,34 @@
-import api from "@/api";
-import { useTypedNavigation, useTypedRoute } from "@/hooks";
-import { Close } from "@/icons";
-import { FinishBookIllustration } from "@/illustrations/finish-book";
+import api from '@/api'
+import { useTypedNavigation, useTypedRoute } from '@/hooks'
+import { Close } from '@/icons'
+import { FinishBookIllustration } from '@/illustrations/finish-book'
 
-import { useAuthStore } from "@/screens/auth/store/auth-store";
-import { RatingSelect } from "@/screens/book-impression/rating-select";
-import { TagsSelect } from "@/screens/book-impression/tags-select";
-import { Button, Field, Icon, ScrollView, Title } from "@/ui";
-import { Color } from "@/utils/colors";
-import { MutationKeys, QueryKeys } from "@/utils/query-keys";
-import { successToast } from "@/utils/toast";
-import {
-  ImpressionSchema,
-  type ImpressionSchemaType,
-} from "@/validation/impression.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as Sentry from "@sentry/react-native";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { RatingSelect } from '@/screens/book-impression/rating-select'
+import { TagsSelect } from '@/screens/book-impression/tags-select'
+import { Button, Field, Icon, ScrollView, Title } from '@/ui'
+import { Color } from '@/utils/colors'
+import { MutationKeys, QueryKeys } from '@/utils/query-keys'
+import { successToast } from '@/utils/toast'
+import { ImpressionSchema, type ImpressionSchemaType } from '@/validation/impression.schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as Sentry from '@sentry/react-native'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { FC } from "react";
-import { useForm } from "react-hook-form";
-import { View } from "react-native";
+import type { FC } from 'react'
+import { useForm } from 'react-hook-form'
+import { View } from 'react-native'
 //TODO: сделать в бекенде implression книги
 
 const BookImpression: FC = () => {
   const { params } = useTypedRoute<"BookImpression">();
   const { navigate } = useTypedNavigation();
   const queryClient = useQueryClient();
-  const user = useAuthStore((state) => state.user);
-  const { mutateAsync: sendReview, isPending: reviewLoading } = useMutation({
+  const { mutateAsync: sendReview } = useMutation({
     mutationKey: MutationKeys.book.review,
-    mutationFn: (dto: ImpressionSchemaType) => api.book.review(dto),
+    mutationFn: (dto: ImpressionSchemaType) => api.book.review({
+      ...dto,
+      bookId: params.id
+    }),
     onSuccess: () => {
       Sentry.metrics.increment("start-reading", 1);
       queryClient.invalidateQueries({

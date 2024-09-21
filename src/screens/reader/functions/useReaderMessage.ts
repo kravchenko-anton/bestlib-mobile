@@ -1,14 +1,14 @@
-import api from "@/api";
-import type { CreateReaction } from "@/screens/reader/functions/useReactions";
-import { MutationKeys } from "@/utils/query-keys";
-import type { reactionsTitles } from "@/utils/reactions";
-import { shareText } from "@/utils/share-text";
-import { errorToast } from "@/utils/toast";
-import { useNetInfo } from "@react-native-community/netinfo";
-import { useMutation } from "@tanstack/react-query";
-import { getLocales } from "expo-localization";
-import type { WebViewMessageEvent } from "react-native-webview";
-import type { GptExplain, TranslateText } from "../../../../api-client";
+import api from '@/api'
+import type { ReactionType } from '@/store/reader/reaction-store'
+import { MutationKeys } from '@/utils/query-keys'
+import type { reactionsTitles } from '@/utils/reactions'
+import { shareText } from '@/utils/share-text'
+import { errorToast } from '@/utils/toast'
+import { useNetInfo } from '@react-native-community/netinfo'
+import { useMutation } from '@tanstack/react-query'
+import { getLocales } from 'expo-localization'
+import type { WebViewMessageEvent } from 'react-native-webview'
+import type { GptExplain, TranslateText } from '../../../../api-client'
 
 export enum ReaderMessageType {
   Scroll = "scroll",
@@ -55,7 +55,7 @@ export interface ReaderMessageProperties {
   bookPicture: string;
   onFinishBookPress: (id: string) => void;
   onContentLoadEnd: () => void;
-  createReaction: (data: CreateReaction) => void;
+  createReaction: (data: ReactionType) => void;
   openReactionModal: (id: string) => void;
   openGptModal: (text: string) => void;
   openTranslationModal: (text: string) => void;

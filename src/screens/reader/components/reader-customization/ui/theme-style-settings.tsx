@@ -1,11 +1,8 @@
-import {
-	themePack,
-	type ThemePackType
-} from '@/screens/reader/components/reader-customization/theme-pack'
+import { themePack, type ThemePackType } from '@/store/reader/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
-import * as Sentry from '@sentry/react-native'
 import { Color } from '@/utils/colors'
-import { useEffect, useRef, type FC } from 'react'
+import * as Sentry from '@sentry/react-native'
+import { type FC, useEffect, useRef } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 
 //TODO: проверить на краши

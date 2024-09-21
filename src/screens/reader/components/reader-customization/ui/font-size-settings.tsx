@@ -1,10 +1,10 @@
-import { fontSizeSettings } from '@/screens/reader/components/reader-customization/customization-store'
-import type { ThemePackType } from '@/screens/reader/components/reader-customization/theme-pack'
+import { Minus, Plus } from '@/icons'
+import { fontSizeSettings } from '@/store/reader/customization-store'
+import type { ThemePackType } from '@/store/reader/theme-pack'
 import { Title } from '@/ui'
 import type { FC } from 'react'
 import { View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Minus, Plus } from '@/icons'
 
 interface FontSizeSettingsProperties {
 	activeFontSize: number

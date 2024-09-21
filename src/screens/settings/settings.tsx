@@ -1,9 +1,9 @@
-import { useTypedNavigation } from "@/hooks";
-import { useAuthStore } from "@/screens/auth/store/auth-store";
-import Header from "@/ui/header/header";
-import { Color } from "@/utils/colors";
-import { Linking, View } from "react-native";
-import * as List from "./settings-list";
+import { useTypedNavigation } from '@/hooks'
+import { useAuthStore } from '@/store/auth/auth-store'
+import Header from '@/ui/header/header'
+import { Color } from '@/utils/colors'
+import { Linking, View } from 'react-native'
+import * as List from './settings-list'
 
 const Settings = () => {
   const { navigate } = useTypedNavigation();

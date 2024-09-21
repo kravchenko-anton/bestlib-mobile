@@ -1,9 +1,9 @@
-import { ReaderFont } from '@/screens/reader/components/reader-customization/customization-store'
-import type { ThemePackType } from '@/screens/reader/components/reader-customization/theme-pack'
+import { ReaderFont } from '@/store/reader/customization-store'
+import type { ThemePackType } from '@/store/reader/theme-pack'
 import { AnimatedPress, Title } from '@/ui'
 import { cn } from '@/utils'
 import { Color } from '@/utils/colors'
-import { useEffect, useRef, type FC } from 'react'
+import { type FC, useEffect, useRef } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 
 interface FontStyleSettingsProperties {

@@ -1,15 +1,14 @@
-import api from '@/api'
-import { Book, Google, Mail } from "@/icons";
-import { LoginIllustration } from "@/illustrations/login";
-import { useAuthStore } from "@/screens/auth/store/auth-store";
-import { useAuthorize } from "@/screens/auth/useAuthorize";
-import { Button, ScrollLayout, Title } from "@/ui";
-import { Color } from "@/utils/colors";
-import { appName } from "@/utils/constants/index";
-import { errorToast } from "@/utils/toast";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { type FC, useLayoutEffect } from "react";
-import { Linking, View } from "react-native";
+import { Book, Google, Mail } from '@/icons'
+import { LoginIllustration } from '@/illustrations/login'
+import { useAuthorize } from '@/screens/auth/useAuthorize'
+import { useAuthStore } from '@/store/auth/auth-store'
+import { Button, ScrollLayout, Title } from '@/ui'
+import { Color } from '@/utils/colors'
+import { appName } from '@/utils/constants/index'
+import { errorToast } from '@/utils/toast'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import { type FC, useLayoutEffect } from 'react'
+import { Linking, View } from 'react-native'
 
 const Welcome: FC = () => {
   const { googleLogin } = useAuthStore((state) => ({

@@ -1,20 +1,22 @@
-import { useTypedRoute } from "@/hooks";
-import ReaderChapters from "@/screens/reader/components/chapters-modal/reader-chapters";
-import { GtpWindow } from "@/screens/reader/components/gpt-window/gpt-window";
-import { ReactionInfo } from "@/screens/reader/components/reaction-info/reaction-info";
-import ReaderCustomization from "@/screens/reader/components/reader-customization/reader-customization";
-import { ReaderLoading } from "@/screens/reader/components/reader-loading";
-import ReaderMenu from "@/screens/reader/components/reader-menu/reader-menu";
-import ReaderViewer from "@/screens/reader/components/reader-viewer/reader-viewer";
-import { Translator } from "@/screens/reader/components/translator/translator";
-import { useReader } from "@/screens/reader/functions/useReader";
-import { Loader } from "@/ui";
-import React from "react";
+import { useTypedRoute } from '@/hooks'
+import ReaderChapters from '@/screens/reader/components/chapters-modal/reader-chapters'
+import { GtpWindow } from '@/screens/reader/components/gpt-window/gpt-window'
+import { ReactionInfo } from '@/screens/reader/components/reaction-info/reaction-info'
+import ReaderCustomization from '@/screens/reader/components/reader-customization/reader-customization'
+import { ReaderLoading } from '@/screens/reader/components/reader-loading'
+import ReaderMenu from '@/screens/reader/components/reader-menu/reader-menu'
+import ReaderViewer from '@/screens/reader/components/reader-viewer/reader-viewer'
+import { Translator } from '@/screens/reader/components/translator/translator'
+import { useReader } from '@/screens/reader/functions/useReader'
+import { useReadingProgressStore } from '@/store/reader/progress-store'
+import { Loader } from '@/ui'
+import React from 'react'
 // install before using https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js
 const Reader = () => {
   const { params } = useTypedRoute<"Reader">();
-
-  const reader = useReader(params.id, params.initialScrollPosition);
+  const lastHistory = useReadingProgressStore((state) => state.lastHistoryByBookId(params.id));
+  console.log(lastHistory?.scrollPosition || 0, "lastHistory?.scrollPosition || 0");
+  const reader = useReader(params.id,  lastHistory?.scrollPosition || 0);
   if (
     !reader.ebook ||
     reader.ebookRequestLoading ||

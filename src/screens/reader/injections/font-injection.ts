@@ -1,5 +1,5 @@
-import { ReaderFont } from "@/screens/reader/components/reader-customization/customization-store";
-import { Platform } from "react-native";
+import { ReaderFont } from '@/store/reader/customization-store'
+import { Platform } from 'react-native'
 
 export const injectFont = () => {
   const fonts = ReaderFont.map((font) => font.fontFamily);

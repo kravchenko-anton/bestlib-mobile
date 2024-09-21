@@ -15,7 +15,7 @@ export type TypeRootStackParameterListType = {
   Profile: undefined;
   Reactions: { id: string };
   Welcome: undefined;
-  Reader: { id: string; initialScrollPosition: number };
+  Reader: { id: string };
   UpdateRecommendation: undefined;
   Search: undefined;
   Settings: undefined;

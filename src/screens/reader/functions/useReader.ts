@@ -1,37 +1,30 @@
-import api from "@/api";
-import { useTypedNavigation } from "@/hooks";
-import { useCustomizationStore } from "@/screens/reader/components/reader-customization/customization-store";
-import { useFinishBook } from "@/screens/reader/functions/useFinishBook";
-import { useModalReference } from "@/screens/reader/functions/useModalReference";
-import { useReactions } from "@/screens/reader/functions/useReactions";
-import { useReaderMessage } from "@/screens/reader/functions/useReaderMessage";
-import { useReadingProgress } from "@/screens/reader/functions/useReadingProgress/useReadingProgress";
-import { injectFont } from "@/screens/reader/injections/font-injection";
-import {
-  getStyleTag,
-  injectStyle,
-} from "@/screens/reader/injections/styles-injection";
-import { QueryKeys } from "@/utils/query-keys";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import type WebView from "react-native-webview";
+import api from '@/api'
+import { useTypedNavigation } from '@/hooks'
+import { useFinishBook } from '@/screens/reader/functions/useFinishBook'
+import { useModalReference } from '@/screens/reader/functions/useModalReference'
+import { useReaderMessage } from '@/screens/reader/functions/useReaderMessage'
+import { useReadingProgress } from '@/screens/reader/functions/useReadingProgress'
+import { injectFont } from '@/screens/reader/injections/font-injection'
+import { getStyleTag, injectStyle } from '@/screens/reader/injections/styles-injection'
+import { useCustomizationStore } from '@/store/reader/customization-store'
+import { useReactionStore } from '@/store/reader/reaction-store'
+import { QueryKeys } from '@/utils/query-keys'
+import { errorToast } from '@/utils/toast'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect, useRef, useState } from 'react'
+import type WebView from 'react-native-webview'
 
 export const useReader = (id: string, initialScrollPosition: number) => {
   const { setOptions } = useTypedNavigation();
   const [readerLoading, setReaderLoading] = useState(true);
   const [readerHeaderVisible, setReaderHeaderVisible] = useState(false);
   const viewerReference = useRef<WebView>(null);
+  const { reactions,findReactionById, updateReaction,deleteReaction,createReaction} = useReactionStore();
 
   const { colorScheme, ...restUiProperties } = useCustomizationStore(
     (state) => state,
   );
-  const {
-    createReaction,
-    deleteReaction,
-    updateReaction,
-    findReactionById,
-    allReactions,
-  } = useReactions(id);
+  
   const {
     data: ebook,
     isLoading: ebookRequestLoading,
@@ -41,8 +34,8 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     queryFn: () => api.ebook.ebookById(id),
     select: (data) => data.data,
     enabled: !!id,
-    staleTime: 0,
-    gcTime: 0,
+    networkMode: "offlineFirst",
+    gcTime: 1000 * 60 * 60 * 24,
   });
 
   const {
@@ -70,7 +63,9 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     openGptModal: (text: string) => openModal.gpt(text),
     openTranslationModal: (text: string) => openModal.translation(text),
     openReactionModal: async (id) => {
-      await openModal.reaction.open(findReactionById(id) || null);
+      const reaction = await findReactionById(id);
+      if (!reaction) return errorToast("Problem with reaction");
+      await openModal.reaction.open(reaction);
     },
   });
 
@@ -79,7 +74,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   const [defaultProperties] = useState({
     scrollPosition,
     theme: styleTag,
-    reactions: allReactions,
+    reactions: reactions,
   });
   useEffect(() => {
     setOptions({
@@ -98,9 +93,9 @@ export const useReader = (id: string, initialScrollPosition: number) => {
 
   useEffect(() => {
     viewerReference.current?.injectJavaScript(
-      `${ebook?.functionEnums.wrapReactionsInMarkTag}(${JSON.stringify(allReactions)})`,
+      `${ebook?.functionEnums.wrapReactionsInMarkTag}(${JSON.stringify(reactions)})`,
     );
-  }, [allReactions, createReaction]);
+  }, [reactions, createReaction]);
   const composedHtml = `
    <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -135,7 +130,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     ebookRequestRefetching,
     openModal,
     onMessage,
-    allReactions,
+    reactions,
     defaultProperties,
     styleTag,
   };

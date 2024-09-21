@@ -1,8 +1,8 @@
-import { useTypedNavigation } from "@/hooks";
-import type Reaction from "@/model/Reaction";
-import type { FunctionType } from "@/utils/types";
-import type { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { type Dispatch, type SetStateAction, useRef } from "react";
+import { useTypedNavigation } from '@/hooks'
+import type { ReactionType } from '@/store/reader/reaction-store'
+import type { FunctionType } from '@/utils/types'
+import type { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { type Dispatch, type SetStateAction, useRef } from 'react'
 
 interface UseModalReferenceProperties {
   onOpenModal: FunctionType;
@@ -39,10 +39,8 @@ export const useModalReference = (
 
     openModal: {
       reaction: {
-        open: async (activeReactionPressed: Promise<Reaction> | null) => {
-          reactionModalReference.current?.present({
-            activeReactionPressed: await activeReactionPressed,
-          });
+        open: async (activeReactionPressed: ReactionType | null) => {
+          reactionModalReference.current?.present(activeReactionPressed);
           onOpenModal();
         },
       },

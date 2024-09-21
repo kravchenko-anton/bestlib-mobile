@@ -1,11 +1,11 @@
-import api from "@/api";
-import { useTypedNavigation } from "@/hooks";
-import { Book } from "@/icons";
-import { Button } from "@/ui";
-import { MutationKeys, QueryKeys } from "@/utils/query-keys";
-import * as Sentry from "@sentry/react-native";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { FC } from "react";
+import api from '@/api'
+import { useTypedNavigation } from '@/hooks'
+import { Book } from '@/icons'
+import { Button } from '@/ui'
+import { MutationKeys, QueryKeys } from '@/utils/query-keys'
+import * as Sentry from '@sentry/react-native'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import type { FC } from 'react'
 
 interface BookReadingButtonProperties {
   id: string;
@@ -32,7 +32,7 @@ const ReadingButton: FC<BookReadingButtonProperties> = ({ id }) => {
       .invalidateQueries({
         queryKey: QueryKeys.library,
       })
-      .then(() => navigate("Reader", { id, initialScrollPosition: 0 }));
+      .then(() => navigate("Reader", { id,  }));
   };
 
   return (

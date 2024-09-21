@@ -1,41 +1,28 @@
-import { Share, Trash } from "@/icons";
-import type Reaction from "@/model/Reaction";
-import type { ThemePackType } from "@/screens/reader/components/reader-customization/theme-pack";
-import type { CreateReaction } from "@/screens/reader/functions/useReactions";
-import { Title } from "@/ui";
-import SelectItem from "@/ui/select-list/select-list-item";
-import { SvgButton } from "@/ui/svg-button/svg-button";
-import { Color } from "@/utils/colors";
-import { reactions } from "@/utils/reactions";
-import { shareReaction } from "@/utils/share-text";
-import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
-import type { ReactionByBookOutput } from "api-client";
-import React, { type FC, type RefObject } from "react";
-import { View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { Share, Trash } from '@/icons'
+import type { ReactionStoreActionsType } from '@/store/reader/reaction-store'
+import type { ThemePackType } from '@/store/reader/theme-pack'
+import { Title } from '@/ui'
+import SelectItem from '@/ui/select-list/select-list-item'
+import { SvgButton } from '@/ui/svg-button/svg-button'
+import { Color } from '@/utils/colors'
+import { reactions } from '@/utils/reactions'
+import { shareReaction } from '@/utils/share-text'
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
+import type { ReactionByBookOutput } from 'api-client'
+import React, { type FC, type RefObject } from 'react'
+import { View } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
 
-export interface ReactionModalProperties {
+export interface ReactionModalProperties extends Omit<ReactionStoreActionsType, 'findReactionById'>{
   sheetRef: RefObject<BottomSheetModal>;
   colorScheme: ThemePackType;
   id: string;
-  deleteReaction: (id: string) => Promise<void>;
-  createReaction: (data: CreateReaction) => Promise<void>;
-  updateReaction: (id: string, data: (_: Reaction) => void) => Promise<void>;
 }
 
-export type BottomSheetModalProperties =
-  | {
-      data: {
-        activeReactionPressed: ReactionByBookOutput | null;
-      };
-    }
-  | undefined;
 
 export const ReactionInfo: FC<ReactionModalProperties> = ({
   sheetRef,
   colorScheme,
-  id,
-  createReaction,
   updateReaction,
   deleteReaction,
 }) => {
@@ -67,8 +54,8 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
         />
       )}
     >
-      {(data: BottomSheetModalProperties) => {
-        const activeReactionPressed = data?.data.activeReactionPressed;
+      {(data:any) => {
+        const activeReactionPressed: ReactionByBookOutput = data?.activeReactionPressed
         return (
           <View className="mx-4">
             <Title
@@ -109,9 +96,9 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
                             return console.error("No active reaction");
                           updateReaction(
                             activeReactionPressed.id,
-                            (reaction) => {
-                              reaction.type = item.title;
-                            },
+                            {
+                              type: item.title
+                            }
                           );
                           sheetRef.current?.close();
                         }

@@ -1,11 +1,11 @@
-import type Reaction from "@/model/Reaction";
-import type { ThemePackType } from "@/screens/reader/components/reader-customization/theme-pack";
-import { windowWidth } from "@/utils/dimensions";
-import { doublePress } from "@/utils/handleDoublePress";
-import type { FunctionType } from "@/utils/types";
-import { forwardRef } from "react";
-import { TouchableWithoutFeedback, View } from "react-native";
-import WebView, { type WebViewMessageEvent } from "react-native-webview";
+import type { ReactionType } from '@/store/reader/reaction-store'
+import type { ThemePackType } from '@/store/reader/theme-pack'
+import { windowWidth } from '@/utils/dimensions'
+import { doublePress } from '@/utils/handleDoublePress'
+import type { FunctionType } from '@/utils/types'
+import { forwardRef } from 'react'
+import { TouchableWithoutFeedback, View } from 'react-native'
+import WebView, { type WebViewMessageEvent } from 'react-native-webview'
 
 export interface ReaderViewerProperties {
   readerUiVisible: boolean;
@@ -14,7 +14,7 @@ export interface ReaderViewerProperties {
   defaultProperties: {
     scrollPosition: number;
     theme: string;
-    reactions: Reaction[];
+    reactions: ReactionType[]
   };
   colorScheme: ThemePackType;
   onMessage: (event: WebViewMessageEvent) => Promise<void>;

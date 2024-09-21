@@ -1,19 +1,19 @@
-import Navigation from "@/navigation/navigation";
-import Toast from "@/ui/toast";
-import { Color } from "@/utils/colors";
-import { clientStorage } from "@/utils/mmkv-wrapper";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import NetInfo from "@react-native-community/netinfo";
-import * as Sentry from "@sentry/react-native";
-import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-import { onlineManager, QueryClient } from "@tanstack/react-query";
-import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { useFonts } from "expo-font";
-import { StatusBar } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import "react-native-svg";
-import "react-native-url-polyfill/auto";
-import "../env-config";
+import Navigation from '@/navigation/navigation'
+import Toast from '@/ui/toast'
+import { Color } from '@/utils/colors'
+import { clientStorage } from '@/utils/mmkv-wrapper'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import NetInfo from '@react-native-community/netinfo'
+import * as Sentry from '@sentry/react-native'
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { onlineManager, QueryClient } from '@tanstack/react-query'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { useFonts } from 'expo-font'
+import { StatusBar } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import 'react-native-svg'
+import 'react-native-url-polyfill/auto'
+import '../env-config'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -77,6 +77,7 @@ const App = () => {
       <GestureHandlerRootView
         style={{
           flex: 1,
+          backgroundColor: Color.background,
         }}
       >
         <BottomSheetModalProvider>

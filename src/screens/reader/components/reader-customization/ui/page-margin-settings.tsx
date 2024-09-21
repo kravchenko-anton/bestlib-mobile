@@ -1,6 +1,6 @@
-import type { CustomizationStoreActionsType } from '@/screens/reader/components/reader-customization/customization-store'
-import type { ThemePackType } from '@/screens/reader/components/reader-customization/theme-pack'
 import PageMarginIcon from '@/screens/reader/components/reader-customization/ui/icons/page-margin'
+import type { CustomizationStoreActionsType } from '@/store/reader/customization-store'
+import type { ThemePackType } from '@/store/reader/theme-pack'
 import type { FC } from 'react'
 import { View } from 'react-native'
 

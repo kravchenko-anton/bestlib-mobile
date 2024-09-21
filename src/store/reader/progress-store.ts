@@ -1,18 +1,13 @@
-import { zustandStorage } from "@/utils/mmkv-wrapper";
-import type { UserLibraryOutput, UserStatistics } from "api-client";
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { historyByLatestSorting } from '@/utils'
+import { zustandStorage } from '@/utils/mmkv-wrapper'
+import dayjs from 'dayjs'
+import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
-export type CompareReadingBooksType = {};
-export type libraryType =
-  | (Omit<UserLibraryOutput, "readingBooks"> & {
-      readingBooks: CompareReadingBooksType[];
-    })
-  | null;
 
 export interface ReadingHistoryType {
-  id: string;
   bookId: string;
+  id: string;
   startProgress: number;
   endProgress: number;
   progressDelta: number;
@@ -23,20 +18,19 @@ export interface ReadingHistoryType {
   startFromReadingScreen: boolean;
 }
 interface ReadingProgressStoreType {
-  history: ReadingHistoryType[];
-  statistics: UserStatistics | null;
-  library: libraryType;
+  localHistory: ReadingHistoryType[];
+  syncedHistory: ReadingHistoryType[];
 }
 
 const initialState: ReadingProgressStoreType = {
-  history: [],
-  statistics: null,
-  library: null,
+  localHistory: [],
+  syncedHistory: [],
 };
 
 interface ReadingProgressStoreActionsType {
   newProgress: (history: ReadingHistoryType) => void;
-  clearHistory: () => void;
+  lastHistoryByBookId: (bookId: string) => ReadingHistoryType | undefined;
+  getInitialHistory: () => ReadingHistoryType | undefined;
   updateStartFromReadingScreen: (
     data: Pick<ReadingHistoryType, "id"> & { startFromReadingScreen: boolean },
   ) => void;
@@ -47,16 +41,32 @@ export const useReadingProgressStore = create<
   persist(
     (set, getState) => ({
       ...initialState,
+      getInitialHistory: () => {
+        const history = [...getState().localHistory, ...getState().syncedHistory]
+        const sortedHistory = historyByLatestSorting(history).find(
+          (h) => h.startFromReadingScreen,
+        )
+        
+        return sortedHistory
+      },
+      lastHistoryByBookId: (bookId) =>
+  [...getState().localHistory, ...getState().syncedHistory]
+          .filter((h) => h.bookId === bookId)[0],
       newProgress: (newHistory) => {
-        const history = getState().history;
-        if (history.some((h) => h.id === newHistory.id)) {
-          console.log("⚠️ update progress", {
+        const allHistory =getState().localHistory
+        const isSameDay = allHistory.some(
+          (h) =>
+            dayjs(h.startDate).isSame(newHistory.startDate, "day") &&
+            h.bookId === newHistory.bookId,
+        )
+        if (isSameDay) {
+          console.log("⚠️ update progress, its same day", {
             id: newHistory.id,
             readTime: newHistory.readingTimeMs,
           });
           return set((state) => ({
             ...state,
-            history: state.history.map(({ ...h }) =>
+            localHistory: state.localHistory.map(({ ...h }) =>
               h.id === newHistory.id ? newHistory : h,
             ),
           }));
@@ -68,18 +78,15 @@ export const useReadingProgressStore = create<
         });
         set((state) => ({
           ...state,
-          needSync: true,
-          history: [...state.history, newHistory],
+          localHistory: [...state.localHistory, newHistory],
         }));
       },
-      clearHistory: () =>
-        set(({ history, ...state }) => ({ ...state, history: [] })),
       updateStartFromReadingScreen: (
         data: Pick<ReadingHistoryType, "id" | "startFromReadingScreen">,
       ) =>
         set((state) => ({
           ...state,
-          history: state.history.map(({ ...h }) =>
+          localHistory: state.localHistory .map(({ ...h }) =>
             h.id === data.id
               ? { ...h, startFromReadingScreen: data.startFromReadingScreen }
               : h,

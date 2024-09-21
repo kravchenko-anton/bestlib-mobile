@@ -1,12 +1,13 @@
 import api from '@/api'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
 import { errorToast } from '@/utils/toast'
+import type { AuthDtoType } from '@/validation/auth/auth.schema'
 import * as Sentry from '@sentry/react-native'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import type { AuthOutput } from '../../../../api-client'
+import type { AuthOutput } from '../../../api-client'
 import { saveTokensStorage } from './auth-helper'
-import type { AuthDtoType } from "@/validation/auth/auth.schema"
+
 export interface AuthStoreStateType {
 	isLoading: 'google' | 'mail-register' | 'mail-login' | false
 	authType: 'register' | 'login' | null

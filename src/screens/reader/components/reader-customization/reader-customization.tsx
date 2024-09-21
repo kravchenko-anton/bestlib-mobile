@@ -1,11 +1,11 @@
-import { useCustomizationStore } from '@/screens/reader/components/reader-customization/customization-store'
 import { FontSizeSettings } from '@/screens/reader/components/reader-customization/ui/font-size-settings'
 import { FontStyleSettings } from '@/screens/reader/components/reader-customization/ui/font-style-settings'
 import { LineHeightSettings } from '@/screens/reader/components/reader-customization/ui/line-height-settings'
 import { PageMarginSettings } from '@/screens/reader/components/reader-customization/ui/page-margin-settings'
 import { ThemeStyleSettings } from '@/screens/reader/components/reader-customization/ui/theme-style-settings'
-import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
+import { useCustomizationStore } from '@/store/reader/customization-store'
 import { Color } from '@/utils/colors'
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
 import type { FC, RefObject } from 'react'
 import { Pressable, View } from 'react-native'
 

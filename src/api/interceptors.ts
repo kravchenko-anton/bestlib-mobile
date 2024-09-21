@@ -1,11 +1,7 @@
-import {
-  deleteTokensStorage,
-  getAccessToken,
-  getNewTokens,
-} from "@/screens/auth/store/auth-helper";
-import { errorCatch } from "@/utils/catch-error";
-import { errorToast } from "@/utils/toast";
-import axios, { type InternalAxiosRequestConfig } from "axios";
+import { deleteTokensStorage, getAccessToken, getNewTokens } from '@/store/auth/auth-helper'
+import { errorCatch } from '@/utils/catch-error'
+import { errorToast } from '@/utils/toast'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
 
 export const instance = axios.create({
   headers: {

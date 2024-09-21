@@ -1,8 +1,8 @@
-import { useTypedNavigation } from "@/hooks";
-import type { WebviewMessageType } from "@/screens/reader/functions/useReaderMessage";
-import { useReadingProgressStore } from "@/screens/reader/functions/useReadingProgress/progress-store";
-import { useEffect, useState } from "react";
-import { AppState } from "react-native";
+import { useTypedNavigation } from '@/hooks'
+import type { WebviewMessageType } from '@/screens/reader/functions/useReaderMessage'
+import { useReadingProgressStore } from '@/store/reader/progress-store'
+import { useEffect, useState } from 'react'
+import { AppState } from 'react-native'
 
 //TODO: пофиксить трекиенг времени чтобы нельзя было полушить приложение и накапает много времени, нужно если прогресс долго не менятся перейти в спящий режим
 interface ReadingProgressProperties {

@@ -27,7 +27,6 @@ export * from './gpt-explain';
 export * from './info-by-id';
 export * from './reaction-by-book-output';
 export * from './reaction-list-output';
-export * from './reading-history';
 export * from './refresh-dto';
 export * from './short-author-dto';
 export * from './short-book';
