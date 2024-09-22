@@ -13,7 +13,6 @@ import { ImpressionSchema, type ImpressionSchemaType } from '@/validation/impres
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Sentry from '@sentry/react-native'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
@@ -58,7 +57,9 @@ const BookImpression: FC = () => {
           onPress={() => navigate("Library")}
         />
       </View>
-      <FinishBookIllustration className="mx-auto" height={200} width={250} />
+      <View className='mx-auto'>
+      <FinishBookIllustration height={200} width={250} />
+      </View>
       <Title className="mt-8 text-center" size={"xxl"} weight="bold">
         Thanks for reading!
       </Title>
@@ -79,7 +80,6 @@ const BookImpression: FC = () => {
 
           <Field
             isArea
-            className="mb-4"
             control={control}
             placeholder="Share your thoughts with us here. "
             name="text"
@@ -87,7 +87,7 @@ const BookImpression: FC = () => {
           <Button
             size="lg"
             variant="primary"
-            className="mb-4 w-full"
+            className="mb-4 mt-4 w-full"
             onPress={handleSubmit(submitReview)}
           >
             Submit

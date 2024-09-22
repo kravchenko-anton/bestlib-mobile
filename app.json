@@ -68,11 +68,9 @@
           ]
         }
       ],
-      "expo-build-properties",
       "expo-localization"
     ],
     "experiments": {
-      "typedRoutes": true
     },
     "extra": {
       "eas": {

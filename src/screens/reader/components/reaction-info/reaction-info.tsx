@@ -13,7 +13,7 @@ import React, { type FC, type RefObject } from 'react'
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 
-export interface ReactionModalProperties extends Omit<ReactionStoreActionsType, 'findReactionById'>{
+export interface ReactionModalProperties extends Pick<ReactionStoreActionsType, 'deleteReaction' | 'createReaction' | 'updateReaction'>{
   sheetRef: RefObject<BottomSheetModal>;
   colorScheme: ThemePackType;
   id: string;
@@ -54,9 +54,9 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
         />
       )}
     >
-      {(data:any) => {
-        const activeReactionPressed: ReactionByBookOutput = data?.activeReactionPressed
-        return (
+      {(data) => {
+        const activeReactionPressed:ReactionByBookOutput = data?.data
+          return (
           <View className="mx-4">
             <Title
               color={colorScheme.colorPalette.text}

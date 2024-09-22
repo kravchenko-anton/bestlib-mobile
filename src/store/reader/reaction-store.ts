@@ -1,4 +1,7 @@
+import api from '@/api'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
+import { fetch } from '@react-native-community/netinfo'
+import dayjs from 'dayjs'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -12,29 +15,49 @@ export interface ReactionType  {
 	book: {
 		id: string
 		title: string
-		author: string
+		author: {
+			id: string
+			name: string
+		}
 		picture: string
 	}
 }
+
+export interface UpdateReactionType {
+	id: string
+	updateObject: Partial<Omit<ReactionType, "id">>
+}
+
 export interface ReactionStoreType {
 	reactions: ReactionType[]
 	hot: {
 		create: ReactionType[],
-		update: ReactionType[],
-		delete: ReactionType[]
+		update: UpdateReactionType[],
+		delete: string[]
 	}
+	lastSyncedAt: Date | null
 }
 const initialState: ReactionStoreType = {
 	reactions: [],
+	lastSyncedAt: null,
 	hot: {
 		create: [],
 		update: [],
 		delete: []
 	}
 }
+export interface ReactionCatalogType  {
+	book: ReactionType["book"]
+	reactions: (Omit<ReactionType, 'book'>)[]
+	count: number
+}
 
 export interface ReactionStoreActionsType {
+	syncReactions: () => void;
 	createReaction: (reaction: ReactionType) => void
+	clearReactions: () => void
+	getReactionByBookId: (bookId: string) => ReactionType[]
+	getReactionCatalog: () => ReactionCatalogType[]
 	findReactionById: (id: string) => Promise<ReactionType | undefined>
 	updateReaction: (id: string,reaction: Partial<Omit<ReactionType, "id">>) => void
 	deleteReaction: (id:string) => void
@@ -45,57 +68,142 @@ export const useReactionStore = create<
 	persist(
 		(set,getState) => ({
 			...initialState,
+			syncReactions: async () =>
+			{
+				const hot = getState().hot
+				const lastSyncedAt = getState().lastSyncedAt;
+				const {isConnected} = await fetch();
+				if (!isConnected) return console.log("😒 no internet connection to sync reaction");
+				if (!hot.create.length && !hot.update.length && !hot.delete.length) return console.log("😒 no data to sync reactions");
+				if (lastSyncedAt && dayjs().diff(dayjs(lastSyncedAt), "day") < 1) {
+					console.log("😒 prevent sync reactions in one day");
+					return;
+				}
+				const {data} = await api.reaction.syncReaction({
+					create: hot.create.map(({book, ...reaction}) => ({
+						...reaction,
+						bookId: book.id
+					})),
+					update: hot.update,
+					delete: hot.delete
+				})
+				if(!data.length) return console.log("😒 problem with sync reactions", data);
+				console.log("😒 synced reactions", data);
+				
+				set((state) => ({
+					...state,
+					lastSyncedAt: dayjs().toDate(),
+					reactions: data as ReactionType[],
+					hot: {
+						create: [],
+						update: [],
+						delete: []
+					}
+				}));
+			},
+			getReactionByBookId: (bookId) => {
+				return getState().reactions.filter((r) => r.book.id === bookId);
+			},
+			getReactionCatalog: () => {
+				const reactions = getState().reactions;
+				return reactions.reduce((acc, reaction) => {
+					const book = reaction.book;
+					const index = acc.findIndex((r) => r.book.id === book.id);
+					if (index === -1) {
+						acc.push({
+							book,
+							reactions: [reaction],
+							count: 1
+						});
+					} else {
+						acc[index].reactions.push(reaction);
+						acc[index].count++;
+					}
+					return acc;
+				}, [] as ReactionCatalogType[]);
+			},
 			findReactionById: async id => {
 				return getState().reactions.find(r => r.id === id)
 			},
-			createReaction: reaction => {
-				set(state => ({
+			
+			
+			createReaction: (reaction) => {
+				set((state) => ({
 					...state,
-				hot: {
-					...state.hot,
-					create: [...state.hot.create, reaction]
-				}
-				}))
-				set(state => ({
-					...state,
+					hot: {
+						...state.hot,
+						create: [...state.hot.create, reaction],
+					},
 					reactions: [...state.reactions, reaction],
-				}))
+				}));
 			},
+			
 			updateReaction: (id, updateObject) => {
-				set(state => {
-				// if exists in create, update it, but only partial fields
-				if (state.hot.create.find(r => r.id === id)) {
-					return {
-						...state,
-						hot: {
-							...state.hot,
-							create: state.hot.create.map(r => (r.id === id ? { ...r, ...updateObject } : r))
-						}
+				const hot = getState().hot;
+				
+				set((state) => {
+					let updatedHot = state.hot;
+					if (hot.create.find((r) => r.id === id)) {
+						updatedHot = {
+							...updatedHot,
+							create: state.hot.create.map((r) =>
+								r.id === id ? { ...r, ...updateObject } : r
+							),
+						};
+					} else {
+						updatedHot = {
+							...updatedHot,
+							update: [...state.hot.update, { id, updateObject }],
+						};
 					}
-				}
+					
 					return {
 						...state,
-						reactions: state.reactions.map(r => (r.id === id ? { ...r, ...updateObject } : r))
-					}})
+						hot: updatedHot,
+						reactions: state.reactions.map((r) =>
+							r.id === id ? { ...r, ...updateObject } : r
+						),
+					};
+				});
 			},
-			deleteReaction: id => {
-				set(state => {
-						// if reaction is in create, remove it from create
-					if (state.hot.create.find(r => r.id === id)) {
-						return {
-							...state,
-							hot: {
-								...state.hot,
-								create: state.hot.create.filter(r => r.id !== id)
-							}
-						}
+			
+			clearReactions: () => {
+				set((state) => ({
+					...state,
+					reactions: [],
+					hot: {
+						create: [],
+						update: [],
+						delete: [],
+					},
+				}));
+			},
+			
+			deleteReaction: (id) => {
+				console.log("delete reaction", id);
+				
+				set((state) => {
+					let updatedHot = state.hot;
+					if (updatedHot.create.find((r) => r.id === id)) {
+						updatedHot = {
+							...updatedHot,
+							create: updatedHot.create.filter((r) => r.id !== id),
+						};
+					} else {
+						updatedHot = {
+							...updatedHot,
+							delete: [...updatedHot.delete, id],
+							update: updatedHot.update.filter((r) => r.id !== id),
+						};
 					}
+					
 					return {
 						...state,
-						reactions: state.reactions.filter(r => r.id !== id)
-					}
-				})
-			}
+						reactions: state.reactions.filter((r) => r.id !== id),
+						hot: updatedHot,
+					};
+				});
+			},
 		}),
 		{
 			name: 'reaction-store',

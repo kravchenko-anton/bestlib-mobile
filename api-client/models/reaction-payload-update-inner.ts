@@ -13,36 +13,27 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { ReactionPayloadUpdateInnerUpdateObject } from './reaction-payload-update-inner-update-object';
 
 /**
  * 
  * @export
- * @interface CreateImpressionDto
+ * @interface ReactionPayloadUpdateInner
  */
-export interface CreateImpressionDto {
+export interface ReactionPayloadUpdateInner {
     /**
      * 
      * @type {string}
-     * @memberof CreateImpressionDto
+     * @memberof ReactionPayloadUpdateInner
      */
-    'text'?: string;
+    'id': string;
     /**
      * 
-     * @type {number}
-     * @memberof CreateImpressionDto
+     * @type {ReactionPayloadUpdateInnerUpdateObject}
+     * @memberof ReactionPayloadUpdateInner
      */
-    'rating': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateImpressionDto
-     */
-    'bookId': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CreateImpressionDto
-     */
-    'tags'?: Array<string>;
+    'updateObject': ReactionPayloadUpdateInnerUpdateObject;
 }
 

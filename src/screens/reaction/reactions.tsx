@@ -1,46 +1,26 @@
-import api from "@/api";
-import { useTypedNavigation, useTypedRoute } from "@/hooks";
-import { Close } from "@/icons";
-import type { SearchFormDataType } from "@/screens/search/useSearchForm";
-import { Button, Flatlist, Loader, Title } from "@/ui";
-import { SvgButton } from "@/ui/svg-button/svg-button";
-import { fontSettings } from "@/ui/title/settings";
-import { cn } from "@/utils";
-import { Color } from "@/utils/colors";
-import { MutationKeys, QueryKeys } from "@/utils/query-keys";
-import { reactions } from "@/utils/reactions";
-import { shareReaction } from "@/utils/share-text";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
-import { TextInput, View } from "react-native";
+import { useTypedNavigation, useTypedRoute } from '@/hooks'
+import { Close } from '@/icons'
+import type { SearchFormDataType } from '@/screens/search/useSearchForm'
+import { useReactionStore } from '@/store/reader/reaction-store'
+import { Button, Flatlist, Title } from '@/ui'
+import { SvgButton } from '@/ui/svg-button/svg-button'
+import { fontSettings } from '@/ui/title/settings'
+import { cn } from '@/utils'
+import { Color } from '@/utils/colors'
+import { reactions } from '@/utils/reactions'
+import { shareReaction } from '@/utils/share-text'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import React from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { TextInput, View } from 'react-native'
 
 dayjs.extend(relativeTime);
 
 const Reactions = () => {
-  const queryClient = useQueryClient();
   const { params } = useTypedRoute<"Reactions">();
-  const {
-    data: userReactions = [],
-    isLoading,
-    isRefetching,
-  } = useQuery({
-    queryKey: QueryKeys.reaction.byId(params.id),
-    queryFn: () => api.reaction.reactionByBook(params.id),
-    select: (data) => data.data,
-    staleTime: 0,
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
-  });
-  const {
-    mutateAsync: removeReactionMutation,
-    isPending: removeReactionLoading,
-  } = useMutation({
-    mutationKey: MutationKeys.reaction.remove,
-    mutationFn: (id: string) => api.reaction.remove(id),
-  });
+  const {getReactionByBookId,deleteReaction} = useReactionStore()
+  const userReactions = getReactionByBookId(params.id)
   const [filterSettings, setFilterSettings] = React.useState({
     search: "",
     reaction: "",
@@ -56,14 +36,13 @@ const Reactions = () => {
 
   const searchTerm = watch("searchTerm");
   const { goBack } = useTypedNavigation();
-  if (!userReactions || isLoading) return <Loader />;
   return (
     <View className="bg-background h-screen w-screen">
       <Controller
         control={control}
         name="searchTerm"
         render={({ field: { value, onChange, onBlur } }) => (
-          <View className="border-bordered border-b-[1px]">
+          <View className="border-bordered border-b-[1px] pb-1">
             <View className=" w-full flex-row items-center justify-between px-2">
               <View className="w-3/4 flex-row items-center">
                 <Close
@@ -75,7 +54,7 @@ const Reactions = () => {
                 <TextInput
                   renderToHardwareTextureAndroid
                   autoCapitalize="none"
-                  className="ml-2 w-full"
+                  className="ml-2 w-full pb-1"
                   value={value}
                   placeholderTextColor={Color.gray}
                   placeholder="Type something to search"
@@ -207,9 +186,6 @@ const Reactions = () => {
                       }}
                     />
                   ) : null}
-                  <Title size="sm" numberOfLines={1} color={Color.gray}>
-                    {dayjs(item.createdAt).fromNow()} ago
-                  </Title>
                 </View>
                 <View className="mt-2 flex-row items-center">
                   <Button
@@ -225,19 +201,8 @@ const Reactions = () => {
                   <Button
                     size={"sm"}
                     variant="foreground"
-                    disabled={
-                      removeReactionLoading || isLoading || isRefetching
-                    }
                     onPress={() => {
-                      if (removeReactionLoading || isLoading) return;
-                      removeReactionMutation(item.id).then(() => {
-                        queryClient.invalidateQueries({
-                          queryKey: QueryKeys.reaction.byId(params.id),
-                        });
-                        queryClient.invalidateQueries({
-                          queryKey: QueryKeys.reaction.list,
-                        });
-                      });
+                      deleteReaction(item.id);
                     }}
                   >
                     Delete

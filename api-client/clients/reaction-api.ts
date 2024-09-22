@@ -28,6 +28,10 @@ import type { ReactionByBookOutput } from '../models';
 // @ts-ignore
 import type { ReactionListOutput } from '../models';
 // @ts-ignore
+import type { ReactionOutput } from '../models';
+// @ts-ignore
+import type { ReactionPayload } from '../models';
+// @ts-ignore
 import type { UpdateReaction } from '../models';
 /**
  * ReactionApi - axios parameter creator
@@ -183,6 +187,45 @@ export const ReactionApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {ReactionPayload} reactionPayload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        syncReaction: async (reactionPayload: ReactionPayload, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'reactionPayload' is not null or undefined
+            assertParamExists('syncReaction', 'reactionPayload', reactionPayload)
+            const localVarPath = `/reaction/sync-reaction`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(reactionPayload, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {UpdateReaction} updateReaction 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -279,6 +322,18 @@ export const ReactionApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {ReactionPayload} reactionPayload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async syncReaction(reactionPayload: ReactionPayload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReactionOutput>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.syncReaction(reactionPayload, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReactionApi.syncReaction']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {UpdateReaction} updateReaction 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -333,6 +388,15 @@ export const ReactionApiFactory = function (configuration?: Configuration, baseP
          */
         remove(id: string, options?: any): AxiosPromise<void> {
             return localVarFp.remove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ReactionPayload} reactionPayload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        syncReaction(reactionPayload: ReactionPayload, options?: any): AxiosPromise<Array<ReactionOutput>> {
+            return localVarFp.syncReaction(reactionPayload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -394,6 +458,17 @@ export class ReactionApi extends BaseAPI {
      */
     public remove(id: string, options?: RawAxiosRequestConfig) {
         return ReactionApiFp(this.configuration).remove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ReactionPayload} reactionPayload 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReactionApi
+     */
+    public syncReaction(reactionPayload: ReactionPayload, options?: RawAxiosRequestConfig) {
+        return ReactionApiFp(this.configuration).syncReaction(reactionPayload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

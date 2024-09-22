@@ -6,6 +6,7 @@ import { routes } from '@/navigation/user-routes'
 import { getRefreshToken } from '@/store/auth/auth-helper'
 import { useAuthStore } from '@/store/auth/auth-store'
 import { useReadingProgressStore } from '@/store/reader/progress-store'
+import { useReactionStore } from '@/store/reader/reaction-store'
 import { Loader } from '@/ui'
 import { Color } from '@/utils/colors'
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native'
@@ -28,7 +29,8 @@ const noBottomMenuRoutes = new Set([
 
 const Navigation: FC = () => {
   const [latestHistory] = useState(useReadingProgressStore.getState().getInitialHistory()); // eslint-disable-line
- 
+  const syncHistory = useReadingProgressStore.getState().syncHistory
+ const syncReaction = useReactionStore.getState().syncReactions
   const { user, logout } = useAuthStore((state) => ({
     user: state.user,
     logout: state.logout,
@@ -50,6 +52,8 @@ const Navigation: FC = () => {
   };
 
   useEffect(() => {
+    syncHistory()
+    syncReaction()
     const listener = navReference.addListener("state", () => {
       const route = navReference.getCurrentRoute()
         ?.name as keyof TypeRootStackParameterListType;

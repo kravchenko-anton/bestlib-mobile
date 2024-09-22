@@ -7,7 +7,9 @@ import { errorToast } from '@/utils/toast'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { useMutation } from '@tanstack/react-query'
 import { getLocales } from 'expo-localization'
+import uuid from 'react-native-uuid'
 import type { WebViewMessageEvent } from 'react-native-webview'
+
 import type { GptExplain, TranslateText } from '../../../../api-client'
 
 export enum ReaderMessageType {
@@ -49,10 +51,15 @@ export interface ReaderMessageProperties {
       "chapter" | "progress" | "scrollTop"
     >,
   ) => void;
-  id: string;
-  bookTitle: string;
-  bookAuthor: string;
-  bookPicture: string;
+ book: {
+    title: string;
+    picture: string;
+    id: string;
+    author: {
+      name: string;
+      id: string;
+    }
+ }
   onFinishBookPress: (id: string) => void;
   onContentLoadEnd: () => void;
   createReaction: (data: ReactionType) => void;
@@ -63,14 +70,11 @@ export interface ReaderMessageProperties {
 
 export const useReaderMessage = ({
   onFinishBookPress,
-  bookAuthor,
-  bookPicture,
+ book,
   onContentLoadEnd,
-  id,
   onScroll,
   openReactionModal,
   createReaction,
-  bookTitle,
   openTranslationModal,
   openGptModal,
 }: ReaderMessageProperties) => {
@@ -104,8 +108,8 @@ export const useReaderMessage = ({
       if (explainLoading) return errorToast("Loading explanation");
       const { data: explanation } = await gptExplain({
         selectedText: payload.text,
-        bookTitle: bookTitle,
-        bookAuthor: bookAuthor,
+        bookTitle: book.title,
+        bookAuthor: book.author.name,
         targetLang: getLocales()[0].languageTag,
       });
       openGptModal(explanation);
@@ -122,9 +126,10 @@ export const useReaderMessage = ({
       openTranslationModal(translateAnswer);
     }
     if (type === ReaderMessageType.Reaction) {
-      console.log("🚂", {
-        bookId: id,
-        id: Math.random().toString(),
+      const uuid2 = uuid.v4()
+      console.log("🤣", {
+        bookId: book.id,
+        id: uuid2,
         createAt: new Date(),
         text: payload.text,
         range: {
@@ -135,15 +140,13 @@ export const useReaderMessage = ({
         reaction: payload.reaction,
       });
       createReaction({
-        bookId: id,
+        id: String(uuid2),
+        book,
         text: payload.text,
         startOffset: payload.range.startOffset,
         endOffset: payload.range.endOffset,
         xpath: payload.range.xpath,
         type: payload.reaction,
-        bookPicture: bookPicture,
-        bookAuthor: bookAuthor,
-        bookTitle: bookTitle,
       });
     }
     if (type === ReaderMessageType.SelectionLimitFail)
@@ -158,7 +161,7 @@ export const useReaderMessage = ({
           chapterProgress: payload.chapter.chapterProgress,
         },
       });
-    if (type === ReaderMessageType.FinishBook) onFinishBookPress(id);
+    if (type === ReaderMessageType.FinishBook) onFinishBookPress(book.id);
     if (
       type === ReaderMessageType.MarkClick &&
       payload.id !== null &&

@@ -17,61 +17,49 @@
 /**
  * 
  * @export
- * @interface ReadingHistory
+ * @interface ReactionPayloadCreateInner
  */
-export interface ReadingHistory {
+export interface ReactionPayloadCreateInner {
     /**
      * 
      * @type {string}
-     * @memberof ReadingHistory
-     */
-    'startDate': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReadingHistory
-     */
-    'endDate': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReadingHistory
-     */
-    'startProgress': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReadingHistory
+     * @memberof ReactionPayloadCreateInner
      */
     'id': string;
     /**
      * 
-     * @type {number}
-     * @memberof ReadingHistory
+     * @type {string}
+     * @memberof ReactionPayloadCreateInner
      */
-    'endProgress': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReadingHistory
-     */
-    'progressDelta': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReadingHistory
-     */
-    'readingTimeMs': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReadingHistory
-     */
-    'scrollPosition': number;
+    'type': string;
     /**
      * 
      * @type {string}
-     * @memberof ReadingHistory
+     * @memberof ReactionPayloadCreateInner
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReactionPayloadCreateInner
+     */
+    'xpath': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReactionPayloadCreateInner
+     */
+    'startOffset': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReactionPayloadCreateInner
+     */
+    'endOffset': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReactionPayloadCreateInner
      */
     'bookId': string;
 }

@@ -48,6 +48,13 @@ models/index.ts
 models/info-by-id.ts
 models/reaction-by-book-output.ts
 models/reaction-list-output.ts
+models/reaction-output-book.ts
+models/reaction-output.ts
+models/reaction-payload-create-inner.ts
+models/reaction-payload-update-inner-update-object.ts
+models/reaction-payload-update-inner.ts
+models/reaction-payload.ts
+models/reading-history.ts
 models/refresh-dto.ts
 models/short-author-dto.ts
 models/short-book.ts

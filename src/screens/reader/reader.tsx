@@ -15,7 +15,6 @@ import React from 'react'
 const Reader = () => {
   const { params } = useTypedRoute<"Reader">();
   const lastHistory = useReadingProgressStore((state) => state.lastHistoryByBookId(params.id));
-  console.log(lastHistory?.scrollPosition || 0, "lastHistory?.scrollPosition || 0");
   const reader = useReader(params.id,  lastHistory?.scrollPosition || 0);
   if (
     !reader.ebook ||

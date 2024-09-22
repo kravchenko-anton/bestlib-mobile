@@ -17,32 +17,20 @@
 /**
  * 
  * @export
- * @interface CreateImpressionDto
+ * @interface ReactionOutputBookAuthor
  */
-export interface CreateImpressionDto {
+export interface ReactionOutputBookAuthor {
     /**
      * 
      * @type {string}
-     * @memberof CreateImpressionDto
+     * @memberof ReactionOutputBookAuthor
      */
-    'text'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreateImpressionDto
-     */
-    'rating': number;
+    'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof CreateImpressionDto
+     * @memberof ReactionOutputBookAuthor
      */
-    'bookId': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CreateImpressionDto
-     */
-    'tags'?: Array<string>;
+    'name'?: string;
 }
 

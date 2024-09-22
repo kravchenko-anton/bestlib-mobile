@@ -19,8 +19,31 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   const [readerLoading, setReaderLoading] = useState(true);
   const [readerHeaderVisible, setReaderHeaderVisible] = useState(false);
   const viewerReference = useRef<WebView>(null);
-  const { reactions,findReactionById, updateReaction,deleteReaction,createReaction} = useReactionStore();
-
+  const {hot, reactions,findReactionById, updateReaction,deleteReaction,createReaction, clearReactions} = useReactionStore();
+    console.log( 'hot ❤️', JSON.stringify({
+      create: hot.create.map(r => {
+        return {
+          id: r.id,
+          text: r.text,
+          type: r.type
+        }
+      }),
+      update: hot.update.map(r => {
+        return {
+          id: r.id,
+          updateObject: r.updateObject
+        }
+      }),
+      deleted: hot.delete
+      }
+    ));
+    console.log( 'reactions 🤦‍♂️', JSON.stringify(reactions.map(r => {
+      return {
+        id: r.id,
+        text: r.text,
+        type: r.type
+      }
+    })));
   const { colorScheme, ...restUiProperties } = useCustomizationStore(
     (state) => state,
   );
@@ -52,10 +75,12 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   });
 
   const { onMessage } = useReaderMessage({
-    id,
-    bookTitle: ebook?.title || "",
-    bookAuthor: ebook?.author.name || "",
-    bookPicture: ebook?.picture || "",
+  book: {
+    title: ebook?.title || "",
+    picture: ebook?.picture || "",
+    id: id,
+    author: ebook?.author as { name: string; id: string },
+  },
     onFinishBookPress: onFinish,
     onContentLoadEnd: () => setReaderLoading(false),
     onScroll: updateReadingProgress,
@@ -65,6 +90,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     openReactionModal: async (id) => {
       const reaction = await findReactionById(id);
       if (!reaction) return errorToast("Problem with reaction");
+      console.log("reaction", reaction);
       await openModal.reaction.open(reaction);
     },
   });

@@ -1,9 +1,10 @@
+import api from '@/api'
 import { historyByLatestSorting } from '@/utils'
 import { zustandStorage } from '@/utils/mmkv-wrapper'
+import NetInfo from '@react-native-community/netinfo'
 import dayjs from 'dayjs'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-
 
 export interface ReadingHistoryType {
   bookId: string;
@@ -20,17 +21,20 @@ export interface ReadingHistoryType {
 interface ReadingProgressStoreType {
   localHistory: ReadingHistoryType[];
   syncedHistory: ReadingHistoryType[];
+  lastSyncedAt: Date | null;
 }
 
 const initialState: ReadingProgressStoreType = {
   localHistory: [],
   syncedHistory: [],
+  lastSyncedAt: null,
 };
 
 interface ReadingProgressStoreActionsType {
   newProgress: (history: ReadingHistoryType) => void;
   lastHistoryByBookId: (bookId: string) => ReadingHistoryType | undefined;
   getInitialHistory: () => ReadingHistoryType | undefined;
+  syncHistory: () => void;
   updateStartFromReadingScreen: (
     data: Pick<ReadingHistoryType, "id"> & { startFromReadingScreen: boolean },
   ) => void;
@@ -41,20 +45,44 @@ export const useReadingProgressStore = create<
   persist(
     (set, getState) => ({
       ...initialState,
+      syncHistory: async () =>
+      {
+        const dataToSync = getState().localHistory.map(({startFromReadingScreen, ...h}) => ({
+          ...h
+        }));
+          const lastSyncedAt = getState().lastSyncedAt;
+        const {isConnected} = await NetInfo.fetch();
+        if (!isConnected) return console.log("🔃 no internet connection");
+        if (!dataToSync.length) return console.log("🔃 no data to sync");
+          // prevent sync in one day, like not less than 1 day
+        if (lastSyncedAt && dayjs().diff(dayjs(lastSyncedAt), "day") < 1) {
+          console.log("🔃 prevent sync in one day");
+          return;
+        }
+        const {data} = await api.user.syncHistory(dataToSync);
+        if(!data.length) return console.log("🔃 problem with sync history", data);
+        console.log("🔃 synced history", data);
+        
+        set((state) => ({
+          ...state,
+          lastSyncedAt:dayjs().toDate(),
+          syncedHistory: data.map((h) => ({
+          ...h,
+          startFromReadingScreen: false,
+          })),
+          localHistory: [],
+        }));
+      },
       getInitialHistory: () => {
         const history = [...getState().localHistory, ...getState().syncedHistory]
-        const sortedHistory = historyByLatestSorting(history).find(
+        return historyByLatestSorting(history).find(
           (h) => h.startFromReadingScreen,
         )
-        
-        return sortedHistory
       },
-      lastHistoryByBookId: (bookId) =>
-  [...getState().localHistory, ...getState().syncedHistory]
-          .filter((h) => h.bookId === bookId)[0],
+      lastHistoryByBookId: (bookId) => [...getState().localHistory, ...getState().syncedHistory].filter((h) => h.bookId === bookId)[0],
       newProgress: (newHistory) => {
-        const allHistory =getState().localHistory
-        const isSameDay = allHistory.some(
+        const history = getState().localHistory
+        const isSameDay = history.some(
           (h) =>
             dayjs(h.startDate).isSame(newHistory.startDate, "day") &&
             h.bookId === newHistory.bookId,

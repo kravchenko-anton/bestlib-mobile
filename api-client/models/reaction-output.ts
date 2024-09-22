@@ -13,66 +13,57 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { ReactionOutputBook } from './reaction-output-book';
 
 /**
  * 
  * @export
- * @interface ReadingHistory
+ * @interface ReactionOutput
  */
-export interface ReadingHistory {
+export interface ReactionOutput {
     /**
      * 
      * @type {string}
-     * @memberof ReadingHistory
-     */
-    'startDate': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReadingHistory
-     */
-    'endDate': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReadingHistory
-     */
-    'startProgress': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReadingHistory
+     * @memberof ReactionOutput
      */
     'id': string;
     /**
      * 
-     * @type {number}
-     * @memberof ReadingHistory
+     * @type {string}
+     * @memberof ReactionOutput
      */
-    'endProgress': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReadingHistory
-     */
-    'progressDelta': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReadingHistory
-     */
-    'readingTimeMs': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ReadingHistory
-     */
-    'scrollPosition': number;
+    'type': string;
     /**
      * 
      * @type {string}
-     * @memberof ReadingHistory
+     * @memberof ReactionOutput
      */
-    'bookId': string;
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReactionOutput
+     */
+    'xpath': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReactionOutput
+     */
+    'startOffset': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReactionOutput
+     */
+    'endOffset': number;
+    /**
+     * 
+     * @type {ReactionOutputBook}
+     * @memberof ReactionOutput
+     */
+    'book': ReactionOutputBook;
 }
 

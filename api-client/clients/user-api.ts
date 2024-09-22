@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { ReadingHistory } from '../models';
+// @ts-ignore
 import type { UserCatalogOutput } from '../models';
 // @ts-ignore
 import type { UserLibraryOutput } from '../models';
@@ -373,6 +375,45 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {Array<ReadingHistory>} readingHistory 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        syncHistory: async (readingHistory: Array<ReadingHistory>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'readingHistory' is not null or undefined
+            assertParamExists('syncHistory', 'readingHistory', readingHistory)
+            const localVarPath = `/user/sync-history`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(readingHistory, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -527,6 +568,18 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {Array<ReadingHistory>} readingHistory 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async syncHistory(readingHistory: Array<ReadingHistory>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReadingHistory>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.syncHistory(readingHistory, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.syncHistory']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -626,6 +679,15 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          */
         statistics(options?: any): AxiosPromise<UserStatistics> {
             return localVarFp.statistics(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Array<ReadingHistory>} readingHistory 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        syncHistory(readingHistory: Array<ReadingHistory>, options?: any): AxiosPromise<Array<ReadingHistory>> {
+            return localVarFp.syncHistory(readingHistory, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -742,6 +804,17 @@ export class UserApi extends BaseAPI {
      */
     public statistics(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).statistics(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Array<ReadingHistory>} readingHistory 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public syncHistory(readingHistory: Array<ReadingHistory>, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).syncHistory(readingHistory, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -1,4 +1,4 @@
-import type { ThemePackType } from "@/screens/reader/components/reader-customization/theme-pack";
+import type { ThemePackType } from "@/store/reader/theme-pack";
 import { Title } from "@/ui";
 import { Color } from "@/utils/colors";
 import { BottomSheetModal, BottomSheetScrollView } from "@gorhom/bottom-sheet";

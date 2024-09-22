@@ -9,11 +9,14 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import { onlineManager, QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { useFonts } from 'expo-font'
+import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-svg'
 import 'react-native-url-polyfill/auto'
 import '../env-config'
+
+SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient({
   defaultOptions: {
