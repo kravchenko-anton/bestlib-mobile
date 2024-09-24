@@ -19,31 +19,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   const [readerLoading, setReaderLoading] = useState(true);
   const [readerHeaderVisible, setReaderHeaderVisible] = useState(false);
   const viewerReference = useRef<WebView>(null);
-  const {hot, reactions,findReactionById, updateReaction,deleteReaction,createReaction, clearReactions} = useReactionStore();
-    console.log( 'hot ❤️', JSON.stringify({
-      create: hot.create.map(r => {
-        return {
-          id: r.id,
-          text: r.text,
-          type: r.type
-        }
-      }),
-      update: hot.update.map(r => {
-        return {
-          id: r.id,
-          updateObject: r.updateObject
-        }
-      }),
-      deleted: hot.delete
-      }
-    ));
-    console.log( 'reactions 🤦‍♂️', JSON.stringify(reactions.map(r => {
-      return {
-        id: r.id,
-        text: r.text,
-        type: r.type
-      }
-    })));
+  const { reactions,findReactionById, updateReaction,deleteReaction,createReaction} = useReactionStore();
   const { colorScheme, ...restUiProperties } = useCustomizationStore(
     (state) => state,
   );
@@ -58,7 +34,8 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     select: (data) => data.data,
     enabled: !!id,
     networkMode: "offlineFirst",
-    gcTime: 1000 * 60 * 60 * 24,
+    staleTime: 0,
+    gcTime: 0
   });
 
   const {

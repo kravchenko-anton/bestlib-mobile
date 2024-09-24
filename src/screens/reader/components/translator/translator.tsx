@@ -1,9 +1,10 @@
-import type { ThemePackType } from "@/store/reader/theme-pack";
-import { Title } from "@/ui";
-import { Color } from "@/utils/colors";
-import { BottomSheetModal, BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import type { FC, RefObject } from "react";
-import { View } from "react-native";
+import type { ThemePackType } from '@/store/reader/theme-pack'
+import { Title } from '@/ui'
+import { Color } from '@/utils/colors'
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import { getLocales } from 'expo-localization'
+import type { FC, RefObject } from 'react'
+import { View } from 'react-native'
 
 export interface TranslatorProperties {
   sheetRef: RefObject<BottomSheetModal> | null;
@@ -42,7 +43,7 @@ export const Translator: FC<TranslatorProperties> = ({
             <View
               style={{
                 height: 22,
-                width: 120,
+                width: 130,
                 backgroundColor: colorScheme.colorPalette.secondary,
                 borderRadius: 20,
                 marginTop: -45,
@@ -50,7 +51,7 @@ export const Translator: FC<TranslatorProperties> = ({
               }}
             >
               <Title size="sm" className="text-center">
-                Translator • {data?.data?.detectedSourceLang}
+                Translator • {data?.data?.detectedSourceLang}-{getLocales()[0].languageCode}
               </Title>
             </View>
             <BottomSheetScrollView

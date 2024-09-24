@@ -75,12 +75,13 @@ const Navigation: FC = () => {
         <NavigationContainer
           ref={navReference}
           fallback={<Loader />}
-          onReady={() => {
-            if (user && latestHistory?.bookId)
+          onReady={async () => {
+            if (user && latestHistory?.bookId) {
               navReference.navigate("Reader", {
                 id: latestHistory.bookId,
-              });
-             SplashScreen.hideAsync();
+              })}
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+             await SplashScreen.hideAsync();
           }}
         >
           <Stack.Navigator

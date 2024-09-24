@@ -57,11 +57,12 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
       {(data) => {
         const activeReactionPressed:ReactionByBookOutput = data?.data
           return (
-          <View className="mx-4">
+          <View className="">
             <Title
               color={colorScheme.colorPalette.text}
               size={"xl"}
               weight="bold"
+              className='px-3'
               numberOfLines={3}
             >
               {activeReactionPressed?.text}
@@ -71,6 +72,9 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
               showsHorizontalScrollIndicator={false}
               data={reactions}
               className="border-b-2 pb-1 pt-2"
+              contentContainerStyle={{
+                paddingHorizontal: 12,
+              }}
               style={{
                 borderColor: colorScheme.colorPalette.background.lighter,
               }}
@@ -106,7 +110,7 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
                 />
               )}
             />
-            <View className="mt-2">
+            <View className="mt-2 px-3">
               <SelectItem
                 icon={Share}
                 title={"Share"}

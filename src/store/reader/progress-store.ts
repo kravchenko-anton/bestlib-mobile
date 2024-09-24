@@ -79,23 +79,31 @@ export const useReadingProgressStore = create<
           (h) => h.startFromReadingScreen,
         )
       },
-      lastHistoryByBookId: (bookId) => [...getState().localHistory, ...getState().syncedHistory].filter((h) => h.bookId === bookId)[0],
+      lastHistoryByBookId: (bookId) => {
+        const history = [...getState().localHistory, ...getState().syncedHistory].filter((h) => h.bookId === bookId)
+        console.log("🔃 last history by book id", history);
+        return historyByLatestSorting(history)[0]
+      },
       newProgress: (newHistory) => {
         const history = getState().localHistory
-        const isSameDay = history.some(
+        const historyWithSameDay = history.find(
           (h) =>
             dayjs(h.startDate).isSame(newHistory.startDate, "day") &&
             h.bookId === newHistory.bookId,
         )
-        if (isSameDay) {
+        if (historyWithSameDay) {
           console.log("⚠️ update progress, its same day", {
             id: newHistory.id,
+            sameDayId: historyWithSameDay.id,
             readTime: newHistory.readingTimeMs,
+            scrollPosition: newHistory.scrollPosition,
+            startProgress: newHistory.startProgress,
+            endProgress: newHistory.endProgress,
           });
           return set((state) => ({
             ...state,
-            localHistory: state.localHistory.map(({ ...h }) =>
-              h.id === newHistory.id ? newHistory : h,
+            localHistory: state.localHistory.map((h) =>
+              h.id === historyWithSameDay.id ? newHistory : h,
             ),
           }));
         }
@@ -127,3 +135,4 @@ export const useReadingProgressStore = create<
     },
   ),
 );
+
