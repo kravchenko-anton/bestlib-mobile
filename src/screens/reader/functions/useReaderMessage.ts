@@ -90,7 +90,7 @@ export const useReaderMessage = ({
     mutationFn: (payload: Omit<TranslateText, "targetLang">) =>
       api.reading.translate({
         ...payload,
-        targetLang: getLocales()[0].languageTag,
+        targetLang: getLocales()[0].languageCode || "en",
       }),
   });
   const onMessage = async (event: WebViewMessageEvent) => {

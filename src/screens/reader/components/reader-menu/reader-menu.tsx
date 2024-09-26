@@ -1,16 +1,16 @@
-import { useTypedNavigation } from "@/hooks";
-import { ArrowLeft, CaseSensitive, ListOrdered } from "@/icons";
-import type { ThemePackType } from "@/store/reader/theme-pack";
-import type { ReadingProgressType } from "@/screens/reader/functions/useReadingProgress";
-import { Title } from "@/ui";
-import { AnimatedView } from "@/ui/animated-components";
-import { hexToRgbA } from "@/utils";
-import type { FunctionType } from "@/utils/types";
-import Slider from "@react-native-community/slider";
-import type { FC } from "react";
-import { View } from "react-native";
-import { useAnimatedStyle, withTiming } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTypedNavigation } from '@/hooks'
+import { ArrowLeft, ListOrdered, Settings } from '@/icons'
+import type { ReadingProgressType } from '@/screens/reader/functions/useReadingProgress'
+import type { ThemePackType } from '@/store/reader/theme-pack'
+import { Title } from '@/ui'
+import { AnimatedView } from '@/ui/animated-components'
+import { hexToRgbA } from '@/utils'
+import type { FunctionType } from '@/utils/types'
+import Slider from '@react-native-community/slider'
+import type { FC } from 'react'
+import { View } from 'react-native'
+import { useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 interface ReaderMenuProperties {
   visible: boolean;
@@ -67,7 +67,7 @@ const ReaderMenu: FC<ReaderMenuProperties> = ({
               color={colorScheme.colorPalette.text}
               onPress={onChapterIconPress}
             />
-            <CaseSensitive
+            <Settings
               width={28}
               height={28}
               color={colorScheme.colorPalette.text}

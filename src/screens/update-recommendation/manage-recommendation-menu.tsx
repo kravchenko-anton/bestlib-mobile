@@ -1,13 +1,13 @@
-import api from "@/api";
-import { Button, Title } from "@/ui";
-import { SvgButton } from "@/ui/svg-button/svg-button";
-import { Color } from "@/utils/colors";
-import { QueryKeys } from "@/utils/query-keys";
-import type { FunctionType } from "@/utils/types";
-import { useQuery } from "@tanstack/react-query";
-import type { FC } from "react";
-import React from "react";
-import { View } from "react-native";
+import api from '@/api'
+import { Button, Title } from '@/ui'
+import { SvgButton } from '@/ui/svg-button/svg-button'
+import { Color } from '@/utils/colors'
+import { QueryKeys } from '@/utils/query-keys'
+import type { FunctionType } from '@/utils/types'
+import { useQuery } from '@tanstack/react-query'
+import type { FC } from 'react'
+import React from 'react'
+import { View } from 'react-native'
 
 interface ManageRecommendationProperties {
   onManagePress: FunctionType;
@@ -36,7 +36,7 @@ const ManageRecommendationMenu: FC<ManageRecommendationProperties> = ({
           <SvgButton
             size="sm"
             altEmoji={genre.emoji}
-            className="mr-2"
+            className="mr-2 mb-1"
             key={genre.name}
             svgUri={genre.icon}
             title={genre.name}

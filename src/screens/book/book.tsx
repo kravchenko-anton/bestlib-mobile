@@ -1,33 +1,19 @@
-import api from "@/api";
-import { useTypedNavigation, useTypedRoute } from "@/hooks";
-import { ArrowLeft, Share } from "@/icons";
-import ReadingButton from "@/screens/book/reading-button";
-import SaveButton from "@/screens/book/save-button";
-import {
-  AnimatedIcon,
-  BookCard,
-  Button,
-  Description,
-  Flatlist,
-  Image,
-  Loader,
-  ScrollLayout,
-  Title,
-} from "@/ui";
-import BannerList from "@/ui/book-lists/banner-list";
-import { SvgButton } from "@/ui/svg-button/svg-button";
-import { Color } from "@/utils/colors";
-import { QueryKeys } from "@/utils/query-keys";
-import { shareBook } from "@/utils/share-text";
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetScrollView,
-} from "@gorhom/bottom-sheet";
-import { useQuery } from "@tanstack/react-query";
-import type { FC } from "react";
-import { useRef } from "react";
-import { View } from "react-native";
+import api from '@/api'
+import { useTypedNavigation, useTypedRoute } from '@/hooks'
+import { ArrowLeft, Share } from '@/icons'
+import ReadingButton from '@/screens/book/reading-button'
+import SaveButton from '@/screens/book/save-button'
+import { AnimatedIcon, BookCard, Button, Description, Flatlist, Image, Loader, ScrollLayout, Title } from '@/ui'
+import BannerList from '@/ui/book-lists/banner-list'
+import { SvgButton } from '@/ui/svg-button/svg-button'
+import { Color } from '@/utils/colors'
+import { QueryKeys } from '@/utils/query-keys'
+import { shareBook } from '@/utils/share-text'
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import { useQuery } from '@tanstack/react-query'
+import type { FC } from 'react'
+import { useRef } from 'react'
+import { View } from 'react-native'
 
 const Book: FC = () => {
   const { params } = useTypedRoute<"Book">();
@@ -129,12 +115,14 @@ const Book: FC = () => {
           )}
         />
 
-        <Description size={16} className="mt-1 px-2 pb-8" weight="light">
+        <Description size={16} className="mt-1 px-2 pb-4" weight="light">
           {book.description}
         </Description>
 
         <BannerList
           title="From the same author"
+          className='mb-8'
+          mt={10}
           data={book.fromSameAuthor}
           renderItem={({ item: book }) => (
             <BookCard
