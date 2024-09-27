@@ -41,7 +41,7 @@ const Welcome: FC = () => {
       errorToast("Something went wrong");
     }
   };
-console.log(process.env.SERVER_URL)
+console.log(process.env.SERVER_URL, "process.env.SERVER_URL")
   return (
     <ScrollLayout>
       <View className="mb-4 mt-[20%]">

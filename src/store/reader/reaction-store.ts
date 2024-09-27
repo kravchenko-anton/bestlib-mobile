@@ -74,7 +74,6 @@ export const useReactionStore = create<
 				const lastSyncedAt = getState().lastSyncedAt;
 				const {isConnected} = await fetch();
 				if (!isConnected) return console.log("😒 no internet connection to sync reaction");
-				if (!hot.create.length && !hot.update.length && !hot.delete.length) return console.log("😒 no data to sync reactions");
 				if (lastSyncedAt && dayjs().diff(dayjs(lastSyncedAt), "day") < 1) {
 					console.log("😒 prevent sync reactions in one day");
 					return;
@@ -87,7 +86,7 @@ export const useReactionStore = create<
 					update: hot.update,
 					delete: hot.delete
 				})
-				if(!data.length) return console.log("😒 problem with sync reactions", data);
+				if(!data.length) return console.log("sync reaction return empty", data);
 				console.log("😒 synced reactions", data);
 				
 				set((state) => ({

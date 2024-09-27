@@ -10,7 +10,7 @@ import { RefreshControl, View } from 'react-native'
 
 const Profile = () => {
   const { navigate } = useTypedNavigation();
-  const {isLoading,refetch,statistic} = useStatisticsWithSync();
+  const {isLoading,refetch,syncHistory, statistic} = useStatisticsWithSync();
   const lastMonthDatesArray = Array.from({ length: dayjs().daysInMonth() }, (_, i) => {
     const date = dayjs().date(i + 1).format('DD');
     const number = dayjs().date(i + 1).format('D');
@@ -35,12 +35,15 @@ const Profile = () => {
             refreshing={false}
             colors={[Color.white]}
             progressBackgroundColor={Color.transparent}
-            onRefresh={refetch}
+            onRefresh={() => {
+              refetch();
+              syncHistory();
+            }}
           />
         }
       >
         
-        <View className='rounded-xl mt-4 bg-foreground p-2 pb-6'>
+        <View className='rounded-xl mx-2 mt-4 bg-foreground p-2 pb-6'>
          <View className='flex-row justify-between items-center px-2'>
            <Title className="mb-2" color={Color.white} weight='bold' size='xxxl'>
              Statistic

@@ -16,7 +16,7 @@ import type WebView from 'react-native-webview'
 
 export const useReader = (id: string, initialScrollPosition: number) => {
   const { setOptions } = useTypedNavigation();
-  const {navigate} = useTypedNavigation()
+  
   const [readerLoading, setReaderLoading] = useState(true);
   const [readerHeaderVisible, setReaderHeaderVisible] = useState(false);
   const viewerReference = useRef<WebView>(null);
@@ -29,21 +29,15 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     data: ebook,
     isLoading: ebookRequestLoading,
     isRefetching: ebookRequestRefetching,
-    isError: ebookRequestError,
   } = useQuery({
     queryKey: QueryKeys.ebook.byId(id),
     queryFn: () => api.ebook.ebookById(id),
     select: (data) => data.data,
     enabled: !!id,
-    networkMode: "offlineFirst",
+    networkMode: 'offlineFirst',
     staleTime: 0,
-    gcTime: 0
+    gcTime: 0,
   });
-  
-  useEffect(() => {
-    if (!ebookRequestError) return
-    navigate('Library')
-  }, [ebookRequestError])
   
   const {
     readingProgress,

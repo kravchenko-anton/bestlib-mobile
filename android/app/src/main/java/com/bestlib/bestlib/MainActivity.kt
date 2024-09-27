@@ -1,4 +1,4 @@
-package com.bestlib.mobile
+package com.bestlib.bestlib
 
 import android.os.Build
 import android.os.Bundle

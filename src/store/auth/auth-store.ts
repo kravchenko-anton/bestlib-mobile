@@ -91,6 +91,7 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 					})
 			},
 			googleLogin: async socialId => {
+				console.log('googleLogin')
 				set({
 					isLoading: 'google'
 				})

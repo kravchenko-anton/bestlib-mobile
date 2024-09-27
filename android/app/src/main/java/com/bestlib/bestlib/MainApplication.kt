@@ -1,4 +1,4 @@
-package com.bestlib.mobile
+package com.bestlib.bestlib
 
 import android.app.Application
 import android.content.res.Configuration

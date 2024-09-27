@@ -4,7 +4,9 @@ import { Check, MoreHorizontal, Share, Trash } from '@/icons'
 import { useFinishBook } from '@/screens/reader/functions/useFinishBook'
 import type { CompareReadingBook } from '@/store/reader/progress-store'
 import { AnimatedIcon, Image, Title } from '@/ui'
+import { AnimatedPressable } from '@/ui/animated-components'
 import { settings } from '@/ui/book-card/settings'
+import BannerList from '@/ui/book-lists/banner-list'
 import ProgressBar from '@/ui/progress-bar/progress-bar'
 import SelectItem from '@/ui/select-list/select-list-item'
 import { Color } from '@/utils/colors'
@@ -16,7 +18,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { UserLibraryOutputReadingBooksInner } from 'api-client'
 import React, { type FC, useRef, useState } from 'react'
 import { View } from 'react-native'
-import Animated, { JumpingTransition } from 'react-native-reanimated'
 
 interface ReadingListProperties {
   data: CompareReadingBook[] | undefined;
@@ -49,44 +50,22 @@ export const ReadingList: FC<ReadingListProperties> = ({ data }) => {
 
   if (data?.length === 0) return null;
   return (
-    <View className="bg-foreground border-bordered mb-0 ml-2 mt-4 rounded-[14px] rounded-r-none border-[1px] border-r-0  p-3 px-0">
-      <View className="pl-4">
-        <Title
-          weight="bold"
-          color={Color.white}
-          onPress={() => {
-            throw new Error("Check the error.");
-          }}
-        >
-          Reading now
-        </Title>
-        <Title weight="regular" className="mb-4" size={"sm"} color={Color.gray}>
-          {data?.length.toString()} books
-        </Title>
-      </View>
-      <Animated.FlatList
+    <>
+      <BannerList
+        title={"Reading now"}
         horizontal
-        showsHorizontalScrollIndicator={false}
-        layout={JumpingTransition}
-        bounces={false}
-        alwaysBounceHorizontal={false}
-        ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
-        data={data}
-        contentContainerStyle={{
-          paddingHorizontal: 12,
-          paddingBottom: 8,
-        }}
+        data={data || []}
         renderItem={({
           item: book,
         }) =>  (
-          <Animated.View
+          <View
             style={{
               width: settings.width.md,
             }}
           >
             <View className="relative">
-              <View
-                onTouchEnd={() => {
+              <AnimatedPressable
+                onPress={() => {
                   navigate("Reader", {
                     id: book.id,
                   });
@@ -98,7 +77,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data }) => {
                   url={book.picture}
                   className="mb-2"
                 />
-              </View>
+              </AnimatedPressable>
 
               <View className="absolute bottom-4  w-full flex-row justify-between px-2">
                 <View />
@@ -114,12 +93,13 @@ export const ReadingList: FC<ReadingListProperties> = ({ data }) => {
               </View>
             </View>
             <ProgressBar
-              progress={(book.lastHistory?.endProgress || 0)} />
+              progress={Math.max((book.lastHistory?.endProgress || 0) / 100, 0.1)
+            } />
 
             <Title numberOfLines={2} size="sm" weight="bold" className="mt-1">
               {book.title}
             </Title>
-          </Animated.View>
+          </View>
         )}
       />
 
@@ -209,6 +189,6 @@ export const ReadingList: FC<ReadingListProperties> = ({ data }) => {
           </View>
         </View>
       </BottomSheetModal>
-    </View>
+    </>
   );
 };

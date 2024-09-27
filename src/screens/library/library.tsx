@@ -24,8 +24,8 @@ const Library = () => {
     select: (data) => data.data,
     staleTime: 0,
   });
-  const {  getReactionCatalog} = useReactionStore();
-    const {getReadingHistoriesCatalog} = useReadingProgressStore();
+  const {  getReactionCatalog, syncReactions} = useReactionStore();
+    const {getReadingHistoriesCatalog, syncHistory} = useReadingProgressStore();
   return (
     <>
       <Header.Head>
@@ -49,7 +49,11 @@ const Library = () => {
                 refreshing={false}
                 colors={[Color.white]}
                 progressBackgroundColor={Color.transparent}
-                onRefresh={refetch}
+                onRefresh={() => {
+                  refetch();
+                  syncHistory();
+                  syncReactions();
+                }}
               />
             }
           >

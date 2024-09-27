@@ -111,9 +111,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.bestlib.mobile'
+    namespace 'com.bestlib.bestlib'
     defaultConfig {
-        applicationId 'com.bestlib.mobile'
+        applicationId 'com.bestlib.bestlib'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

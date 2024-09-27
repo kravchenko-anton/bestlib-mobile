@@ -1,4 +1,5 @@
 import api from '@/api'
+import { useReadingProgressStore } from '@/store/reader/progress-store'
 import { QueryKeys } from '@/utils/query-keys'
 import { useQuery } from '@tanstack/react-query'
 
@@ -14,7 +15,8 @@ export const useStatisticsWithSync = () => {
       ),
     select: (data) => data.data,
   });
+  const {  syncHistory} = useReadingProgressStore();
   console.log(statistics)
 
-  return { isLoading, statistic: statistics, refetch };
+  return { isLoading,syncHistory, statistic: statistics, refetch };
 };

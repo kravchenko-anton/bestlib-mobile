@@ -212,6 +212,32 @@ export const getStyleTag = ({
 	    :#select-default-menu-item:focus {
 	    	background: ${colorPalette.background.lighter} !important;
 	    }
+	.hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  display: none;
+  transition: opacity 0.2s ease;
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  display: flex;
+  transition: opacity 0.2s ease;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.enabled {
+  opacity: 1;
+  pointer-events: auto;
+}
+	   
     img {
     max-width: 80% !important;
     max-height: 100% !important;

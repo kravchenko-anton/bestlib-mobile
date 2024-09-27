@@ -60,7 +60,6 @@ export const useReadingProgressStore = create<
           const lastSyncedAt = getState().lastSyncedAt;
         const {isConnected} = await NetInfo.fetch();
         if (!isConnected) return console.log("🔃 no internet connection");
-        if (!dataToSync.length) return console.log("🔃 no data to sync");
           // prevent sync in one day, like not less than 1 day
         if (lastSyncedAt && dayjs().diff(dayjs(lastSyncedAt), "day") < 1) {
           console.log("🔃 prevent sync in one day");

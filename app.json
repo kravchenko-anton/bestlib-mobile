@@ -17,10 +17,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bestlib.mobile"
+      "bundleIdentifier": "com.bestlib.bestlib"
     },
     "android": {
-      "package": "com.bestlib.mobile",
+      "package": "com.bestlib.bestlib",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon/foreground.png",
         "backgroundImage": "./assets/images/adaptive-icon/background.png"
@@ -74,7 +74,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "e7b545fe-e610-44ff-85d4-307de03cc0e4"
+        "projectId": "c0dfe310-6bed-42cc-bac8-7c0503effdbd"
       }
     }
   }
