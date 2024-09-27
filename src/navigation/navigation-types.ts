@@ -1,7 +1,7 @@
-import type { ParamListBase } from "@react-navigation/native";
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import type { ComponentType } from "react";
-import type { GoBackGesture } from "react-native-reanimated";
+import type { ParamListBase } from '@react-navigation/native'
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import type { ComponentType } from 'react'
+import type { GoBackGesture } from 'react-native-reanimated'
 
 export type TypeRootStackParameterListType = {
   Book: { id: string };
@@ -15,7 +15,7 @@ export type TypeRootStackParameterListType = {
   Profile: undefined;
   Reactions: { id: string };
   Welcome: undefined;
-  Reader: { id: string };
+  Reader: { id: string, startFromScratch?: boolean };
   UpdateRecommendation: undefined;
   Search: undefined;
   Settings: undefined;

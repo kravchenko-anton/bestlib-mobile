@@ -5,7 +5,11 @@ import NetInfo from '@react-native-community/netinfo'
 import dayjs from 'dayjs'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import type { UserLibraryOutputReadingBooksInner } from '../../../api-client'
 
+export interface CompareReadingBook extends UserLibraryOutputReadingBooksInner {
+  lastHistory: ReadingHistoryType | undefined;
+}
 export interface ReadingHistoryType {
   bookId: string;
   id: string;
@@ -35,6 +39,9 @@ interface ReadingProgressStoreActionsType {
   lastHistoryByBookId: (bookId: string) => ReadingHistoryType | undefined;
   getInitialHistory: () => ReadingHistoryType | undefined;
   syncHistory: () => void;
+  getReadingHistoriesCatalog: (
+    books: Array<UserLibraryOutputReadingBooksInner>,
+  ) =>CompareReadingBook[];
   updateStartFromReadingScreen: (
     data: Pick<ReadingHistoryType, "id"> & { startFromReadingScreen: boolean },
   ) => void;
@@ -83,6 +90,22 @@ export const useReadingProgressStore = create<
         const history = [...getState().localHistory, ...getState().syncedHistory].filter((h) => h.bookId === bookId)
         console.log("🔃 last history by book id", history);
         return historyByLatestSorting(history)[0]
+      },
+      getReadingHistoriesCatalog: (books) => {
+        const history = [...getState().localHistory, ...getState().syncedHistory]
+        return books.map((book) => {
+          const lastHistory = historyByLatestSorting(history).find(
+            (h) => h.bookId === book.id,
+          )
+          return {
+            ...book,
+            lastHistory,
+          }
+        }).sort((a, b) => {
+          if (!a.lastHistory) return 1
+          if (!b.lastHistory) return -1
+          return dayjs(b.lastHistory.startDate).diff(dayjs(a.lastHistory.startDate))
+        })
       },
       newProgress: (newHistory) => {
         const history = getState().localHistory

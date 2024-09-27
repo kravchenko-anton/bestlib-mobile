@@ -66,39 +66,6 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        picksOfTheWeek: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/catalog/picks-of-the-week`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {string} query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -157,17 +124,6 @@ export const CatalogApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async picksOfTheWeek(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ShortBook>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.picksOfTheWeek(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.picksOfTheWeek']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @param {string} query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -198,14 +154,6 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        picksOfTheWeek(options?: any): AxiosPromise<Array<ShortBook>> {
-            return localVarFp.picksOfTheWeek(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {string} query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -231,16 +179,6 @@ export class CatalogApi extends BaseAPI {
      */
     public featured(options?: RawAxiosRequestConfig) {
         return CatalogApiFp(this.configuration).featured(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CatalogApi
-     */
-    public picksOfTheWeek(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).picksOfTheWeek(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -110,7 +110,7 @@ export const useReaderMessage = ({
         selectedText: payload.text,
         bookTitle: book.title,
         bookAuthor: book.author.name,
-        targetLang: getLocales()[0].languageTag,
+        targetLang: getLocales()[0].languageCode || "en",
       });
       openGptModal(explanation);
     }
@@ -127,18 +127,6 @@ export const useReaderMessage = ({
     }
     if (type === ReaderMessageType.Reaction) {
       const uuid2 = uuid.v4()
-      console.log("🤣", {
-        bookId: book.id,
-        id: uuid2,
-        createAt: new Date(),
-        text: payload.text,
-        range: {
-          startOffset: payload.range.startOffset,
-          endOffset: payload.range.endOffset,
-          xpath: payload.range.xpath,
-        },
-        reaction: payload.reaction,
-      });
       createReaction({
         id: String(uuid2),
         book,

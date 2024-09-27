@@ -12,10 +12,11 @@ import { useReadingProgressStore } from '@/store/reader/progress-store'
 import { Loader } from '@/ui'
 import React from 'react'
 // install before using https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js
+
 const Reader = () => {
   const { params } = useTypedRoute<"Reader">();
   const lastHistory = useReadingProgressStore((state) => state.lastHistoryByBookId(params.id));
-  const reader = useReader(params.id,  lastHistory?.scrollPosition || 0);
+  const reader = useReader(params.id, params.startFromScratch ? 0 : (lastHistory?.scrollPosition || 0));
   if (
     !reader.ebook ||
     reader.ebookRequestLoading ||

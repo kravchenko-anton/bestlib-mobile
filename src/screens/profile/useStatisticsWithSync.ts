@@ -14,6 +14,7 @@ export const useStatisticsWithSync = () => {
       ),
     select: (data) => data.data,
   });
+  console.log(statistics)
 
   return { isLoading, statistic: statistics, refetch };
 };

@@ -38,6 +38,7 @@ models/create-reaction.ts
 models/ebook-output-chapters-inner.ts
 models/ebook-output-function-enums.ts
 models/ebook-output.ts
+models/featured-output-books-by-selected-genres-inner.ts
 models/featured-output.ts
 models/find-one-genre-output.ts
 models/full-book-count.ts
@@ -77,5 +78,4 @@ models/user-library-output-reading-books-inner-author.ts
 models/user-library-output-reading-books-inner-reading-history.ts
 models/user-library-output-reading-books-inner.ts
 models/user-library-output.ts
-models/user-statistics-progress-by-current-week-inner.ts
 models/user-statistics.ts

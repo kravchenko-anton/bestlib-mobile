@@ -22,6 +22,10 @@ const Settings = () => {
             onPress={() => Linking.openURL("https://t.me/boknex")}
           />
           <List.Item
+            title="Contact us"
+            onPress={() => Linking.openURL("mailto:anton.kravchenko.developer@gmail.com")}
+          />
+          <List.Item
             description={user?.email}
             title={`Sign out`}
             onPress={() => navigate("Logout")}

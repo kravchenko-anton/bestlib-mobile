@@ -1,19 +1,15 @@
-import { useTypedNavigation } from "@/hooks";
-import { ArrowLeft } from "@/icons";
-import type {
-  PressableDefaultProperties,
-  TextDefaultProperties,
-  ViewDefaultProperties,
-} from "@/types/component-types";
-import BaseButton from "@/ui/button/button";
-import type { ButtonProperties } from "@/ui/button/types";
-import type { IconProperties } from "@/ui/icon/types";
-import { cn } from "@/utils";
-import { Color } from "@/utils/colors";
-import { appName } from "@/utils/constants/index";
-import type { FC, PropsWithChildren } from "react";
-import { Pressable, View } from "react-native";
-import { Title } from "../../ui";
+import { useTypedNavigation } from '@/hooks'
+import { ArrowLeft } from '@/icons'
+import type { PressableDefaultProperties, TextDefaultProperties, ViewDefaultProperties } from '@/types/component-types'
+import BaseButton from '@/ui/button/button'
+import type { ButtonProperties } from '@/ui/button/types'
+import type { IconProperties } from '@/ui/icon/types'
+import { cn } from '@/utils'
+import { Color } from '@/utils/colors'
+import { appName } from '@/utils/constants/index'
+import type { FC, PropsWithChildren } from 'react'
+import { Pressable, View } from 'react-native'
+import { Title } from '../../ui'
 
 export const Head: FC<PropsWithChildren<ViewDefaultProperties>> = ({
   children,
@@ -54,6 +50,13 @@ export const BackWithTitle: FC<{ title: string }> = ({ title }) => (
     </Title>
   </View>
 );
+export const HeaderTitle: FC<{ title: string }> = ({ title }) => (
+  <View className="flex-row px-3 py-1 items-center">
+    <Title className="" size={"xxl"} weight="bold" color={Color.white}>
+      {title}
+    </Title>
+  </View>
+);
 export const Logo: FC<Omit<TextDefaultProperties, "onPress">> = ({
   className,
   ...properties
@@ -88,4 +91,4 @@ export const Icon: FC<
   </Pressable>
 );
 
-export default { Head, Logo, BackWithTitle, Icon };
+export default { Head, Logo, Title: HeaderTitle, BackWithTitle, Icon };

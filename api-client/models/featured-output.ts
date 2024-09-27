@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { FeaturedOutputBooksBySelectedGenresInner } from './featured-output-books-by-selected-genres-inner';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -46,15 +49,9 @@ export interface FeaturedOutput {
     'bestSellingBooks': Array<UserLibraryOutputFinishedBooksInner>;
     /**
      * 
-     * @type {Array<UserLibraryOutputFinishedBooksInner>}
+     * @type {Array<FeaturedOutputBooksBySelectedGenresInner>}
      * @memberof FeaturedOutput
      */
-    'newReleases': Array<UserLibraryOutputFinishedBooksInner>;
-    /**
-     * 
-     * @type {Array<Array<UserLibraryOutputFinishedBooksInner>>}
-     * @memberof FeaturedOutput
-     */
-    'booksBySelectedGenres': Array<Array<UserLibraryOutputFinishedBooksInner>>;
+    'booksBySelectedGenres': Array<FeaturedOutputBooksBySelectedGenresInner>;
 }
 

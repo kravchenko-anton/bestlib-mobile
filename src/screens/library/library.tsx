@@ -1,6 +1,7 @@
 import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
+import { useReadingProgressStore } from '@/store/reader/progress-store'
 import { useReactionStore } from '@/store/reader/reaction-store'
 import { BookCard, Flatlist, Image, Loader, ScrollLayout, Title } from '@/ui'
 import { AnimatedPressable } from '@/ui/animated-components'
@@ -23,12 +24,12 @@ const Library = () => {
     select: (data) => data.data,
     staleTime: 0,
   });
-  const { reactions, getReactionCatalog} = useReactionStore();
-  
+  const {  getReactionCatalog} = useReactionStore();
+    const {getReadingHistoriesCatalog} = useReadingProgressStore();
   return (
     <>
       <Header.Head>
-        <Header.BackWithTitle title="Library" />
+        <Header.Title title="Library" />
       </Header.Head>
 
       {library ? (
@@ -52,7 +53,7 @@ const Library = () => {
               />
             }
           >
-            <ReadingList data={library.readingBooks} />
+            <ReadingList data={getReadingHistoriesCatalog(library.readingBooks)} />
             <Flatlist
               horizontal
               title="Saved to read"

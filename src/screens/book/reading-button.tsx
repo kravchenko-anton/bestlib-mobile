@@ -32,7 +32,7 @@ const ReadingButton: FC<BookReadingButtonProperties> = ({ id }) => {
       .invalidateQueries({
         queryKey: QueryKeys.library,
       })
-      .then(() => navigate("Reader", { id,  }));
+      .then(() => navigate("Reader", { id, startFromScratch: true  }));
   };
 
   return (

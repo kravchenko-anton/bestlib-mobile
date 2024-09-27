@@ -1,17 +1,17 @@
-import api from "@/api";
-import { useTypedNavigation } from "@/hooks";
-import { Search } from "@/icons";
-import ManageRecommendationMenu from "@/screens/update-recommendation/manage-recommendation-menu";
-import { BookCard, Flatlist, Loader, ScrollLayout } from "@/ui";
-import BannerList from "@/ui/book-lists/banner-list";
-import Header from "@/ui/header/header";
-import { SvgButton } from "@/ui/svg-button/svg-button";
-import { Color } from "@/utils/colors";
-import { QueryKeys } from "@/utils/query-keys";
-import * as Sentry from "@sentry/react-native";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { RefreshControl } from "react-native";
+import api from '@/api'
+import { useTypedNavigation } from '@/hooks'
+import { Search } from '@/icons'
+import ManageRecommendationMenu from '@/screens/update-recommendation/manage-recommendation-menu'
+import { BookCard, Flatlist, Loader, ScrollLayout } from '@/ui'
+import BannerList from '@/ui/book-lists/banner-list'
+import Header from '@/ui/header/header'
+import { SvgButton } from '@/ui/svg-button/svg-button'
+import { Color } from '@/utils/colors'
+import { QueryKeys } from '@/utils/query-keys'
+import * as Sentry from '@sentry/react-native'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { RefreshControl } from 'react-native'
 
 const Featured = () => {
   const {
@@ -98,26 +98,13 @@ const Featured = () => {
               />
             )}
           />
-          <Flatlist
-            horizontal
-            title="New releases"
-            data={featured.newReleases}
-            renderItem={({ item: book }) => (
-              <BookCard
-                size="md"
-                image={{
-                  uri: book.picture,
-                }}
-                onPress={() => navigate("Book", { id: book.id })}
-              />
-            )}
-          />
+        
           {featured.booksBySelectedGenres.map((list) => (
             <BannerList
-              key={list.length + Math.random()}
+              key={list.name}
               className="mb-4"
-              title="Best selling books"
-              data={list}
+              title={list.name}
+              data={list.books}
               renderItem={({ item: book }) => (
                 <BookCard
                   author={book.author.name}

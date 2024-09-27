@@ -1,6 +1,6 @@
-import type { CustomizationStoreType } from "@/store/reader/customization-store";
-import { Color } from "@/utils/colors";
-import { windowWidth } from "@/utils/dimensions";
+import type { CustomizationStoreType } from '@/store/reader/customization-store'
+import { Color } from '@/utils/colors'
+import { windowWidth } from '@/utils/dimensions'
 
 export const injectStyle = (style: string) => `
 	var style = document.createElement('style');
@@ -29,6 +29,7 @@ export const getStyleTag = ({
 		font-family: ${fontFamily}-Regular !important;
 		font-size: ${fontSize}px;
 		scroll-behavior: smooth !important;
+		will-change:transform;
 		line-height: ${lineHeight};
 		word-wrap: break-word !important;
 		max-width: 100% !important;

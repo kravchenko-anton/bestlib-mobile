@@ -2,8 +2,10 @@ import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { Check, MoreHorizontal, Share, Trash } from '@/icons'
 import { useFinishBook } from '@/screens/reader/functions/useFinishBook'
+import type { CompareReadingBook } from '@/store/reader/progress-store'
 import { AnimatedIcon, Image, Title } from '@/ui'
 import { settings } from '@/ui/book-card/settings'
+import ProgressBar from '@/ui/progress-bar/progress-bar'
 import SelectItem from '@/ui/select-list/select-list-item'
 import { Color } from '@/utils/colors'
 import { MutationKeys, QueryKeys } from '@/utils/query-keys'
@@ -17,7 +19,7 @@ import { View } from 'react-native'
 import Animated, { JumpingTransition } from 'react-native-reanimated'
 
 interface ReadingListProperties {
-  data: UserLibraryOutputReadingBooksInner[] | undefined;
+  data: CompareReadingBook[] | undefined;
 }
 
 export const ReadingList: FC<ReadingListProperties> = ({ data }) => {
@@ -76,9 +78,7 @@ export const ReadingList: FC<ReadingListProperties> = ({ data }) => {
         }}
         renderItem={({
           item: book,
-        }: {
-          item: UserLibraryOutputReadingBooksInner;
-        }) => (
+        }) =>  (
           <Animated.View
             style={{
               width: settings.width.md,
@@ -113,7 +113,8 @@ export const ReadingList: FC<ReadingListProperties> = ({ data }) => {
                 />
               </View>
             </View>
-            {/* <ProgressBar progress={book.progress} /> */}
+            <ProgressBar
+              progress={(book.lastHistory?.endProgress || 0)} />
 
             <Title numberOfLines={2} size="sm" weight="bold" className="mt-1">
               {book.title}

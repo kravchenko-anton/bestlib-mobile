@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { UserStatisticsProgressByCurrentWeekInner } from './user-statistics-progress-by-current-week-inner';
 
 /**
  * 
@@ -25,27 +22,15 @@ import type { UserStatisticsProgressByCurrentWeekInner } from './user-statistics
 export interface UserStatistics {
     /**
      * 
-     * @type {Array<UserStatisticsProgressByCurrentWeekInner>}
+     * @type {string}
      * @memberof UserStatistics
      */
-    'progressByCurrentWeek': Array<UserStatisticsProgressByCurrentWeekInner>;
+    'date': string;
     /**
      * 
      * @type {string}
      * @memberof UserStatistics
      */
-    'pepTalk': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserStatistics
-     */
-    'goalMinutes': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserStatistics
-     */
-    'userSteak': number;
+    'totalReadingTime': string;
 }
 

@@ -560,7 +560,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async statistics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserStatistics>> {
+        async statistics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserStatistics>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.statistics(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.statistics']?.[localVarOperationServerIndex]?.url;
@@ -677,7 +677,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        statistics(options?: any): AxiosPromise<UserStatistics> {
+        statistics(options?: any): AxiosPromise<Array<UserStatistics>> {
             return localVarFp.statistics(options).then((request) => request(axios, basePath));
         },
         /**
