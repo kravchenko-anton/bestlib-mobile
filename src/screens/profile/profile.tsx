@@ -1,7 +1,7 @@
 import { useTypedNavigation } from '@/hooks'
 import { Settings as SettingsIcon } from '@/icons'
 import { useStatisticsWithSync } from '@/screens/profile/useStatisticsWithSync'
-import { ScrollLayout, Title } from '@/ui'
+import { Loader, ScrollLayout, Title } from '@/ui'
 import * as Header from '@/ui/header/header'
 import { cn } from '@/utils'
 import { Color } from '@/utils/colors'
@@ -11,12 +11,13 @@ import { RefreshControl, View } from 'react-native'
 const Profile = () => {
   const { navigate } = useTypedNavigation();
   const {isLoading,refetch,syncHistory, statistic} = useStatisticsWithSync();
-  const lastMonthDatesArray = Array.from({ length: dayjs().daysInMonth() }, (_, i) => {
-    const date = dayjs().date(i + 1).format('DD');
-    const number = dayjs().date(i + 1).format('D');
+  const lastMonthDatesArray = Array.from({ length: dayjs().daysInMonth() }, (_, index) => {
+    const date = dayjs().date(index + 1).format('DD');
+    const number = dayjs().date(index + 1).format('D');
     const totalReadingTime = statistic?.find(stat => dayjs(stat.date).format('DD') === date)?.totalReadingTime
     return { date, totalReadingTime,number };
   });
+  if (isLoading) return <Loader />;
   return (
     <>
       <Header.Head>
@@ -36,8 +37,8 @@ const Profile = () => {
             colors={[Color.white]}
             progressBackgroundColor={Color.transparent}
             onRefresh={() => {
+              syncHistory(true);
               refetch();
-              syncHistory();
             }}
           />
         }
@@ -57,8 +58,7 @@ const Profile = () => {
          </View>
           <View className='flex gap-2 flex-wrap flex-row justify-center'>
         {
-          lastMonthDatesArray.map((date) => {
-            return (
+          lastMonthDatesArray.map((date) => (
               <View key={date.date}
                 className={cn('border-2 justify-center items-center border-bordered w-[14%] h-[55px]  rounded-md', {
                 'bg-primary border-0': date.totalReadingTime
@@ -70,8 +70,7 @@ const Profile = () => {
                   {date.totalReadingTime}
                 </Title>
               </View>
-            )
-          })
+            ))
         }
           </View>
         </View>

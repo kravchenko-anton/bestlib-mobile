@@ -8,6 +8,7 @@ import BannerList from '@/ui/book-lists/banner-list'
 import { SvgButton } from '@/ui/svg-button/svg-button'
 import { Color } from '@/utils/colors'
 import { QueryKeys } from '@/utils/query-keys'
+
 import { shareBook } from '@/utils/share-text'
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { useQuery } from '@tanstack/react-query'
@@ -24,7 +25,6 @@ const Book: FC = () => {
   });
   const sheetReference = useRef<BottomSheetModal>(null);
 
-  //TODO: доделать страницу и сделать верхнее меню
   const { navigate, goBack } = useTypedNavigation();
   if (!book) return <Loader />;
   return (

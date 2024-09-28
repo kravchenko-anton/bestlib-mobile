@@ -18,7 +18,7 @@
 import type { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { UserLibraryOutputFinishedBooksInner } from './user-library-output-finished-books-inner';
+import type { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { UserLibraryOutputReadingBooksInnerAuthor } from './user-library-output-reading-books-inner-author';
@@ -97,9 +97,9 @@ export interface InfoById {
     'readingTime': string;
     /**
      * 
-     * @type {Array<UserLibraryOutputFinishedBooksInner>}
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
      * @memberof InfoById
      */
-    'fromSameAuthor': Array<UserLibraryOutputFinishedBooksInner>;
+    'fromSameAuthor': Array<UserLibraryOutputReadingBooksInner>;
 }
 

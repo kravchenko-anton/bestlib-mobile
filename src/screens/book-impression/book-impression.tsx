@@ -16,7 +16,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { View } from 'react-native'
-//TODO: сделать в бекенде implression книги
 
 const BookImpression: FC = () => {
   const { params } = useTypedRoute<"BookImpression">();

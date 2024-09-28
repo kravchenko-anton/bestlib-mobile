@@ -86,7 +86,7 @@ export const useReactionStore = create<
 					update: hot.update,
 					delete: hot.delete
 				})
-				if(!data.length) return console.log("sync reaction return empty", data);
+				if(data.length === 0) return console.log("sync reaction return empty", data);
 				console.log("😒 synced reactions", data);
 				
 				set((state) => ({
@@ -100,30 +100,26 @@ export const useReactionStore = create<
 					}
 				}));
 			},
-			getReactionByBookId: (bookId) => {
-				return getState().reactions.filter((r) => r.book.id === bookId);
-			},
+			getReactionByBookId: (bookId) => getState().reactions.filter((r) => r.book.id === bookId),
 			getReactionCatalog: () => {
 				const reactions = getState().reactions;
-				return reactions.reduce((acc, reaction) => {
+				return reactions.reduce((accumulator, reaction) => {
 					const book = reaction.book;
-					const index = acc.findIndex((r) => r.book.id === book.id);
+					const index = accumulator.findIndex((r) => r.book.id === book.id);
 					if (index === -1) {
-						acc.push({
+						accumulator.push({
 							book,
 							reactions: [reaction],
 							count: 1
 						});
 					} else {
-						acc[index].reactions.push(reaction);
-						acc[index].count++;
+						accumulator[index].reactions.push(reaction);
+						accumulator[index].count++;
 					}
-					return acc;
+					return accumulator;
 				}, [] as ReactionCatalogType[]);
 			},
-			findReactionById: async id => {
-				return getState().reactions.find(r => r.id === id)
-			},
+			findReactionById: async id => getState().reactions.find(r => r.id === id),
 			
 			
 			createReaction: (reaction) => {
@@ -142,19 +138,15 @@ export const useReactionStore = create<
 				
 				set((state) => {
 					let updatedHot = state.hot;
-					if (hot.create.find((r) => r.id === id)) {
-						updatedHot = {
+					updatedHot = hot.create.find((r) => r.id === id) ? {
 							...updatedHot,
 							create: state.hot.create.map((r) =>
 								r.id === id ? { ...r, ...updateObject } : r
 							),
-						};
-					} else {
-						updatedHot = {
+						} : {
 							...updatedHot,
 							update: [...state.hot.update, { id, updateObject }],
 						};
-					}
 					
 					return {
 						...state,
@@ -183,18 +175,14 @@ export const useReactionStore = create<
 				
 				set((state) => {
 					let updatedHot = state.hot;
-					if (updatedHot.create.find((r) => r.id === id)) {
-						updatedHot = {
+					updatedHot = updatedHot.create.find((r) => r.id === id) ? {
 							...updatedHot,
 							create: updatedHot.create.filter((r) => r.id !== id),
-						};
-					} else {
-						updatedHot = {
+						} : {
 							...updatedHot,
 							delete: [...updatedHot.delete, id],
 							update: updatedHot.update.filter((r) => r.id !== id),
 						};
-					}
 					
 					return {
 						...state,

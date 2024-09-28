@@ -1,11 +1,11 @@
-import AnimatedPress from "@/ui/animated-press/animated-press";
-import { cn } from "@/utils";
-import { InnerColor } from "@/utils/colors";
-import { ActivityIndicator } from "react-native";
-import Title from "../title/title";
-import { settings } from "./settings";
-import type { ButtonProperties } from "./types";
-//TODO сделать вместе с иконкой компонент кнопки и сделать чтобы можно было справа разместить, так-же сделать в genre отображение иконки исходя из url
+import AnimatedPress from '@/ui/animated-press/animated-press'
+import { cn } from '@/utils'
+import { InnerColor } from '@/utils/colors'
+import { ActivityIndicator } from 'react-native'
+import Title from '../title/title'
+import { settings } from './settings'
+import type { ButtonProperties } from './types'
+
 const Button = ({
   size = "lg",
   variant = "foreground",

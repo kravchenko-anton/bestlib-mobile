@@ -1,15 +1,15 @@
-import { useTypedNavigation } from "@/hooks";
-import { Close } from "@/icons";
-import { useSearch } from "@/screens/search/useSearch";
-import { Button, Layout, Loader } from "@/ui";
-import CatalogList from "@/ui/book-lists/catalog-list";
-import NothingFount from "@/ui/nothing-fount";
-import { fontSettings } from "@/ui/title/settings";
-import { cn } from "@/utils";
-import { Color } from "@/utils/colors";
-import { Controller } from "react-hook-form";
-import { TextInput, View } from "react-native";
-//TODO: проверить debounce
+import { useTypedNavigation } from '@/hooks'
+import { Close } from '@/icons'
+import { useSearch } from '@/screens/search/useSearch'
+import { Button, Layout, Loader } from '@/ui'
+import CatalogList from '@/ui/book-lists/catalog-list'
+import NothingFount from '@/ui/nothing-fount'
+import { fontSettings } from '@/ui/title/settings'
+import { cn } from '@/utils'
+import { Color } from '@/utils/colors'
+import { Controller } from 'react-hook-form'
+import { TextInput, View } from 'react-native'
+
 const Search = () => {
   const { searchTerm, books, booksLoading, control, clearSearch } = useSearch();
   const { navigate, goBack } = useTypedNavigation();

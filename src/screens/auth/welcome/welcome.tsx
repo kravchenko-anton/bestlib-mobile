@@ -36,11 +36,11 @@ const Welcome: FC = () => {
       googleLogin({
         socialId: userInfo.data?.idToken,
       });
-    } catch (e) {
-      console.log("error",JSON.stringify(e));
-      errorToast("Something went wrong");
+    } catch (error) {
+      console.log("error",JSON.stringify(error));
+      errorToast("Something went wrong with Google");
     }
-  };
+  }
 console.log(process.env.SERVER_URL, "process.env.SERVER_URL")
   return (
     <ScrollLayout>
@@ -112,25 +112,10 @@ console.log(process.env.SERVER_URL, "process.env.SERVER_URL")
             Create account
           </Button>
         </View>
-        <Title className="mt-2" color={Color.gray} numberOfLines={4}>
-          By continuing, you agree to our{" "}
-          <Title
-            weight="bold"
-            onPress={() =>
-              Linking.openURL("https://booknex.up.railway.app/terms-of-service")
-            }
-          >
-            Terms of Service
-          </Title>{" "}
-          and{" "}
-          <Title
-            weight="bold"
-            onPress={() =>
-              Linking.openURL("https://booknex.up.railway.app/privacy-policy")
-            }
-          >
-            Privacy Policy
-          </Title>
+        <Title
+          onPress={() => Linking.openURL("mailto:anton.kravchenko.developer@gmail.com")}
+          className="mt-2 items-center" color={Color.gray}>
+          Contact us <Title color={Color.white} weight="bold">here</Title>
         </Title>
       </View>
     </ScrollLayout>

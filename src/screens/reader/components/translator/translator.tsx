@@ -14,8 +14,7 @@ export interface TranslatorProperties {
 export const Translator: FC<TranslatorProperties> = ({
   sheetRef,
   colorScheme,
-}) => {
-  return (
+}) => (
     <BottomSheetModal
       detached
       handleIndicatorStyle={{
@@ -73,4 +72,3 @@ export const Translator: FC<TranslatorProperties> = ({
       }}
     </BottomSheetModal>
   );
-};

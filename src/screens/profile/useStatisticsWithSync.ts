@@ -15,7 +15,7 @@ export const useStatisticsWithSync = () => {
       ),
     select: (data) => data.data,
   });
-  const {  syncHistory} = useReadingProgressStore();
+  const { syncHistory} = useReadingProgressStore();
   console.log(statistics)
 
   return { isLoading,syncHistory, statistic: statistics, refetch };

@@ -1,11 +1,10 @@
-import { usePressAnimation } from "@/ui/animated-press/press-animation";
-import { cn } from "@/utils";
-import { InnerColor } from "@/utils/colors";
-import type { FC } from "react";
+import { cn } from '@/utils'
+import { InnerColor } from '@/utils/colors'
+import type { FC } from 'react'
 
 import { ActivityIndicator, TouchableOpacity } from 'react-native'
-import { settings } from "./settings";
-import type { IconProperties } from "./types";
+import { settings } from './settings'
+import type { IconProperties } from './types'
 
 const AnimatedIcon: FC<IconProperties> = ({
   icon: Icon,
@@ -18,8 +17,7 @@ const AnimatedIcon: FC<IconProperties> = ({
   noPadding = false,
   onPress,
   ...properties
-}) => {
-  return (
+}) => (
     <TouchableOpacity
       activeOpacity={0.6}
       className={cn(
@@ -48,5 +46,4 @@ const AnimatedIcon: FC<IconProperties> = ({
       )}
     </TouchableOpacity>
   );
-};
 export default AnimatedIcon;

@@ -16,9 +16,6 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { UserLibraryOutputReadingBooksInnerAuthor } from './user-library-output-reading-books-inner-author';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { UserLibraryOutputReadingBooksInnerReadingHistory } from './user-library-output-reading-books-inner-reading-history';
 
 /**
  * 
@@ -56,11 +53,5 @@ export interface UserLibraryOutputReadingBooksInner {
      * @memberof UserLibraryOutputReadingBooksInner
      */
     'rating': number;
-    /**
-     * 
-     * @type {UserLibraryOutputReadingBooksInnerReadingHistory}
-     * @memberof UserLibraryOutputReadingBooksInner
-     */
-    'readingHistory': UserLibraryOutputReadingBooksInnerReadingHistory | null;
 }
 

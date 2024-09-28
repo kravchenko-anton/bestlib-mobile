@@ -41,7 +41,7 @@ Sentry.init({
   integrations: [Sentry.metrics.metricsAggregatorIntegration()],
 });
 
-export const clientPersister: any = createSyncStoragePersister({
+export const clientPersister = createSyncStoragePersister({
   storage: clientStorage,
 });
 

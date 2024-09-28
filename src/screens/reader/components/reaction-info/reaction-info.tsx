@@ -25,8 +25,7 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
   colorScheme,
   updateReaction,
   deleteReaction,
-}) => {
-  return (
+}) => (
     <BottomSheetModal
       enableContentPanningGesture
       enableHandlePanningGesture
@@ -135,4 +134,3 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
       }}
     </BottomSheetModal>
   );
-};

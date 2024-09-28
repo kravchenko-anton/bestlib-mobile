@@ -15,9 +15,6 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { UserLibraryOutputFinishedBooksInner } from './user-library-output-finished-books-inner';
-// May contain unused imports in some cases
-// @ts-ignore
 import type { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
 
 /**
@@ -34,15 +31,15 @@ export interface UserLibraryOutput {
     'readingBooks': Array<UserLibraryOutputReadingBooksInner>;
     /**
      * 
-     * @type {Array<UserLibraryOutputFinishedBooksInner>}
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
      * @memberof UserLibraryOutput
      */
-    'finishedBooks': Array<UserLibraryOutputFinishedBooksInner>;
+    'finishedBooks': Array<UserLibraryOutputReadingBooksInner>;
     /**
      * 
-     * @type {Array<UserLibraryOutputFinishedBooksInner>}
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
      * @memberof UserLibraryOutput
      */
-    'savedBooks': Array<UserLibraryOutputFinishedBooksInner>;
+    'savedBooks': Array<UserLibraryOutputReadingBooksInner>;
 }
 

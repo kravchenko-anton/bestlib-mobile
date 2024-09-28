@@ -118,9 +118,6 @@ const Featured = () => {
             />
           ))}
 
-          {
-            // TODO: сделать колекцию,жанры относительно фаворитных жанров
-          }
           <ManageRecommendationMenu
             onManagePress={() => navigate("UpdateRecommendation")}
           />

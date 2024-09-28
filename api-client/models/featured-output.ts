@@ -21,7 +21,7 @@ import type { FeaturedOutputBooksBySelectedGenresInner } from './featured-output
 import type { UserCatalogOutputDataInnerSelectedGenresInner } from './user-catalog-output-data-inner-selected-genres-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { UserLibraryOutputFinishedBooksInner } from './user-library-output-finished-books-inner';
+import type { UserLibraryOutputReadingBooksInner } from './user-library-output-reading-books-inner';
 
 /**
  * 
@@ -31,10 +31,10 @@ import type { UserLibraryOutputFinishedBooksInner } from './user-library-output-
 export interface FeaturedOutput {
     /**
      * 
-     * @type {Array<UserLibraryOutputFinishedBooksInner>}
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
      * @memberof FeaturedOutput
      */
-    'picksOfWeek': Array<UserLibraryOutputFinishedBooksInner>;
+    'picksOfWeek': Array<UserLibraryOutputReadingBooksInner>;
     /**
      * 
      * @type {Array<UserCatalogOutputDataInnerSelectedGenresInner>}
@@ -43,10 +43,10 @@ export interface FeaturedOutput {
     'genres': Array<UserCatalogOutputDataInnerSelectedGenresInner>;
     /**
      * 
-     * @type {Array<UserLibraryOutputFinishedBooksInner>}
+     * @type {Array<UserLibraryOutputReadingBooksInner>}
      * @memberof FeaturedOutput
      */
-    'bestSellingBooks': Array<UserLibraryOutputFinishedBooksInner>;
+    'bestSellingBooks': Array<UserLibraryOutputReadingBooksInner>;
     /**
      * 
      * @type {Array<FeaturedOutputBooksBySelectedGenresInner>}

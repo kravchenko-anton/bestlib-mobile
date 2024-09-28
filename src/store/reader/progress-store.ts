@@ -38,9 +38,11 @@ interface ReadingProgressStoreActionsType {
   newProgress: (history: ReadingHistoryType) => void;
   lastHistoryByBookId: (bookId: string) => ReadingHistoryType | undefined;
   getInitialHistory: () => ReadingHistoryType | undefined;
-  syncHistory: () => void;
+  syncHistory: (
+    syncWithCurrentDay?: boolean,
+  ) => void;
   getReadingHistoriesCatalog: (
-    books: Array<UserLibraryOutputReadingBooksInner>,
+    books: UserLibraryOutputReadingBooksInner[],
   ) =>CompareReadingBook[];
   updateStartFromReadingScreen: (
     data: Pick<ReadingHistoryType, "id"> & { startFromReadingScreen: boolean },
@@ -52,7 +54,7 @@ export const useReadingProgressStore = create<
   persist(
     (set, getState) => ({
       ...initialState,
-      syncHistory: async () =>
+      syncHistory: async (syncWithCurrentDay ) =>
       {
         const dataToSync = getState().localHistory.map(({startFromReadingScreen, ...h}) => ({
           ...h
@@ -61,12 +63,12 @@ export const useReadingProgressStore = create<
         const {isConnected} = await NetInfo.fetch();
         if (!isConnected) return console.log("🔃 no internet connection");
           // prevent sync in one day, like not less than 1 day
-        if (lastSyncedAt && dayjs().diff(dayjs(lastSyncedAt), "day") < 1) {
+        if (lastSyncedAt && dayjs().diff(dayjs(lastSyncedAt), "day") < 1 && !syncWithCurrentDay)  {
           console.log("🔃 prevent sync in one day");
           return;
         }
         const {data} = await api.user.syncHistory(dataToSync);
-        if(!data.length) return console.log("🔃 problem with sync history", data);
+        if(data.length === 0) return console.log("🔃 problem with sync history", data);
         console.log("🔃 synced history", data);
         
         set((state) => ({

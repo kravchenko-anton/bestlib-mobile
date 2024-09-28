@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { View, type StyleProp, type ViewStyle } from 'react-native'
+import { type StyleProp, View, type ViewStyle } from 'react-native'
 import Svg, { G, Path } from 'react-native-svg'
 
 export interface CircularProgressProperties {
@@ -173,7 +173,7 @@ export const CircularProgressBar: FC<CircularProgressProperties> = ({
 			{children ? (
 				<View style={localChildrenContainerStyle as ViewStyle}>
 					{
-						// @ts-ignore
+						// @ts-expect-error
 						children(fill)
 					}
 				</View>
