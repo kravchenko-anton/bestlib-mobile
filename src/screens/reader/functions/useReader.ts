@@ -1,5 +1,5 @@
+import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
-import { useBookWithDownload } from '@/screens/reader/functions/useBookwithDownload'
 import { useFinishBook } from '@/screens/reader/functions/useFinishBook'
 import { useModalReference } from '@/screens/reader/functions/useModalReference'
 import { useReaderMessage } from '@/screens/reader/functions/useReaderMessage'
@@ -8,7 +8,9 @@ import { injectFont } from '@/screens/reader/injections/font-injection'
 import { getStyleTag, injectStyle } from '@/screens/reader/injections/styles-injection'
 import { useCustomizationStore } from '@/store/reader/customization-store'
 import { useReactionStore } from '@/store/reader/reaction-store'
+import { QueryKeys } from '@/utils/query-keys'
 import { errorToast } from '@/utils/toast'
+import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import type WebView from 'react-native-webview'
 
@@ -23,7 +25,21 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     (state) => state,
   );
   
-  const {ebook,ebookRequestRefetching,  ebookRequestLoading} = useBookWithDownload(id);
+  const {
+    data: ebook,
+    isPending: ebookRequestLoading
+  } = useQuery({
+    queryKey: QueryKeys.ebook.byId(id),
+    queryFn: () => api.ebook.ebookById(id),
+    select: (data) => data.data,
+    enabled: !!id, // Ensure isConnected is properly checked
+    networkMode: 'offlineFirst',
+    staleTime: 60 *  60 * 24,
+    gcTime: 60 *  60 *  24 * 7,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
   const {
     readingProgress,
     scrollPosition,
@@ -34,7 +50,7 @@ export const useReader = (id: string, initialScrollPosition: number) => {
   const { onFinish } = useFinishBook(clearProgress);
   const { openModal, modalRefs } = useModalReference(setReaderHeaderVisible, {
     onOpenModal: () =>
-      viewerReference.current?.injectJavaScript(`removeAllTextSelection()`),
+      viewerReference.current?.injectJavaScript(`${ebook?.functionEnums.removeAllTextSelection}()`),
   });
 
   const { onMessage } = useReaderMessage({
@@ -116,7 +132,6 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     composedHtml,
     updateReaction,
     deleteReaction,
-    ebookRequestRefetching,
     openModal,
     onMessage,
     reactions,

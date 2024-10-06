@@ -2,7 +2,8 @@ import { useTypedNavigation, useTypedRoute } from '@/hooks'
 import { Close } from '@/icons'
 import type { SearchFormDataType } from '@/screens/search/useSearchForm'
 import { useReactionStore } from '@/store/reader/reaction-store'
-import { Button, Flatlist, Title } from '@/ui'
+import { Button, Flatlist, ScrollLayout, Title } from '@/ui'
+import NothingFount from '@/ui/nothing-fount'
 import { SvgButton } from '@/ui/svg-button/svg-button'
 import { fontSettings } from '@/ui/title/settings'
 import { cn } from '@/utils'
@@ -13,13 +14,13 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { TextInput, View } from 'react-native'
+import { RefreshControl, TextInput, View } from 'react-native'
 
 dayjs.extend(relativeTime);
 
 const Reactions = () => {
   const { params } = useTypedRoute<"Reactions">();
-  const {getReactionByBookId,deleteReaction} = useReactionStore()
+  const {getReactionByBookId,deleteReaction, syncReactions} = useReactionStore()
   const userReactions = getReactionByBookId(params.id)
   const [filterSettings, setFilterSettings] = React.useState({
     search: "",
@@ -37,7 +38,20 @@ const Reactions = () => {
   const searchTerm = watch("searchTerm");
   const { goBack } = useTypedNavigation();
   return (
-    <View className="bg-background h-screen w-screen">
+   <>
+   {userReactions ? (
+       <ScrollLayout
+         refreshControl={
+           <RefreshControl
+             refreshing={false}
+             colors={[Color.white]}
+             progressBackgroundColor={Color.transparent}
+             onRefresh={() => {
+                syncReactions(true);
+             }}
+           />
+         }
+       >
       <Controller
         control={control}
         name="searchTerm"
@@ -100,7 +114,7 @@ const Reactions = () => {
                   size="sm"
                   className="px-3"
                   variant={
-                    filterSettings.reaction === "" ? "muted" : "foreground"
+                    filterSettings.reaction === "" ? "primary" : "foreground"
                   }
                   onPress={() =>
                     setFilterSettings({
@@ -122,7 +136,7 @@ const Reactions = () => {
                 size="sm"
                 variant={
                   filterSettings.reaction === item.title
-                    ? "muted"
+                    ? "primary"
                     : "foreground"
                 }
                 onPress={() =>
@@ -138,6 +152,7 @@ const Reactions = () => {
       </View>
       <Flatlist
         mt={2}
+        scrollEnabled={false}
         ListEmptyComponent={() => (
           <Title
             className="mx-auto"
@@ -160,7 +175,7 @@ const Reactions = () => {
           );
 
           return (
-            <View className="bg-muted border-bordered mx-2 rounded-lg border-[1px] p-2 py-2">
+            <View className="bg-foreground border-bordered mx-2 rounded-lg border-[1px] p-2 py-2">
               <Title
                 size="md"
                 className="mb-2"
@@ -177,7 +192,7 @@ const Reactions = () => {
                       title={item.type}
                       altEmoji={emoji?.altEmoji}
                       svgUri={emoji?.svg}
-                      variant={"foreground"}
+                      variant={"muted"}
                       onPress={() => {
                         setFilterSettings({
                           ...filterSettings,
@@ -190,7 +205,7 @@ const Reactions = () => {
                 <View className="mt-2 flex-row items-center">
                   <Button
                     size={"sm"}
-                    variant="foreground"
+                    variant="muted"
                     className="mr-2"
                     onPress={() => {
                       shareReaction(item.text);
@@ -200,7 +215,7 @@ const Reactions = () => {
                   </Button>
                   <Button
                     size={"sm"}
-                    variant="foreground"
+                    variant="muted"
                     onPress={() => {
                       deleteReaction(item.id);
                     }}
@@ -213,7 +228,17 @@ const Reactions = () => {
           );
         }}
       />
-    </View>
+
+      </ScrollLayout>
+      ) : (
+       <NothingFount
+         text={
+           "You haven’t saved any books yet. \n" +
+           "Go to the catalog and find something to read."
+         }
+       />
+     )}
+    </>
   );
 };
 export default Reactions;

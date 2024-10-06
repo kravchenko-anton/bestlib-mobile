@@ -51,7 +51,7 @@ const Profile = () => {
            </Title>
            <View>
              <Title color={Color.white} weight='light' size='xl'>
-               30 days
+                {dayjs().format('MMMM')}  
              </Title>
              
            </View>

@@ -23,6 +23,8 @@ export interface ReactionType  {
 	}
 }
 
+export type ShortReactionType = Omit<ReactionType, 'book'>
+
 export interface UpdateReactionType {
 	id: string
 	updateObject: Partial<Omit<ReactionType, "id">>
@@ -53,7 +55,9 @@ export interface ReactionCatalogType  {
 }
 
 export interface ReactionStoreActionsType {
-	syncReactions: () => void;
+	syncReactions: (
+		syncWithCurrentDay?: boolean
+	) => void;
 	createReaction: (reaction: ReactionType) => void
 	clearReactions: () => void
 	getReactionByBookId: (bookId: string) => ReactionType[]
@@ -68,13 +72,13 @@ export const useReactionStore = create<
 	persist(
 		(set,getState) => ({
 			...initialState,
-			syncReactions: async () =>
+			syncReactions: async (syncWithCurrentDay) =>
 			{
 				const hot = getState().hot
 				const lastSyncedAt = getState().lastSyncedAt;
 				const {isConnected} = await fetch();
 				if (!isConnected) return console.log("😒 no internet connection to sync reaction");
-				if (lastSyncedAt && dayjs().diff(dayjs(lastSyncedAt), "day") < 1) {
+				if (lastSyncedAt && dayjs().diff(dayjs(lastSyncedAt), "day") < 1 && !syncWithCurrentDay) {
 					console.log("😒 prevent sync reactions in one day");
 					return;
 				}

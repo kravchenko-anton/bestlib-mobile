@@ -19,8 +19,7 @@ const Reader = () => {
   const reader = useReader(params.id, params.startFromScratch ? 0 : (lastHistory?.scrollPosition || 0));
   if (
     !reader.ebook ||
-    reader.ebookRequestLoading ||
-    reader.ebookRequestRefetching
+    reader.ebookRequestLoading 
   )
     return (
       <Loader background={reader.colorScheme.colorPalette.background.normal} />
@@ -74,6 +73,9 @@ const Reader = () => {
       />
 
       <ReaderCustomization
+        onFontSizeChanged={() =>
+       null
+        }
         sheetRef={reader.modalRefs.readingSettingsModalReference}
       />
       <ReactionInfo

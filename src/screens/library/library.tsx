@@ -50,9 +50,9 @@ const Library = () => {
                 colors={[Color.white]}
                 progressBackgroundColor={Color.transparent}
                 onRefresh={() => {
+                  syncHistory(true);
+                  syncReactions(true);
                   refetch();
-                  syncHistory();
-                  syncReactions();
                 }}
               />
             }

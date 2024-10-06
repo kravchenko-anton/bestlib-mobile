@@ -11,10 +11,11 @@ import { Pressable, View } from 'react-native'
 
 interface ReaderCustomizationProperties {
 	sheetRef: RefObject<BottomSheetModal>
+	onFontSizeChanged: () => void
 }
 
 const ReaderCustomization: FC<ReaderCustomizationProperties> = ({
-	sheetRef
+	sheetRef,onFontSizeChanged
 }) => {
 	const {
 		colorScheme,
@@ -64,6 +65,7 @@ const ReaderCustomization: FC<ReaderCustomizationProperties> = ({
 							changeTheme={changeTheme}
 						/>
 						<FontSizeSettings
+							onFontSizeChanged={onFontSizeChanged}
 							colorScheme={colorScheme}
 							activeFontSize={fontSize}
 							changeFontSize={changeFontSize}

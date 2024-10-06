@@ -25,7 +25,6 @@ export * from './full-book-count';
 export * from './google-auth-dto';
 export * from './gpt-explain';
 export * from './info-by-id';
-export * from './reaction-by-book-output';
 export * from './reaction-output';
 export * from './reaction-output-book';
 export * from './reaction-payload';

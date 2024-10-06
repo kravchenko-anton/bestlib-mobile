@@ -1,5 +1,5 @@
 import { Share, Trash } from '@/icons'
-import type { ReactionStoreActionsType } from '@/store/reader/reaction-store'
+import type { ReactionStoreActionsType, ShortReactionType } from '@/store/reader/reaction-store'
 import type { ThemePackType } from '@/store/reader/theme-pack'
 import { Title } from '@/ui'
 import SelectItem from '@/ui/select-list/select-list-item'
@@ -8,10 +8,10 @@ import { Color } from '@/utils/colors'
 import { reactions } from '@/utils/reactions'
 import { shareReaction } from '@/utils/share-text'
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet'
-import type { ReactionByBookOutput } from 'api-client'
 import React, { type FC, type RefObject } from 'react'
 import { View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
+
 
 export interface ReactionModalProperties extends Pick<ReactionStoreActionsType, 'deleteReaction' | 'createReaction' | 'updateReaction'>{
   sheetRef: RefObject<BottomSheetModal>;
@@ -54,7 +54,7 @@ export const ReactionInfo: FC<ReactionModalProperties> = ({
       )}
     >
       {(data) => {
-        const activeReactionPressed:ReactionByBookOutput = data?.data
+        const activeReactionPressed:ShortReactionType = data?.data
           return (
           <View className="">
             <Title

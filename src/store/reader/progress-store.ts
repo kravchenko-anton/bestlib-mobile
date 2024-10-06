@@ -127,7 +127,10 @@ export const useReadingProgressStore = create<
           return set((state) => ({
             ...state,
             localHistory: state.localHistory.map((h) =>
-              h.id === historyWithSameDay.id ? newHistory : h,
+              h.id === historyWithSameDay.id ? {
+              ...newHistory,
+                readingTimeMs: h.readingTimeMs + newHistory.readingTimeMs
+              }: h,
             ),
           }));
         }

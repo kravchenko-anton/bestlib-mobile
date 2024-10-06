@@ -46,7 +46,6 @@ models/google-auth-dto.ts
 models/gpt-explain.ts
 models/index.ts
 models/info-by-id.ts
-models/reaction-by-book-output.ts
 models/reaction-output-book.ts
 models/reaction-output.ts
 models/reaction-payload-create-inner.ts

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bestlib",
-    "slug": "bestlib",
+    "name": "Readly",
+    "slug": "readly",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -17,10 +17,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bestlib.bestlib"
+      "bundleIdentifier": "com.readly.readly"
     },
     "android": {
-      "package": "com.bestlib.bestlib",
+      "package": "com.readly.readly",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon/foreground.png",
         "backgroundImage": "./assets/images/adaptive-icon/background.png"

@@ -10,11 +10,13 @@ interface FontSizeSettingsProperties {
 	activeFontSize: number
 	changeFontSize: (size: number) => void
 	colorScheme: ThemePackType
+	onFontSizeChanged: () => void
 }
 export const FontSizeSettings: FC<FontSizeSettingsProperties> = ({
 	changeFontSize,
 	activeFontSize,
-	colorScheme
+	colorScheme,
+	                                                                 onFontSizeChanged
 }) => (
 	<View className='my-1.5 flex-row items-center justify-between px-3'>
 		<Title weight='semiBold' size={'xxl'} color={colorScheme.colorPalette.text}>
@@ -30,7 +32,10 @@ export const FontSizeSettings: FC<FontSizeSettingsProperties> = ({
 							? colorScheme.colorPalette.background.normal
 							: colorScheme.colorPalette.background.lighter
 				}}
-				onPress={() => changeFontSize(activeFontSize - 2)}>
+				onPress={() => {
+					changeFontSize(activeFontSize - 2)
+					onFontSizeChanged()
+				}}>
 				<Minus
 					width={30}
 					color={colorScheme.colorPalette.text}
@@ -47,7 +52,10 @@ export const FontSizeSettings: FC<FontSizeSettingsProperties> = ({
 							? colorScheme.colorPalette.background.normal
 							: colorScheme.colorPalette.background.lighter
 				}}
-				onPress={() => changeFontSize(activeFontSize + 2)}>
+				onPress={() => {
+					changeFontSize(activeFontSize + 2)
+					onFontSizeChanged()
+				}}>
 				<Plus
 					width={30}
 					color={colorScheme.colorPalette.text}

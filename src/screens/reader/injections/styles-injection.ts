@@ -3,10 +3,22 @@ import { Color } from '@/utils/colors'
 import { windowWidth } from '@/utils/dimensions'
 
 export const injectStyle = (style: string) => `
-	var style = document.createElement('style');
-	style.type = 'text/css';
-	style.innerHTML = \`${style}\`;
- document.head.appendChild(style);
+ (function() {
+    // Calculate the current scroll position as a percentage
+    const currentScrollPercentage = window.scrollY / document.body.scrollHeight;
+
+    // Create a new style element and apply the provided styles
+    var styleElement = document.createElement('style');
+    styleElement.type = 'text/css';
+    styleElement.innerHTML = \`${style}\`;
+    document.head.appendChild(styleElement);
+
+    // Use requestAnimationFrame to wait for the browser to apply the styles
+    requestAnimationFrame(function() {
+      // Scroll to the previously calculated position after the styles have been applied
+      window.scrollTo(0, currentScrollPercentage * document.body.scrollHeight);
+    });
+  })();
 		`;
 export const getStyleTag = ({
   fontSize,
@@ -36,6 +48,12 @@ export const getStyleTag = ({
 		height: 100% !important;
 		user-select: element !important;
 		padding: ${padding}px;
+		scroll-snap-type: y mandatory !important;
+		scroll-snap-stop: always !important;
+		-webkit-overflow-scrolling: touch !important;
+		scroll-padding: auto !important;
+		-webkit-user-drag: none !important;
+		
 		behave: smooth !important;
 		overflow-x: hidden !important;
 		overscroll-behavior: none !important;
