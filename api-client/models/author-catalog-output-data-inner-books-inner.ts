@@ -13,39 +13,36 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AuthOutputUser } from './auth-output-user';
 
 /**
  * 
  * @export
- * @interface AuthOutput
+ * @interface AuthorCatalogOutputDataInnerBooksInner
  */
-export interface AuthOutput {
+export interface AuthorCatalogOutputDataInnerBooksInner {
     /**
      * 
      * @type {string}
-     * @memberof AuthOutput
+     * @memberof AuthorCatalogOutputDataInnerBooksInner
      */
-    'accessToken': string;
+    'id': string;
     /**
      * 
      * @type {string}
-     * @memberof AuthOutput
+     * @memberof AuthorCatalogOutputDataInnerBooksInner
      */
-    'refreshToken': string;
+    'title': string;
     /**
      * 
      * @type {string}
-     * @memberof AuthOutput
+     * @memberof AuthorCatalogOutputDataInnerBooksInner
      */
-    'type'?: string;
+    'picture': string;
     /**
      * 
-     * @type {AuthOutputUser}
-     * @memberof AuthOutput
+     * @type {number}
+     * @memberof AuthorCatalogOutputDataInnerBooksInner
      */
-    'user': AuthOutputUser;
+    'rating': number;
 }
 

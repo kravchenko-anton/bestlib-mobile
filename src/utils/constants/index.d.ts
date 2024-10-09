@@ -1,1 +1,1 @@
-export declare const appName = "Readly";
+export declare const appName = "booknext";

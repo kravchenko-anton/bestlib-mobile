@@ -1,6 +1,6 @@
-import api from '@/api'
 import { useTypedNavigation } from '@/hooks'
 import { ReadingList } from '@/screens/library/reading-list'
+import { useLibraryStore } from '@/store/reader/library-store'
 import { useReadingProgressStore } from '@/store/reader/progress-store'
 import { useReactionStore } from '@/store/reader/reaction-store'
 import { BookCard, Flatlist, Image, Loader, ScrollLayout, Title } from '@/ui'
@@ -8,23 +8,12 @@ import { AnimatedPressable } from '@/ui/animated-components'
 import Header from '@/ui/header/header'
 import NothingFount from '@/ui/nothing-fount'
 import { Color } from '@/utils/colors'
-import { QueryKeys } from '@/utils/query-keys'
-import { useQuery } from '@tanstack/react-query'
 import { RefreshControl, View } from 'react-native'
 
 const Library = () => {
   const { navigate } = useTypedNavigation();
-  const {
-    data: library,
-    isLoading,
-    refetch
-  } = useQuery({
-    queryKey: QueryKeys.library,
-    queryFn: () => api.user.library(),
-    select: (data) => data.data,
-    staleTime: 0,
-  });
-  const {  getReactionCatalog, syncReactions} = useReactionStore();
+  const library = useLibraryStore.getState().getLibraryCatalog()
+  const { getReactionCatalog, syncReactions } = useReactionStore();
     const {getReadingHistoriesCatalog, syncHistory} = useReadingProgressStore();
   return (
     <>
@@ -52,7 +41,6 @@ const Library = () => {
                 onRefresh={() => {
                   syncHistory(true);
                   syncReactions(true);
-                  refetch();
                 }}
               />
             }

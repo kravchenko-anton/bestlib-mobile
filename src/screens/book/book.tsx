@@ -1,8 +1,7 @@
 import api from '@/api'
 import { useTypedNavigation, useTypedRoute } from '@/hooks'
-import { ArrowLeft, Share } from '@/icons'
-import ReadingButton from '@/screens/book/reading-button'
-import SaveButton from '@/screens/book/save-button'
+import { ArrowLeft, Book as BookIcon, Bookmarked, Share } from '@/icons'
+import { useLibraryStore } from '@/store/reader/library-store'
 import { AnimatedIcon, BookCard, Button, Description, Flatlist, Image, Loader, ScrollLayout, Title } from '@/ui'
 import BannerList from '@/ui/book-lists/banner-list'
 import { SvgButton } from '@/ui/svg-button/svg-button'
@@ -22,9 +21,12 @@ const Book: FC = () => {
     queryKey: QueryKeys.book.infoById(params.id),
     queryFn: () => api.book.infoById(params.id),
     select: (data) => data.data,
+    gcTime: 1000 * 60 * 60 * 24,
   });
+  
+  
+  const {isSaved,toggleSave, startReading} = useLibraryStore()
   const sheetReference = useRef<BottomSheetModal>(null);
-
   const { navigate, goBack } = useTypedNavigation();
   if (!book) return <Loader />;
   return (
@@ -39,7 +41,23 @@ const Book: FC = () => {
               onPress={() => goBack()}
             />
             <View>
-              <SaveButton id={book.id} />
+              <AnimatedIcon
+                variant="muted"
+                icon={Bookmarked}
+                fatness={2}
+                size="md"
+                className="ml-3"
+                fill={!!isSaved}
+                onPress={() => toggleSave({
+                  id: book.id,
+                  title: book.title,
+                  picture: book.picture,
+                  author: {
+                    name: book.author.name,
+                    id: book.author.id,
+                  }
+                })}
+              />
               <AnimatedIcon
                 className="ml-3 mt-2"
                 variant="foreground"
@@ -91,7 +109,28 @@ const Book: FC = () => {
           >
             Summary
           </Button>
-          <ReadingButton id={book.id} />
+          <Button
+            icon={BookIcon}
+            className="flex-1"
+            variant="primary"
+            size="md"
+            onPress={() => {
+              startReading({
+                id: book.id,
+                title: book.title,
+                picture: book.picture,
+                author: {
+                  name: book.author.name,
+                  id: book.author.id
+                }
+              })
+              
+              navigate('Reader', { id: book.id, startFromScratch: true })
+            }
+          }
+          >
+            {"Start Reading"}
+          </Button>
         </View>
         <View className="flex-row justify-between mt-4 mb-1 px-2 items-center ">
           <Title size="xl" weight="bold" className="">

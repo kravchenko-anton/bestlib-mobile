@@ -17,20 +17,32 @@
 /**
  * 
  * @export
- * @interface UserLibraryOutputReadingBooksInnerAuthor
+ * @interface FeaturedOutputGenresInner
  */
-export interface UserLibraryOutputReadingBooksInnerAuthor {
+export interface FeaturedOutputGenresInner {
     /**
      * 
      * @type {string}
-     * @memberof UserLibraryOutputReadingBooksInnerAuthor
+     * @memberof FeaturedOutputGenresInner
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
-     * @memberof UserLibraryOutputReadingBooksInnerAuthor
+     * @memberof FeaturedOutputGenresInner
      */
-    'name'?: string;
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeaturedOutputGenresInner
+     */
+    'icon': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeaturedOutputGenresInner
+     */
+    'emoji': string;
 }
 

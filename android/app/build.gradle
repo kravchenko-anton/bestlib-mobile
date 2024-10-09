@@ -111,9 +111,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.bestlib.bestlib'
+    namespace 'com.booknext.booknext'
     defaultConfig {
-        applicationId 'com.bestlib.bestlib'
+        applicationId 'com.booknext.booknext'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

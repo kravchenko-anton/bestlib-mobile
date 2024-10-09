@@ -57,7 +57,7 @@ export interface ReactionCatalogType  {
 export interface ReactionStoreActionsType {
 	syncReactions: (
 		syncWithCurrentDay?: boolean
-	) => void;
+	) => Promise<void>
 	createReaction: (reaction: ReactionType) => void
 	clearReactions: () => void
 	getReactionByBookId: (bookId: string) => ReactionType[]
@@ -142,7 +142,7 @@ export const useReactionStore = create<
 				
 				set((state) => {
 					let updatedHot = state.hot;
-					updatedHot = hot.create.find((r) => r.id === id) ? {
+					updatedHot = hot.create.some((r) => r.id === id) ? {
 							...updatedHot,
 							create: state.hot.create.map((r) =>
 								r.id === id ? { ...r, ...updateObject } : r
@@ -179,7 +179,7 @@ export const useReactionStore = create<
 				
 				set((state) => {
 					let updatedHot = state.hot;
-					updatedHot = updatedHot.create.find((r) => r.id === id) ? {
+					updatedHot = updatedHot.create.some((r) => r.id === id) ? {
 							...updatedHot,
 							create: updatedHot.create.filter((r) => r.id !== id),
 						} : {

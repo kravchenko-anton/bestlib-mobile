@@ -34,13 +34,16 @@ const BookImpression: FC = () => {
       });
     },
   });
-  const { control, handleSubmit, watch } = useForm<ImpressionSchemaType>({
+  const { control, handleSubmit, watch, formState: {errors} } = useForm<ImpressionSchemaType>({
     mode: "onSubmit",
-    resolver: zodResolver(ImpressionSchema),
+    resolver: zodResolver(ImpressionSchema.omit({bookId: true})),
   });
+  
+  console.log(errors)
 
   const rating = watch("rating");
   const submitReview = async (data: ImpressionSchemaType) => {
+    console.log('BookImpression.submitReview called with data:', data);
     await sendReview(data);
     successToast("Thanks for your feedback!");
     navigate("Library");

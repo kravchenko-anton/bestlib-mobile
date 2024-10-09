@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Readly",
-    "slug": "readly",
+    "name": "Booknext",
+    "slug": "bestlib",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -17,10 +17,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.readly.readly"
+      "bundleIdentifier": "com.booknext.booknext"
     },
     "android": {
-      "package": "com.readly.readly",
+      "package": "com.booknext.booknext",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon/foreground.png",
         "backgroundImage": "./assets/images/adaptive-icon/background.png"

@@ -133,7 +133,8 @@ export const useAuthStore = create<AuthStoreStateType & AuthStoreActionsType>()(
 		}),
 		{
 			name: 'auth-storage',
-			storage: createJSONStorage(() => zustandStorage)
+			storage: createJSONStorage(() => zustandStorage),
+			partialize: ({isLoading, ...rest}) => ({  ...rest })
 		}
 	)
 )

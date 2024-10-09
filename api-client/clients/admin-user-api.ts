@@ -22,25 +22,26 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { GptExplain } from '../models';
-// @ts-ignore
-import type { TranslateText } from '../models';
+import type { UserCatalogOutput } from '../models';
 /**
- * ReadingApi - axios parameter creator
+ * AdminUserApi - axios parameter creator
  * @export
  */
-export const ReadingApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AdminUserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {GptExplain} gptExplain 
+         * @param {string} searchTerm 
+         * @param {number} cursor 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gptExplain: async (gptExplain: GptExplain, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'gptExplain' is not null or undefined
-            assertParamExists('gptExplain', 'gptExplain', gptExplain)
-            const localVarPath = `/reading/gpt-explain`;
+        catalog: async (searchTerm: string, cursor: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'searchTerm' is not null or undefined
+            assertParamExists('catalog', 'searchTerm', searchTerm)
+            // verify required parameter 'cursor' is not null or undefined
+            assertParamExists('catalog', 'cursor', cursor)
+            const localVarPath = `/admin/user/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -48,7 +49,7 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -56,14 +57,19 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (searchTerm !== undefined) {
+                localVarQueryParameter['searchTerm'] = searchTerm;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(gptExplain, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -72,14 +78,15 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {TranslateText} translateText 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        translate: async (translateText: TranslateText, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'translateText' is not null or undefined
-            assertParamExists('translate', 'translateText', translateText)
-            const localVarPath = `/reading/translate`;
+        remove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('remove', 'id', id)
+            const localVarPath = `/admin/user/remove/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -87,7 +94,7 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -97,12 +104,9 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(translateText, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -113,94 +117,97 @@ export const ReadingApiAxiosParamCreator = function (configuration?: Configurati
 };
 
 /**
- * ReadingApi - functional programming interface
+ * AdminUserApi - functional programming interface
  * @export
  */
-export const ReadingApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ReadingApiAxiosParamCreator(configuration)
+export const AdminUserApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminUserApiAxiosParamCreator(configuration)
     return {
         /**
          * 
-         * @param {GptExplain} gptExplain 
+         * @param {string} searchTerm 
+         * @param {number} cursor 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async gptExplain(gptExplain: GptExplain, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.gptExplain(gptExplain, options);
+        async catalog(searchTerm: string, cursor: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCatalogOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.catalog(searchTerm, cursor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReadingApi.gptExplain']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminUserApi.catalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {TranslateText} translateText 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async translate(translateText: TranslateText, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.translate(translateText, options);
+        async remove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.remove(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReadingApi.translate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminUserApi.remove']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * ReadingApi - factory interface
+ * AdminUserApi - factory interface
  * @export
  */
-export const ReadingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ReadingApiFp(configuration)
+export const AdminUserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminUserApiFp(configuration)
     return {
         /**
          * 
-         * @param {GptExplain} gptExplain 
+         * @param {string} searchTerm 
+         * @param {number} cursor 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        gptExplain(gptExplain: GptExplain, options?: any): AxiosPromise<string> {
-            return localVarFp.gptExplain(gptExplain, options).then((request) => request(axios, basePath));
+        catalog(searchTerm: string, cursor: number, options?: any): AxiosPromise<UserCatalogOutput> {
+            return localVarFp.catalog(searchTerm, cursor, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {TranslateText} translateText 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        translate(translateText: TranslateText, options?: any): AxiosPromise<string> {
-            return localVarFp.translate(translateText, options).then((request) => request(axios, basePath));
+        remove(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.remove(id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ReadingApi - object-oriented interface
+ * AdminUserApi - object-oriented interface
  * @export
- * @class ReadingApi
+ * @class AdminUserApi
  * @extends {BaseAPI}
  */
-export class ReadingApi extends BaseAPI {
+export class AdminUserApi extends BaseAPI {
     /**
      * 
-     * @param {GptExplain} gptExplain 
+     * @param {string} searchTerm 
+     * @param {number} cursor 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ReadingApi
+     * @memberof AdminUserApi
      */
-    public gptExplain(gptExplain: GptExplain, options?: RawAxiosRequestConfig) {
-        return ReadingApiFp(this.configuration).gptExplain(gptExplain, options).then((request) => request(this.axios, this.basePath));
+    public catalog(searchTerm: string, cursor: number, options?: RawAxiosRequestConfig) {
+        return AdminUserApiFp(this.configuration).catalog(searchTerm, cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {TranslateText} translateText 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ReadingApi
+     * @memberof AdminUserApi
      */
-    public translate(translateText: TranslateText, options?: RawAxiosRequestConfig) {
-        return ReadingApiFp(this.configuration).translate(translateText, options).then((request) => request(this.axios, this.basePath));
+    public remove(id: string, options?: RawAxiosRequestConfig) {
+        return AdminUserApiFp(this.configuration).remove(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

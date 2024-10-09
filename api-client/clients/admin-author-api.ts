@@ -22,29 +22,30 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AuthDto } from '../models';
+import type { AuthorCatalogOutput } from '../models';
 // @ts-ignore
-import type { AuthOutput } from '../models';
+import type { CreateAuthorDto } from '../models';
 // @ts-ignore
-import type { GoogleAuthDto } from '../models';
-// @ts-ignore
-import type { RefreshDto } from '../models';
+import type { ShortAuthorDto } from '../models';
 /**
- * AuthApi - axios parameter creator
+ * AdminAuthorApi - axios parameter creator
  * @export
  */
-export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AdminAuthorApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {GoogleAuthDto} googleAuthDto Sign in with google account
+         * @param {string} searchTerm 
+         * @param {number} page 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        googleSign: async (googleAuthDto: GoogleAuthDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'googleAuthDto' is not null or undefined
-            assertParamExists('googleSign', 'googleAuthDto', googleAuthDto)
-            const localVarPath = `/auth/google-sign`;
+        catalog: async (searchTerm: string, page: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'searchTerm' is not null or undefined
+            assertParamExists('catalog', 'searchTerm', searchTerm)
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('catalog', 'page', page)
+            const localVarPath = `/admin/author/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -52,18 +53,27 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (searchTerm !== undefined) {
+                localVarQueryParameter['searchTerm'] = searchTerm;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(googleAuthDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -72,14 +82,14 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {AuthDto} authDto Login user
+         * @param {CreateAuthorDto} createAuthorDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mailLogin: async (authDto: AuthDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authDto' is not null or undefined
-            assertParamExists('mailLogin', 'authDto', authDto)
-            const localVarPath = `/auth/mail-login`;
+        create: async (createAuthorDto: CreateAuthorDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createAuthorDto' is not null or undefined
+            assertParamExists('create', 'createAuthorDto', createAuthorDto)
+            const localVarPath = `/admin/author/create`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -91,6 +101,10 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -98,7 +112,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(authDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(createAuthorDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -107,14 +121,15 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {AuthDto} authDto Register new user
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mailRegister: async (authDto: AuthDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authDto' is not null or undefined
-            assertParamExists('mailRegister', 'authDto', authDto)
-            const localVarPath = `/auth/mail-register`;
+        remove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('remove', 'id', id)
+            const localVarPath = `/admin/author/remove/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -122,18 +137,19 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(authDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -142,14 +158,14 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {RefreshDto} refreshDto Refresh access token
+         * @param {ShortAuthorDto} shortAuthorDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshToken: async (refreshDto: RefreshDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'refreshDto' is not null or undefined
-            assertParamExists('refreshToken', 'refreshDto', refreshDto)
-            const localVarPath = `/auth/refresh`;
+        update: async (shortAuthorDto: ShortAuthorDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'shortAuthorDto' is not null or undefined
+            assertParamExists('update', 'shortAuthorDto', shortAuthorDto)
+            const localVarPath = `/admin/author/update`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -161,6 +177,10 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -168,7 +188,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(refreshDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(shortAuthorDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -179,158 +199,161 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 };
 
 /**
- * AuthApi - functional programming interface
+ * AdminAuthorApi - functional programming interface
  * @export
  */
-export const AuthApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
+export const AdminAuthorApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminAuthorApiAxiosParamCreator(configuration)
     return {
         /**
          * 
-         * @param {GoogleAuthDto} googleAuthDto Sign in with google account
+         * @param {string} searchTerm 
+         * @param {number} page 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async googleSign(googleAuthDto: GoogleAuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.googleSign(googleAuthDto, options);
+        async catalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorCatalogOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.catalog(searchTerm, page, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.googleSign']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminAuthorApi.catalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {AuthDto} authDto Login user
+         * @param {CreateAuthorDto} createAuthorDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async mailLogin(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.mailLogin(authDto, options);
+        async create(createAuthorDto: CreateAuthorDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.create(createAuthorDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.mailLogin']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminAuthorApi.create']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {AuthDto} authDto Register new user
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async mailRegister(authDto: AuthDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.mailRegister(authDto, options);
+        async remove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.remove(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.mailRegister']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminAuthorApi.remove']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {RefreshDto} refreshDto Refresh access token
+         * @param {ShortAuthorDto} shortAuthorDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async refreshToken(refreshDto: RefreshDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.refreshToken(refreshDto, options);
+        async update(shortAuthorDto: ShortAuthorDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.update(shortAuthorDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.refreshToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminAuthorApi.update']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * AuthApi - factory interface
+ * AdminAuthorApi - factory interface
  * @export
  */
-export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AuthApiFp(configuration)
+export const AdminAuthorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminAuthorApiFp(configuration)
     return {
         /**
          * 
-         * @param {GoogleAuthDto} googleAuthDto Sign in with google account
+         * @param {string} searchTerm 
+         * @param {number} page 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        googleSign(googleAuthDto: GoogleAuthDto, options?: any): AxiosPromise<AuthOutput> {
-            return localVarFp.googleSign(googleAuthDto, options).then((request) => request(axios, basePath));
+        catalog(searchTerm: string, page: number, options?: any): AxiosPromise<AuthorCatalogOutput> {
+            return localVarFp.catalog(searchTerm, page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {AuthDto} authDto Login user
+         * @param {CreateAuthorDto} createAuthorDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mailLogin(authDto: AuthDto, options?: any): AxiosPromise<AuthOutput> {
-            return localVarFp.mailLogin(authDto, options).then((request) => request(axios, basePath));
+        create(createAuthorDto: CreateAuthorDto, options?: any): AxiosPromise<void> {
+            return localVarFp.create(createAuthorDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {AuthDto} authDto Register new user
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mailRegister(authDto: AuthDto, options?: any): AxiosPromise<AuthOutput> {
-            return localVarFp.mailRegister(authDto, options).then((request) => request(axios, basePath));
+        remove(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.remove(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {RefreshDto} refreshDto Refresh access token
+         * @param {ShortAuthorDto} shortAuthorDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        refreshToken(refreshDto: RefreshDto, options?: any): AxiosPromise<AuthOutput> {
-            return localVarFp.refreshToken(refreshDto, options).then((request) => request(axios, basePath));
+        update(shortAuthorDto: ShortAuthorDto, options?: any): AxiosPromise<void> {
+            return localVarFp.update(shortAuthorDto, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * AuthApi - object-oriented interface
+ * AdminAuthorApi - object-oriented interface
  * @export
- * @class AuthApi
+ * @class AdminAuthorApi
  * @extends {BaseAPI}
  */
-export class AuthApi extends BaseAPI {
+export class AdminAuthorApi extends BaseAPI {
     /**
      * 
-     * @param {GoogleAuthDto} googleAuthDto Sign in with google account
+     * @param {string} searchTerm 
+     * @param {number} page 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
+     * @memberof AdminAuthorApi
      */
-    public googleSign(googleAuthDto: GoogleAuthDto, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).googleSign(googleAuthDto, options).then((request) => request(this.axios, this.basePath));
+    public catalog(searchTerm: string, page: number, options?: RawAxiosRequestConfig) {
+        return AdminAuthorApiFp(this.configuration).catalog(searchTerm, page, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {AuthDto} authDto Login user
+     * @param {CreateAuthorDto} createAuthorDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
+     * @memberof AdminAuthorApi
      */
-    public mailLogin(authDto: AuthDto, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).mailLogin(authDto, options).then((request) => request(this.axios, this.basePath));
+    public create(createAuthorDto: CreateAuthorDto, options?: RawAxiosRequestConfig) {
+        return AdminAuthorApiFp(this.configuration).create(createAuthorDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {AuthDto} authDto Register new user
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
+     * @memberof AdminAuthorApi
      */
-    public mailRegister(authDto: AuthDto, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).mailRegister(authDto, options).then((request) => request(this.axios, this.basePath));
+    public remove(id: string, options?: RawAxiosRequestConfig) {
+        return AdminAuthorApiFp(this.configuration).remove(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {RefreshDto} refreshDto Refresh access token
+     * @param {ShortAuthorDto} shortAuthorDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
+     * @memberof AdminAuthorApi
      */
-    public refreshToken(refreshDto: RefreshDto, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).refreshToken(refreshDto, options).then((request) => request(this.axios, this.basePath));
+    public update(shortAuthorDto: ShortAuthorDto, options?: RawAxiosRequestConfig) {
+        return AdminAuthorApiFp(this.configuration).update(shortAuthorDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

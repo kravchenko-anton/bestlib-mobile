@@ -2,6 +2,9 @@
 .npmignore
 api.ts
 base.ts
+clients/admin-author-api.ts
+clients/admin-book-api.ts
+clients/admin-user-api.ts
 clients/auth-api.ts
 clients/author-api.ts
 clients/book-api.ts
@@ -21,9 +24,9 @@ index.ts
 models/auth-dto.ts
 models/auth-output-user.ts
 models/auth-output.ts
+models/author-catalog-output-data-inner-books-inner.ts
 models/author-catalog-output-data-inner.ts
 models/author-catalog-output.ts
-models/author-dto-books-inner.ts
 models/author-dto.ts
 models/book-catalog-output-data-inner.ts
 models/book-catalog-output.ts
@@ -38,6 +41,7 @@ models/ebook-output-chapters-inner.ts
 models/ebook-output-function-enums.ts
 models/ebook-output.ts
 models/featured-output-books-by-selected-genres-inner.ts
+models/featured-output-genres-inner.ts
 models/featured-output.ts
 models/find-one-genre-output.ts
 models/full-book-count.ts
@@ -65,7 +69,6 @@ models/update-chapter-dto.ts
 models/update-recommendation-dto.ts
 models/upload-output-dto.ts
 models/user-catalog-output-data-inner-count.ts
-models/user-catalog-output-data-inner-selected-genres-inner.ts
 models/user-catalog-output-data-inner-statistics-inner.ts
 models/user-catalog-output-data-inner.ts
 models/user-catalog-output.ts

@@ -7,7 +7,7 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import type { UserLibraryOutputReadingBooksInner } from '../../../api-client'
 
-export interface CompareReadingBook extends UserLibraryOutputReadingBooksInner {
+export interface CompareReadingBook extends Omit<UserLibraryOutputReadingBooksInner, 'rating'> {
   lastHistory: ReadingHistoryType | undefined;
 }
 export interface ReadingHistoryType {
@@ -36,13 +36,14 @@ const initialState: ReadingProgressStoreType = {
 
 interface ReadingProgressStoreActionsType {
   newProgress: (history: ReadingHistoryType) => void;
-  lastHistoryByBookId: (bookId: string) => ReadingHistoryType | undefined;
+  lastHistoryByBookId: (bookId: string) => ReadingHistoryType | null
   getInitialHistory: () => ReadingHistoryType | undefined;
+  clearHistory: () => void;
   syncHistory: (
     syncWithCurrentDay?: boolean,
-  ) => void;
+  ) => Promise<void>;
   getReadingHistoriesCatalog: (
-    books: UserLibraryOutputReadingBooksInner[],
+    books: Omit<UserLibraryOutputReadingBooksInner, 'rating'>[],
   ) =>CompareReadingBook[];
   updateStartFromReadingScreen: (
     data: Pick<ReadingHistoryType, "id"> & { startFromReadingScreen: boolean },
@@ -54,6 +55,10 @@ export const useReadingProgressStore = create<
   persist(
     (set, getState) => ({
       ...initialState,
+      clearHistory: () => {
+        set({ localHistory: [], syncedHistory: [] })
+        return console.log("🔃 clear history");
+      },
       syncHistory: async (syncWithCurrentDay ) =>
       {
         const dataToSync = getState().localHistory.map(({startFromReadingScreen, ...h}) => ({
@@ -90,7 +95,7 @@ export const useReadingProgressStore = create<
       lastHistoryByBookId: (bookId) => {
         const history = [...getState().localHistory, ...getState().syncedHistory].filter((h) => h.bookId === bookId)
         console.log("🔃 last history by book id", history);
-        return historyByLatestSorting(history)[0]
+        return historyByLatestSorting(history)[0] as ReadingHistoryType | null
       },
       getReadingHistoriesCatalog: (books) => {
         const history = [...getState().localHistory, ...getState().syncedHistory]

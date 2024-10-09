@@ -52,8 +52,6 @@ const Navigation: FC = () => {
   };
 
   useEffect(() => {
-    syncHistory()
-    syncReaction()
     const listener = navReference.addListener("state", () => {
       const route = navReference.getCurrentRoute()
         ?.name as keyof TypeRootStackParameterListType;
@@ -80,6 +78,12 @@ const Navigation: FC = () => {
               navReference.navigate("Reader", {
                 id: latestHistory.bookId,
               })}
+            
+            if (user) {
+            await syncHistory()
+            await syncReaction()
+            }
+            
             await new Promise((resolve) => setTimeout(resolve, 2000));
              await SplashScreen.hideAsync();
           }}

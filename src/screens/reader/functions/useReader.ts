@@ -34,8 +34,8 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     select: (data) => data.data,
     enabled: !!id, // Ensure isConnected is properly checked
     networkMode: 'offlineFirst',
-    staleTime: 60 *  60 * 24,
-    gcTime: 60 *  60 *  24 * 7,
+    staleTime: 0,
+    gcTime: 0,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
@@ -69,7 +69,6 @@ export const useReader = (id: string, initialScrollPosition: number) => {
     openReactionModal: async (id) => {
       const reaction = await findReactionById(id);
       if (!reaction) return errorToast("Problem with reaction");
-      console.log("reaction", reaction);
       await openModal.reaction.open(reaction);
     },
   });
@@ -117,7 +116,6 @@ export const useReader = (id: string, initialScrollPosition: number) => {
      };
     </script>
   `;
-
   return {
     ebook,
     readerLoading,

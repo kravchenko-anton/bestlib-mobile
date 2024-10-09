@@ -2,11 +2,14 @@ import { Book, Google, Mail } from '@/icons'
 import { LoginIllustration } from '@/illustrations/login'
 import { useAuthorize } from '@/screens/auth/useAuthorize'
 import { useAuthStore } from '@/store/auth/auth-store'
+import { useReadingProgressStore } from '@/store/reader/progress-store'
+import { useReactionStore } from '@/store/reader/reaction-store'
 import { Button, ScrollLayout, Title } from '@/ui'
 import { Color } from '@/utils/colors'
 import { appName } from '@/utils/constants/index'
 import { errorToast } from '@/utils/toast'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import { useQueryClient } from '@tanstack/react-query'
 import { type FC, useLayoutEffect } from 'react'
 import { Linking, View } from 'react-native'
 
@@ -14,6 +17,9 @@ const Welcome: FC = () => {
   const { googleLogin } = useAuthStore((state) => ({
     googleLogin: state.googleLogin,
   }));
+  const syncHistory = useReadingProgressStore.getState().clearHistory
+  const syncReaction = useReactionStore.getState().clearReactions
+  const queryClient = useQueryClient();
   const {
     isLoading: authLoading,
     onCreateAccount,
@@ -26,7 +32,11 @@ const Welcome: FC = () => {
         //TODO: обернуть в env
         "390949311214-hqfqvic7p47pt3elpne00es58k99nonh.apps.googleusercontent.com",
     });
-  }, []);
+    // clear all cache from tanstack query and from zustand
+    queryClient.clear()
+    syncHistory()
+    syncReaction()
+  }, [queryClient]);
 
   const signIn = async () => {
     try {

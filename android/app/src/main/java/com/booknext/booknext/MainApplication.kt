@@ -1,4 +1,4 @@
-package com.bestlib.bestlib
+package com.booknext.booknext
 
 import android.app.Application
 import android.content.res.Configuration
